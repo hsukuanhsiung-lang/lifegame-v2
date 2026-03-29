@@ -55,6 +55,13 @@
       } else {
         console.warn('[Main] LoadingManager 未找到');
       }
+      
+      // Undo Manager
+      if (LifeGame.getModule('undo-manager')) {
+        LifeGame.getModule('undo-manager').init();
+      } else {
+        console.warn('[Main] UndoManager 未找到');
+      }
     },
     
     initModules: function() {
@@ -89,6 +96,12 @@
           console.warn('[Main] 模块 "' + name + '" 未注册或没有 init 方法');
         }
       });
+      
+      // 应用用户设置的时间栏颜色
+      var settingsModule = LifeGame.getModule('settings');
+      if (settingsModule && settingsModule.applyTimebarColor) {
+        settingsModule.applyTimebarColor();
+      }
     }
   };
   

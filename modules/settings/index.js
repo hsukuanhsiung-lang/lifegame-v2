@@ -113,6 +113,20 @@
             '</div>',
           '</div>',
           
+          // 时间栏颜色设置卡片
+          '<div class="settings-card">',
+            '<div class="settings-card-header">',
+              '<span class="settings-card-icon">🕐</span>',
+              '<span class="settings-card-title">时间栏颜色</span>',
+            '</div>',
+            '<div class="settings-card-body">',
+              '<div class="timebar-color-desc">选择顶部时间栏的颜色风格</div>',
+              '<div class="timebar-color-options">',
+                this.buildTimebarColorOptions(),
+              '</div>',
+            '</div>',
+          '</div>',
+          
           // 数据管理卡片
           '<div class="settings-card">',
             '<div class="settings-card-header">',
@@ -137,6 +151,17 @@
             '</div>',
           '</div>',
           
+          // GitHub 同步卡片
+          '<div class="settings-card">',
+            '<div class="settings-card-header">',
+              '<span class="settings-card-icon">🔄</span>',
+              '<span class="settings-card-title">GitHub 云端同步</span>',
+            '</div>',
+            '<div class="settings-card-body">',
+              this.buildGitHubSyncHTML(),
+            '</div>',
+          '</div>',
+          
           // 关于卡片
           '<div class="settings-card">',
             '<div class="settings-card-header">',
@@ -152,6 +177,116 @@
           '</div>',
         '</div>'
       ].join('');
+    },
+    
+    // 构建 GitHub 同步 HTML
+    buildGitHubSyncHTML: function() {
+      var sync = LifeGame.getModule('github-sync');
+      if (!sync) {
+        return '<div class="github-sync-notice">模块未加载</div>';
+      }
+      
+      var status = sync.getStatus();
+      var isConfigured = status.configured;
+      var isEnabled = status.enabled;
+      
+      // 状态文本
+      var statusText = '未配置';
+      var statusClass = 'status-not-configured';
+      if (isConfigured) {
+        if (status.syncing) {
+          statusText = '同步中...';
+          statusClass = 'status-syncing';
+        } else if (status.lastError) {
+          statusText = '同步失败';
+          statusClass = 'status-error';
+        } else if (status.lastSyncTime) {
+          statusText = '已同步';
+          statusClass = 'status-synced';
+        } else {
+          statusText = '待同步';
+          statusClass = 'status-pending';
+        }
+      }
+      
+      // 上次同步时间
+      var lastSyncText = '无';
+      if (status.lastSyncTime) {
+        var date = new Date(status.lastSyncTime);
+        lastSyncText = date.toLocaleString('zh-CN', { 
+          month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' 
+        });
+      }
+      
+      return [
+        '<div class="github-sync-container">',
+          // Token 输入
+          '<div class="github-sync-section">',
+            '<label class="github-sync-label">GitHub Token</label>',
+            '<div class="github-sync-input-wrap">',
+              '<input type="password" id="github-token-input" class="github-sync-input" placeholder="ghp_xxxxxxxxxxxx" value="' + (isConfigured ? '********' : '') + '">',
+              '<button id="github-token-save" class="github-sync-btn-small">保存</button>',
+            '</div>',
+            '<div class="github-sync-hint">在 GitHub Settings → Developer settings → Personal access tokens 生成</div>',
+          '</div>',
+          
+          // 状态显示
+          '<div class="github-sync-status">',
+            '<div class="github-sync-status-item">',
+              '<span class="github-sync-status-label">状态</span>',
+              '<span class="github-sync-status-value ' + statusClass + '">' + statusText + '</span>',
+            '</div>',
+            '<div class="github-sync-status-item">',
+              '<span class="github-sync-status-label">上次同步</span>',
+              '<span class="github-sync-status-value">' + lastSyncText + '</span>',
+            '</div>',
+          '</div>',
+          
+          // 自动同步开关
+          '<div class="github-sync-toggle">',
+            '<label class="github-sync-toggle-label">',
+              '<input type="checkbox" id="github-sync-enabled" ' + (isEnabled ? 'checked' : '') + ' ' + (isConfigured ? '' : 'disabled') + '>',
+              '<span class="github-sync-toggle-text">自动同步（30秒防抖）</span>',
+            '</label>',
+          '</div>',
+          
+          // 操作按钮
+          '<div class="github-sync-actions">',
+            '<button id="github-sync-now" class="github-sync-btn" ' + (isConfigured ? '' : 'disabled') + '>立即同步</button>',
+            '<button id="github-clear-token" class="github-sync-btn danger" ' + (isConfigured ? '' : 'disabled') + '>清除 Token</button>',
+          '</div>',
+          
+          // 错误提示
+          status.lastError ? '<div class="github-sync-error">错误: ' + status.lastError + '</div>' : '',
+        '</div>'
+      ].join('');
+    },
+    
+    // 构建时间栏颜色选项
+    buildTimebarColorOptions: function() {
+      // 获当前选择的颜色方案
+      var currentColor = LifeGame.core.Storage.get('timebarColor') || 'gold';
+      
+      var colors = [
+        { id: 'gold', name: '金黄', icon: '🏆', desc: '游戏金币风', color: '#ffeb3b', bg: 'linear-gradient(135deg, #ffd700, #ffeb3b)' },
+        { id: 'cyan', name: '青蓝', icon: '❄️', desc: '科技冷静', color: '#22d3ee', bg: 'linear-gradient(135deg, #06b6d4, #22d3ee)' },
+        { id: 'orange', name: '橙红', icon: '🔥', desc: '活力激情', color: '#fb923c', bg: 'linear-gradient(135deg, #f97316, #fb923c)' },
+        { id: 'silver', name: '白银', icon: '🤍', desc: '简洁优雅', color: '#f8fafc', bg: 'linear-gradient(135deg, #cbd5e1, #f8fafc)' },
+        { id: 'purple', name: '粉紫', icon: '💜', desc: '赛博鹏克', color: '#e879f9', bg: 'linear-gradient(135deg, #a855f7, #e879f9)' },
+        { id: 'green', name: '绿色', icon: '🌿', desc: '复古护眼', color: '#4ade80', bg: 'linear-gradient(135deg, #22c55e, #4ade80)' }
+      ];
+      
+      return colors.map(function(item) {
+        var isActive = currentColor === item.id;
+        return '<button class="timebar-color-btn ' + (isActive ? 'active' : '') + '" data-color="' + item.id + '">' +
+          '<span class="timebar-color-preview" style="background: ' + item.bg + '"></span>' +
+          '<span class="timebar-color-info">' +
+            '<span class="timebar-color-name">' + item.icon + ' ' + item.name + '</span>' +
+            '<span class="timebar-color-desc">' + item.desc + '</span>' +
+          '</span>' +
+          (isActive ? '<span class="timebar-color-check">✓</span>' : '') +
+        '</button>';
+      }).join('');
     },
     
     // 构建说明页面 HTML
@@ -408,6 +543,19 @@
           return;
         }
         
+        // 时间栏颜色选择
+        var colorBtn = e.target.closest('.timebar-color-btn');
+        if (colorBtn) {
+          var color = colorBtn.dataset.color;
+          LifeGame.core.Storage.set('timebarColor', color);
+          self.applyTimebarColor(color);
+          self.render(container);
+          if (LifeGame.showSuccess) {
+            LifeGame.showSuccess('已切换到' + colorBtn.querySelector('.timebar-color-name').textContent);
+          }
+          return;
+        }
+        
         // 导出数据
         if (e.target.closest('#export-data-btn')) {
           self.exportData();
@@ -423,6 +571,30 @@
         // 清除数据
         if (e.target.closest('#clear-data-btn')) {
           self.clearAllData();
+          return;
+        }
+        
+        // 保存 GitHub Token
+        if (e.target.closest('#github-token-save')) {
+          self.saveGitHubToken();
+          return;
+        }
+        
+        // 手动同步到 GitHub
+        if (e.target.closest('#github-sync-now')) {
+          self.syncToGitHub();
+          return;
+        }
+        
+        // 切换自动同步
+        if (e.target.closest('#github-sync-enabled')) {
+          self.toggleAutoSync();
+          return;
+        }
+        
+        // 清除 GitHub Token
+        if (e.target.closest('#github-clear-token')) {
+          self.clearGitHubToken();
           return;
         }
       };
@@ -535,6 +707,82 @@
       input.click();
     },
     
+    // 应用时间栏颜色
+    applyTimebarColor: function(color) {
+      color = color || LifeGame.core.Storage.get('timebarColor') || 'gold';
+      
+      // 定义各颜色方案的 CSS 变量 - 时间颜色调亮，与日期一样明亮
+      var colorSchemes = {
+        gold: {
+          '--timebar-date': '#ffd700',
+          '--timebar-main': '#ffd700',  // 和日期一样的金黄色
+          '--timebar-stroke': '#b8860b',
+          '--timebar-badge-bg': 'rgba(251, 191, 36, 0.2)',
+          '--timebar-badge-bg2': 'rgba(245, 158, 11, 0.3)',
+          '--timebar-badge-border': 'rgba(251, 191, 36, 0.5)',
+          '--timebar-badge-color': '#fbbf24'
+        },
+        cyan: {
+          '--timebar-date': '#67e8f9',
+          '--timebar-main': '#67e8f9',  // 和日期一样的青色
+          '--timebar-stroke': '#0891b2',
+          '--timebar-badge-bg': 'rgba(6, 182, 212, 0.25)',
+          '--timebar-badge-bg2': 'rgba(59, 130, 246, 0.35)',
+          '--timebar-badge-border': 'rgba(103, 232, 249, 0.5)',
+          '--timebar-badge-color': '#67e8f9'
+        },
+        orange: {
+          '--timebar-date': '#fdba74',
+          '--timebar-main': '#fdba74',  // 和日期一样的橙色
+          '--timebar-stroke': '#c2410c',
+          '--timebar-badge-bg': 'rgba(251, 146, 60, 0.25)',
+          '--timebar-badge-bg2': 'rgba(239, 68, 68, 0.35)',
+          '--timebar-badge-border': 'rgba(253, 186, 116, 0.5)',
+          '--timebar-badge-color': '#fdba74'
+        },
+        silver: {
+          '--timebar-date': '#cbd5e1',
+          '--timebar-main': '#cbd5e1',  // 和日期一样的白色
+          '--timebar-stroke': '#64748b',
+          '--timebar-badge-bg': 'rgba(148, 163, 184, 0.2)',
+          '--timebar-badge-bg2': 'rgba(203, 213, 225, 0.25)',
+          '--timebar-badge-border': 'rgba(203, 213, 225, 0.4)',
+          '--timebar-badge-color': '#e2e8f0'
+        },
+        purple: {
+          '--timebar-date': '#f0abfc',
+          '--timebar-main': '#f0abfc',  // 和日期一样的粉紫色
+          '--timebar-stroke': '#a21caf',
+          '--timebar-badge-bg': 'rgba(168, 85, 247, 0.25)',
+          '--timebar-badge-bg2': 'rgba(236, 72, 153, 0.35)',
+          '--timebar-badge-border': 'rgba(240, 171, 252, 0.5)',
+          '--timebar-badge-color': '#f0abfc'
+        },
+        green: {
+          '--timebar-date': '#86efac',
+          '--timebar-main': '#86efac',  // 和日期一样的绿色
+          '--timebar-stroke': '#166534',
+          '--timebar-badge-bg': 'rgba(34, 197, 94, 0.25)',
+          '--timebar-badge-bg2': 'rgba(74, 222, 128, 0.35)',
+          '--timebar-badge-border': 'rgba(134, 239, 172, 0.5)',
+          '--timebar-badge-color': '#86efac'
+        }
+      };
+      
+      var scheme = colorSchemes[color] || colorSchemes.gold;
+      var root = document.documentElement;
+      
+      // 应用 CSS 变量
+      for (var key in scheme) {
+        root.style.setProperty(key, scheme[key]);
+      }
+      
+      // 保存选择
+      LifeGame.core.Storage.set('timebarColor', color);
+      
+      LifeGame.log('[Settings] 时间栏颜色已切换为:', color);
+    },
+    
     // 清除所有数据
     clearAllData: function() {
       if (confirm('⚠️ 警告：确定要清除所有数据吗？此操作不可恢复！')) {
@@ -543,6 +791,130 @@
           alert('所有数据已清除！页面将刷新。');
           location.reload();
         }
+      }
+    },
+    
+    // 保存 GitHub Token
+    saveGitHubToken: function() {
+      var input = document.getElementById('github-token-input');
+      if (!input) return;
+      
+      var token = input.value.trim();
+      if (!token || token === '********') {
+        // 如果没有输入或显示的是掩码，不做任何操作
+        return;
+      }
+      
+      // 验证 Token 格式
+      if (!token.match(/^ghp_[a-zA-Z0-9]{36}$/)) {
+        if (LifeGame.showError) {
+          LifeGame.showError('Token 格式不正确，请以 ghp_ 开头');
+        } else {
+          alert('Token 格式不正确，请以 ghp_ 开头');
+        }
+        return;
+      }
+      
+      // 保存 Token
+      localStorage.setItem('lg_github_token', token);
+      
+      // 更新 GitHub 同步模块状态
+      var sync = LifeGame.getModule('github-sync');
+      if (sync) {
+        sync._saveStatus();
+      }
+      
+      // 重新渲染以更新状态显示
+      var container = document.getElementById('settings-container');
+      if (container) {
+        this.render(container);
+      }
+      
+      if (LifeGame.showSuccess) {
+        LifeGame.showSuccess('GitHub Token 已保存');
+      }
+    },
+    
+    // 清除 GitHub Token
+    clearGitHubToken: function() {
+      if (!confirm('确定要清除 GitHub Token 吗？这将停止云端同步。')) {
+        return;
+      }
+      
+      localStorage.removeItem('lg_github_token');
+      
+      // 重新渲染以更新状态显示
+      var container = document.getElementById('settings-container');
+      if (container) {
+        this.render(container);
+      }
+      
+      if (LifeGame.showInfo) {
+        LifeGame.showInfo('GitHub Token 已清除');
+      }
+    },
+    
+    // 手动同步到 GitHub
+    syncToGitHub: function() {
+      var sync = LifeGame.getModule('github-sync');
+      if (!sync) {
+        if (LifeGame.showError) {
+          LifeGame.showError('GitHub 同步功能未加载');
+        }
+        return;
+      }
+      
+      var self = this;
+      var btn = document.getElementById('github-sync-now');
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = '同步中...';
+      }
+      
+      // 立即同步
+      sync.sync().then(function(result) {
+        // 重新渲染以更新状态
+        var container = document.getElementById('settings-container');
+        if (container) {
+          self.render(container);
+        }
+        
+        if (result && result.success) {
+          if (LifeGame.showSuccess) {
+            LifeGame.showSuccess('同步成功！');
+          }
+        } else if (result && result.skipped) {
+          // 被跳过的同步不显示错误
+          if (LifeGame.showInfo) {
+            var reason = result.reason === 'not_configured' ? '未配置 Token' :
+                         result.reason === 'disabled' ? '自动同步已禁用' :
+                         result.reason === 'in_progress' ? '同步进行中' : '已跳过';
+            LifeGame.showInfo('同步' + reason);
+          }
+        } else {
+          if (LifeGame.showError) {
+            LifeGame.showError('同步失败: ' + (result && result.error ? result.error : '未知错误'));
+          }
+        }
+      });
+    },
+    
+    // 切换自动同步
+    toggleAutoSync: function() {
+      var checkbox = document.getElementById('github-sync-enabled');
+      if (!checkbox) return;
+      
+      var enabled = checkbox.checked;
+      
+      var sync = LifeGame.getModule('github-sync');
+      if (sync && sync.setEnabled) {
+        sync.setEnabled(enabled);
+      } else {
+        localStorage.setItem('githubSyncEnabled', enabled ? 'true' : 'false');
+      }
+      
+      if (LifeGame.showSuccess) {
+        LifeGame.showSuccess(enabled ? '自动同步已开启' : '自动同步已关闭');
       }
     }
   };

@@ -1628,18 +1628,61 @@
       var wasDone = task.done;
       task.done = !task.done;
       
+      // 计算经验值变化
+      var expMap = { 'SSS': 10000000, 'SS': 1000000, 'S': 100000, 'A': 10000, 'B': 1000, 'C': 100, 'D': 10, 'E': 5, 'F': 1 };
+      var expChange = expMap[task.diff] || 1;
+      
       // 如果是今日任务或收集箱的完成操作，显示完成提示后执行动画
       if ((task.period === 'today' || task.period === 'inbox') && task.done) {
         // 先显示任务完成提示，用户点击确定后再执行动画
         alert('🎉 任务完成！');
         this.animateTaskCompletion(task);
+        
+        // 添加撤销功能
+        var self = this;
+        if (LifeGame.addUndoable) {
+          LifeGame.addUndoable(
+            'complete',
+            '已完成任务「' + (task.n || '无标题') + '」',
+            function(data) {
+              // 撤销完成：标记为未完成
+              var t = self.data.find(function(item) { return item.id === data.taskId; });
+              if (t) {
+                t.done = false;
+                t.completedAt = null;
+                self.saveAndEmit(t);
+                self.debouncedRender();
+              }
+            },
+            { taskId: task.id, expChange: expChange }
+          );
+        }
         return;
       }
       
+      // 如果是取消完成，也添加撤销
+      if (!task.done && wasDone && (task.period === 'today' || task.period === 'inbox')) {
+        var self = this;
+        if (LifeGame.addUndoable) {
+          LifeGame.addUndoable(
+            'uncomplete',
+            '已取消完成任务「' + (task.n || '无标题') + '」',
+            function(data) {
+              // 撤销取消完成：重新标记为完成
+              var t = self.data.find(function(item) { return item.id === data.taskId; });
+              if (t) {
+                t.done = true;
+                t.completedAt = new Date().toISOString();
+                self.saveAndEmit(t);
+                self.debouncedRender();
+              }
+            },
+            { taskId: task.id, expChange: expChange }
+          );
+        }
+      }
+      
       if (task.done) {
-        var expMap = { 'SSS': 10000000, 'SS': 1000000, 'S': 100000, 'A': 10000, 'B': 1000, 'C': 100, 'D': 10, 'E': 5, 'F': 1 };
-        var expChange = expMap[task.diff] || 1;
-        
         LifeGame.emit('task:completed', { 
           task: task,
           name: task.n,
@@ -1878,9 +1921,27 @@
       var idx = this.data.findIndex(function(t) { return t.id === taskId; });
       if (idx > -1) {
         var deleted = this.data.splice(idx, 1)[0];
+        var deletedIndex = idx; // 保存索引以便撤销时恢复位置
         LifeGame.core.Storage.set('tasks', this.data);
         LifeGame.emit('task:deleted', { task: deleted });
         this.debouncedRender();
+        
+        // 添加撤销功能
+        var self = this;
+        if (LifeGame.addUndoable) {
+          LifeGame.addUndoable(
+            'delete',
+            '已删除任务「' + (deleted.n || '无标题') + '」',
+            function(data) {
+              // 撤销删除：恢复任务
+              self.data.splice(data.index, 0, data.task);
+              LifeGame.core.Storage.set('tasks', self.data);
+              LifeGame.emit('task:restored', { task: data.task });
+              self.debouncedRender();
+            },
+            { task: deleted, index: deletedIndex }
+          );
+        }
       }
     },
     

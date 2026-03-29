@@ -40,6 +40,13 @@
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(this.data));
         LifeGame.emit('storage:changed', this.data);
+        
+        // 触发 GitHub 同步（30秒防抖）
+        var syncModule = LifeGame.getModule('github-sync');
+        if (syncModule && syncModule.debouncedSync) {
+          syncModule.debouncedSync();
+        }
+        
         return true;
       } catch (e) {
         LifeGame.error('[Storage] 保存失败:', e);

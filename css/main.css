@@ -117,12 +117,13 @@ body {
 .time-date {
   font-size: 13px;
   font-weight: 600;
-  color: #ffd700;
+  color: var(--timebar-date, #ffd700);
   letter-spacing: 0.5px;
   text-shadow: 
     0 0 5px rgba(255, 215, 0, 0.8),
     0 0 10px rgba(255, 215, 0, 0.5),
     0 1px 3px rgba(0, 0, 0, 0.8);
+  transition: color 0.3s ease;
 }
 
 .time-center {
@@ -134,40 +135,38 @@ body {
   font-family: 'Press Start 2P', monospace;
   font-size: 26px;
   font-weight: bold;
-  color: #ffeb3b;
+  color: var(--timebar-main, #ffeb3b);
   text-shadow: 
-    2px 2px 0px #b8860b,
-    -1px -1px 0px #b8860b,
-    1px -1px 0px #b8860b,
-    -1px 1px 0px #b8860b,
-    1px 1px 0px #b8860b,
-    0 0 10px rgba(255, 235, 59, 1),
-    0 0 20px rgba(255, 235, 59, 0.9),
-    0 0 40px rgba(255, 235, 59, 0.6),
-    0 0 60px rgba(255, 235, 59, 0.4);
+    0 0 5px var(--timebar-main, #ffeb3b),
+    0 0 10px var(--timebar-main, #ffeb3b),
+    0 0 20px var(--timebar-main, #ffeb3b),
+    0 0 40px var(--timebar-main, #ffeb3b),
+    0 0 80px var(--timebar-main, #ffeb3b);
   letter-spacing: 3px;
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  -webkit-text-stroke: 1px #b8860b;
+  transition: all 0.3s ease;
 }
 
 .time-h,
 .time-m {
-  color: #ffd700;
+  color: var(--timebar-date, #ffd700);
   text-shadow: 
     0 0 5px rgba(255, 215, 0, 0.8),
     0 0 10px rgba(255, 215, 0, 0.5),
     0 1px 3px rgba(0, 0, 0, 0.8);
+  transition: color 0.3s ease;
 }
 
 .time-colon {
   animation: time-blink 1s step-end infinite;
   opacity: 1;
-  color: #ffd700;
+  color: var(--timebar-date, #ffd700);
   text-shadow: 
     0 0 5px rgba(255, 215, 0, 0.8),
     0 0 10px rgba(255, 215, 0, 0.5);
+  transition: color 0.3s ease;
 }
 
 @keyframes time-blink {
@@ -196,19 +195,20 @@ body {
   gap: 6px;
   padding: 6px 14px;
   background: linear-gradient(135deg, 
-    rgba(251, 191, 36, 0.2) 0%, 
-    rgba(245, 158, 11, 0.3) 100%);
-  border: 1px solid rgba(251, 191, 36, 0.5);
+    var(--timebar-badge-bg, rgba(251, 191, 36, 0.2)) 0%, 
+    var(--timebar-badge-bg2, rgba(245, 158, 11, 0.3)) 100%);
+  border: 1px solid var(--timebar-badge-border, rgba(251, 191, 36, 0.5));
   border-radius: 4px;
   font-family: 'Press Start 2P', monospace;
   font-size: 10px;
-  color: #fbbf24;
-  text-shadow: 0 0 8px rgba(251, 191, 36, 0.5);
+  color: var(--timebar-badge-color, #fbbf24);
+  text-shadow: 0 0 8px var(--timebar-badge-border, rgba(251, 191, 36, 0.5));
   box-shadow: 
-    0 0 10px rgba(251, 191, 36, 0.2),
+    0 0 10px var(--timebar-badge-border, rgba(251, 191, 36, 0.2)),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
   position: relative;
   overflow: hidden;
+  transition: all 0.3s ease;
 }
 
 .day-badge::before {
