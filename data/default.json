@@ -1,0 +1,91 @@
+{
+  "v": "1.2.0",
+  "primaryTab": "surface",
+  "secondaryTab": {
+    "surface": "task",
+    "inner": "me",
+    "offline": "rest"
+  },
+  "tertiaryFilter": {
+    "today": "all",
+    "long": "all"
+  },
+  "tasks": [],
+  "forbids": [],
+  "history": [],
+  "attrs": {
+    "hp": 0,
+    "str": 0,
+    "int": 0,
+    "agi": 0,
+    "free": 0
+  },
+  "actions": {
+    "hp": [
+      { "id": "a-hp-1", "n": "洗漱", "type": "hp" },
+      { "id": "a-hp-2", "n": "家务", "type": "hp" },
+      { "id": "a-hp-3", "n": "做饭", "type": "hp" },
+      { "id": "a-hp-4", "n": "整理", "type": "hp" }
+    ],
+    "str": [
+      { "id": "a-str-1", "n": "健身", "type": "str" },
+      { "id": "a-str-2", "n": "跑步", "type": "str" },
+      { "id": "a-str-3", "n": "举重", "type": "str" },
+      { "id": "a-str-4", "n": "瑜伽", "type": "str" }
+    ],
+    "int": [
+      { "id": "a-int-1", "n": "读书", "type": "int" },
+      { "id": "a-int-2", "n": "写作", "type": "int" },
+      { "id": "a-int-3", "n": "冥想", "type": "int" },
+      { "id": "a-int-4", "n": "学习", "type": "int" }
+    ],
+    "agi": [
+      { "id": "a-agi-1", "n": "瑜伽", "type": "agi" },
+      { "id": "a-agi-2", "n": "跳绳", "type": "agi" },
+      { "id": "a-agi-3", "n": "球类运动", "type": "agi" },
+      { "id": "a-agi-4", "n": "舞蹈", "type": "agi" }
+    ],
+    "free": [
+      { "id": "a-free-1", "n": "编程", "type": "free" },
+      { "id": "a-free-2", "n": "剪辑", "type": "free" },
+      { "id": "a-free-3", "n": "创作", "type": "free" },
+      { "id": "a-free-4", "n": "工作", "type": "free" }
+    ]
+  },
+  "currentAction": { "attr": null, "action": null },
+  "memories": [],
+  "memoryCategories": [
+    {
+      "id": "default",
+      "name": "记忆流水",
+      "items": [],
+      "subCategories": [
+        { "id": "sc1", "name": "📝 默认" }
+      ]
+    }
+  ],
+  "currentMemoryCategory": "default",
+  "currentMemorySubCategory": "sc1",
+  "tl": {},
+  "tlDate": "",
+  "tlCat": "free",
+  "tlSub": "work",
+  "tlSubs": {
+    "life": [{ "k": "wash", "l": "洗漱" }, { "k": "meal", "l": "饮食" }, { "k": "health", "l": "健康" }],
+    "power": [{ "k": "gym", "l": "健身" }, { "k": "run", "l": "跑步" }, { "k": "yoga", "l": "瑜伽" }],
+    "intel": [{ "k": "write", "l": "写作" }, { "k": "read", "l": "阅读" }, { "k": "study", "l": "学习" }],
+    "agile": [{ "k": "sport", "l": "运动" }, { "k": "stretch", "l": "拉伸" }],
+    "free": [{ "k": "work", "l": "工作" }, { "k": "create", "l": "创作" }, { "k": "plan", "l": "规划" }],
+    "rest": [{ "k": "sleep", "l": "睡眠" }, { "k": "relax", "l": "放松" }, { "k": "meditate", "l": "冥想" }]
+  },
+  "gameData": {
+    "diamonds": 0,
+    "gold": 0,
+    "equipment": [],
+    "inventory": []
+  },
+  "timerRecords": [],
+  "selectedActionId": null,
+  "showingOverview": false,
+  "lastCheckDate": ""
+}

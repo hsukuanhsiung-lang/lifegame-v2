@@ -1,0 +1,656 @@
+/* Profile Module Styles - 角色系统 */
+
+/* Page Header with Back Button */
+.page-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+  background: var(--card);
+  border-bottom: 1px solid var(--card-border);
+}
+
+.page-header.profile-page-header {
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.1), rgba(168, 85, 247, 0.1));
+}
+
+.page-back-btn {
+  padding: 8px 14px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.page-back-btn:hover {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+.page-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  flex: 1;
+}
+
+.profile-container {
+  padding: 0;
+  min-height: 100vh;
+}
+
+/* 头部 */
+.profile-header {
+  text-align: center;
+  padding: 32px 20px;
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.1), rgba(168, 85, 247, 0.1));
+  border-bottom: 1px solid var(--card-border);
+}
+
+.profile-avatar-section {
+  margin-bottom: 16px;
+}
+
+.profile-avatar {
+  font-size: 72px;
+  line-height: 1;
+  margin-bottom: 8px;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.profile-soul-name {
+  font-size: 14px;
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.profile-name {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.profile-badges {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.profile-badge {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.profile-badge.level {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: var(--bg);
+}
+
+.profile-badge.affinity {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--affinity-color);
+  color: var(--affinity-color);
+}
+
+.profile-currency {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.currency-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: var(--card);
+  border-radius: 20px;
+  border: 1px solid var(--card-border);
+}
+
+.currency-icon {
+  font-size: 16px;
+}
+
+.currency-value {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.currency-item.diamonds {
+  border-color: rgba(56, 189, 248, 0.5);
+}
+
+.currency-item.diamonds .currency-value {
+  color: #38bdf8;
+}
+
+/* 标签页 */
+.profile-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--card-border);
+  background: var(--card);
+}
+
+.profile-tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border-bottom: 2px solid transparent;
+}
+
+.profile-tab:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.profile-tab.active {
+  border-bottom-color: var(--accent);
+  color: var(--accent);
+}
+
+.tab-icon {
+  font-size: 16px;
+}
+
+.tab-name {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* 内容区 */
+.profile-content {
+  padding: 16px;
+}
+
+.profile-card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--card-border);
+}
+
+.card-icon {
+  font-size: 18px;
+}
+
+.card-title {
+  flex: 1;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+/* 契合度卡片 */
+.affinity-card .affinity-level {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+}
+
+.affinity-progress {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.affinity-bar {
+  flex: 1;
+  height: 12px;
+  background: var(--bg2);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.affinity-fill {
+  height: 100%;
+  border-radius: 6px;
+  transition: width 0.5s ease;
+}
+
+.affinity-value {
+  font-size: 16px;
+  font-weight: 700;
+  min-width: 50px;
+  text-align: right;
+}
+
+.affinity-desc {
+  font-size: 13px;
+  color: var(--text2);
+  margin-bottom: 16px;
+  padding: 12px;
+  background: var(--bg2);
+  border-radius: 8px;
+}
+
+.affinity-history {
+  height: 40px;
+}
+
+.affinity-mini-chart {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 100%;
+  gap: 4px;
+}
+
+.mini-bar {
+  flex: 1;
+  background: var(--accent);
+  border-radius: 2px 2px 0 0;
+  min-height: 4px;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.mini-bar:hover {
+  opacity: 1;
+}
+
+.no-history {
+  font-size: 12px;
+  color: var(--text3);
+  text-align: center;
+  line-height: 40px;
+}
+
+/* 属性卡片 */
+.attributes-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.attribute-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  background: var(--bg2);
+  border-radius: 12px;
+  border: 1px solid var(--card-border);
+  position: relative;
+  overflow: hidden;
+}
+
+.attr-icon {
+  font-size: 24px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--card);
+  border-radius: 10px;
+}
+
+.attr-info {
+  flex: 1;
+}
+
+.attr-name {
+  font-size: 12px;
+  color: var(--text2);
+  margin-bottom: 2px;
+}
+
+.attr-value {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--attr-color);
+}
+
+.attr-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--card-border);
+}
+
+.attr-fill {
+  height: 100%;
+  transition: width 0.5s ease;
+}
+
+/* 效果卡片 */
+.effects-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.effect-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: var(--bg2);
+  border-radius: 10px;
+}
+
+.effect-name {
+  font-size: 13px;
+  color: var(--text2);
+}
+
+.effect-value {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* 外观标签 */
+.current-form-card {
+  text-align: center;
+  padding: 32px;
+}
+
+.current-form-display {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.form-big-icon {
+  font-size: 100px;
+  line-height: 1;
+  margin-bottom: 16px;
+}
+
+.form-big-name {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.form-big-desc {
+  font-size: 14px;
+  color: var(--text2);
+}
+
+.unlocked-forms-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.unlocked-form-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  background: var(--bg2);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 2px solid transparent;
+}
+
+.unlocked-form-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--accent);
+}
+
+.unlocked-form-item.current {
+  border-color: var(--accent);
+  background: rgba(var(--accent-rgb), 0.1);
+}
+
+.unlocked-form-item .form-icon {
+  font-size: 28px;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--card);
+  border-radius: 12px;
+}
+
+.unlocked-form-item .form-name {
+  flex: 1;
+}
+
+/* ==================== 契合度报告样式 ==================== */
+
+.today-change {
+  font-size: 12px;
+  font-weight: 500;
+  opacity: 0.8;
+}
+
+.affinity-bonus {
+  font-size: 13px;
+  color: var(--success);
+  margin-bottom: 12px;
+  padding: 8px 12px;
+  background: rgba(34, 197, 94, 0.1);
+  border-radius: 8px;
+  text-align: center;
+}
+
+/* 报告卡片 */
+.report-card {
+  margin-top: 16px;
+}
+
+.affinity-report-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.report-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  background: var(--bg2);
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+.report-time {
+  color: var(--text3);
+  font-size: 12px;
+  min-width: 45px;
+}
+
+.report-reason {
+  flex: 1;
+  color: var(--text);
+}
+
+.report-amount {
+  font-weight: 600;
+  min-width: 40px;
+  text-align: right;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.current-badge {
+  padding: 4px 10px;
+  background: var(--accent);
+  color: var(--bg);
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 10px;
+}
+
+.switch-badge {
+  padding: 4px 10px;
+  background: var(--card-border);
+  color: var(--text2);
+  font-size: 11px;
+  border-radius: 10px;
+}
+
+/* 进化标签 */
+.evolution-tree {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.evolution-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: var(--bg2);
+  border-radius: 16px;
+  border: 2px solid transparent;
+  transition: all 0.2s;
+}
+
+.evolution-item.unlocked {
+  border-color: var(--accent);
+}
+
+.evolution-item.can-unlock {
+  border-color: #22c55e;
+  cursor: pointer;
+}
+
+.evolution-item.can-unlock:hover {
+  background: rgba(34, 197, 94, 0.1);
+}
+
+.evolution-item.locked {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.evolution-icon {
+  font-size: 36px;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--card);
+  border-radius: 16px;
+}
+
+.evolution-info {
+  flex: 1;
+}
+
+.evolution-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.evolution-desc {
+  font-size: 12px;
+  color: var(--text2);
+  margin-bottom: 6px;
+}
+
+.evolution-effects {
+  font-size: 11px;
+  color: var(--accent);
+  padding: 4px 8px;
+  background: rgba(var(--accent-rgb), 0.1);
+  border-radius: 6px;
+  display: inline-block;
+}
+
+.evolution-cost {
+  text-align: right;
+}
+
+.unlocked-badge {
+  padding: 6px 12px;
+  background: var(--accent);
+  color: var(--bg);
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 10px;
+}
+
+.cost-badge {
+  padding: 6px 12px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.cost-badge.can {
+  background: #22c55e;
+  color: #fff;
+}
+
+.cost-badge.cannot {
+  background: var(--card-border);
+  color: var(--text3);
+}
+
+.evolution-hint {
+  text-align: center;
+  padding: 16px;
+  font-size: 12px;
+  color: var(--text2);
+}
+
+.evolution-hint p {
+  margin: 4px 0;
+}
+
+/* Responsive */
+@media (max-width: 380px) {
+  .attributes-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .profile-badges {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .currency-item {
+    padding: 6px 12px;
+  }
+}

@@ -1,0 +1,19 @@
+/* 魔法阵调试样式 - 取消注释可强制显示魔法阵 */
+
+/* 
+.world-card .magic-circle {
+  opacity: 1 !important;
+  border: 2px solid red !important;
+}
+*/
+
+/* 如果魔法阵看不到，尝试以下检查：
+1. 检查 .world-card 是否有 overflow: visible
+2. 检查魔法阵元素是否在DOM中存在
+3. 检查 z-index 层级
+4. 在浏览器控制台运行：
+   document.querySelectorAll('.magic-circle').forEach(el => {
+     el.style.opacity = '1';
+     el.style.border = '2px solid red';
+   });
+*/

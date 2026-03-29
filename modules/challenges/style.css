@@ -1,0 +1,1029 @@
+/* Challenges Module Styles */
+
+/* Page Header with Back Button */
+.page-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+  background: var(--card);
+  border-bottom: 1px solid var(--card-border);
+}
+
+.page-back-btn {
+  padding: 8px 14px;
+  background: var(--bg2);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.page-back-btn:hover {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+.page-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  flex: 1;
+}
+
+.header-diamonds {
+  font-size: 16px;
+  font-weight: 700;
+  color: #38bdf8;
+  padding: 6px 12px;
+  background: rgba(56, 189, 248, 0.1);
+  border-radius: 20px;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+.challenges-header {
+  padding: 0 16px 12px;
+  background: var(--card);
+  border-bottom: 1px solid var(--card-border);
+  margin-top: 0;
+}
+
+.challenges-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  margin-top: 0;
+}
+
+.challenges-title-row h2 {
+  font-size: 28px;
+  color: var(--theme-accent, var(--accent));
+  margin: 0;
+  text-shadow: 0 0 20px rgba(220, 38, 38, 0.3);
+}
+
+.filter-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.filter-btn {
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 14px;
+  text-align: center;
+}
+
+/* 颜色由 color-theme-manager.js 注入的全局样式控制 */
+
+.add-challenge-btn {
+  width: 100%;
+  padding: 10px;
+  margin-top: 8px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+/* 颜色和背景由 color-theme-manager.js 注入的全局样式控制 */
+
+/* ==================== 每日挑战进度条 ==================== */
+
+.daily-progress-header {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  padding: 0 4px;
+}
+
+.progress-title {
+  font-size: 14px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.progress-count {
+  font-size: 16px;
+  color: var(--theme-accent, var(--accent));
+  font-weight: 600;
+}
+
+.daily-progress-bar {
+  grid-column: 1 / -1;
+  height: 8px;
+  background: var(--bg-card);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 8px;
+  border: 1px solid var(--border-default);
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--theme-gradient, var(--accent-gradient));
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+/* ==================== 全勤提示 ==================== */
+
+.all-completed-banner {
+  grid-column: 1 / -1;
+  padding: 16px;
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(22, 163, 74, 0.1));
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  border-radius: 12px;
+  text-align: center;
+  color: #22c55e;
+  font-weight: 600;
+  font-size: 16px;
+  animation: pulseBanner 2s infinite;
+}
+
+@keyframes pulseBanner {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.3); }
+  50% { box-shadow: 0 0 20px 4px rgba(34, 197, 94, 0.1); }
+}
+
+/* ==================== 全勤动画 ==================== */
+
+.all-completed-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  animation: fadeIn 0.3s ease;
+}
+
+.all-completed-animation {
+  background: linear-gradient(135deg, #1e293b, #0f172a);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  border-radius: 24px;
+  padding: 40px;
+  text-align: center;
+  animation: celebrateIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes celebrateIn {
+  0% { transform: scale(0.5); opacity: 0; }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.celebration-icon {
+  font-size: 80px;
+  margin-bottom: 20px;
+  animation: bounce 0.6s ease infinite alternate;
+}
+
+@keyframes bounce {
+  from { transform: translateY(0); }
+  to { transform: translateY(-10px); }
+}
+
+.celebration-text {
+  font-size: 24px;
+  color: #22c55e;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.celebration-subtext {
+  font-size: 16px;
+  color: var(--text2);
+}
+
+/* ==================== 挑战卡片网格 ==================== */
+
+.challenges-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  padding: 16px;
+}
+
+.challenge-card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 16px;
+  cursor: grab;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.challenge-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-active);
+  box-shadow: var(--glow-default);
+}
+
+.challenge-card:active {
+  cursor: grabbing;
+}
+
+.challenge-card.completed {
+  background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+  border-color: #22c55e;
+  box-shadow: 0 2px 8px rgba(34, 197, 94, 0.2);
+}
+
+.challenge-card.completed .challenge-name {
+  color: #166534;
+}
+
+.challenge-card.completed .challenge-target {
+  color: #15803d;
+}
+
+.challenge-card.completed .challenge-time {
+  color: #166534;
+}
+
+.challenge-card.completed .challenge-bind {
+  color: #166534;
+}
+
+.challenge-card.completed .challenge-chk {
+  background: #22c55e;
+  border-color: #22c55e;
+  color: white;
+}
+
+/* 深色主题下的已完成卡片样式 */
+[data-theme="night"] .challenge-card.completed,
+[data-theme="midnight"] .challenge-card.completed {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.2) 0%, rgba(34, 197, 94, 0.1) 100%);
+  border-color: #22c55e;
+}
+
+[data-theme="night"] .challenge-card.completed .challenge-name,
+[data-theme="midnight"] .challenge-card.completed .challenge-name {
+  color: #86efac;
+}
+
+[data-theme="night"] .challenge-card.completed .challenge-target,
+[data-theme="midnight"] .challenge-card.completed .challenge-target {
+  color: #4ade80;
+}
+
+[data-theme="night"] .challenge-card.completed .challenge-bind,
+[data-theme="midnight"] .challenge-card.completed .challenge-bind {
+  color: #86efac;
+}
+
+.challenge-icon {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.challenge-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4px;
+  line-height: 1.3;
+}
+
+.challenge-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.challenge-chk {
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--border-default);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  flex-shrink: 0;
+  transition: all 0.2s;
+  margin-top: 2px;
+}
+
+.challenge-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.challenge-target {
+  font-size: 12px;
+  color: var(--text2);
+  margin-bottom: 4px;
+  line-height: 1.4;
+}
+
+.challenge-bind {
+  font-size: 11px;
+  color: var(--text2);
+  opacity: 0.8;
+}
+
+.challenge-desc {
+  font-size: 12px;
+  color: var(--text2);
+  margin-bottom: 8px;
+}
+
+.challenge-time {
+  font-size: 11px;
+  color: var(--text2);
+  font-weight: 600;
+}
+
+.challenge-check {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--border-default);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.challenge-card.completed .challenge-check {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+
+.challenge-streak {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 2px 8px;
+  background: var(--accent-gradient);
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 700;
+  color: white;
+}
+
+/* ==================== 禁止事项列表（双列网格） ==================== */
+
+.forbids-header {
+  padding: 0 16px 12px;
+}
+
+.forbids-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  padding: 0 16px 16px;
+}
+
+.forbid-card {
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  cursor: grab;
+  transition: all 0.2s;
+}
+
+.forbid-card:hover {
+  border-color: var(--border-active);
+}
+
+.forbid-card:active {
+  cursor: grabbing;
+}
+
+.forbid-card.violated {
+  border-color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.forbid-card.completed {
+  background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+  border-color: #22c55e;
+}
+
+.forbid-card.completed .forbid-name {
+  color: #166534;
+}
+
+.forbid-card.completed .forbid-status-badge {
+  background: #22c55e;
+  color: white;
+}
+
+/* 深色主题下的禁止事项完成样式 */
+[data-theme="night"] .forbid-card.completed,
+[data-theme="midnight"] .forbid-card.completed {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.2) 0%, rgba(34, 197, 94, 0.1) 100%);
+  border-color: #22c55e;
+}
+
+[data-theme="night"] .forbid-card.completed .forbid-name,
+[data-theme="midnight"] .forbid-card.completed .forbid-name {
+  color: #86efac;
+}
+
+.forbid-card.protected {
+  border-color: var(--border-active);
+  background: var(--bg-tertiary);
+}
+
+.forbid-icon {
+  font-size: 28px;
+}
+
+.forbid-info {
+  flex: 1;
+}
+
+.forbid-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.forbid-desc {
+  font-size: 13px;
+  color: var(--text2);
+}
+
+.forbid-status {
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.forbid-status.safe {
+  background: rgba(34, 197, 94, 0.2);
+  color: #22c55e;
+}
+
+.forbid-status.violated {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+}
+
+.forbid-status.protected {
+  background: rgba(245, 158, 11, 0.2);
+  color: #f59e0b;
+}
+
+.forbid-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.forbid-btn {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.forbid-btn.violate {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+  border: 1px solid #ef4444;
+}
+
+.forbid-btn.violate:hover {
+  background: rgba(239, 68, 68, 0.3);
+}
+
+/* 禁止事项卡片内部布局 */
+.forbid-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.forbid-rank {
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  color: white;
+  flex-shrink: 0;
+}
+
+/* 禁止事项等级徽章颜色 */
+.forbid-rank.rank-f { background: linear-gradient(135deg, #e5e7eb, #d1d5db); color: #374151; }
+.forbid-rank.rank-e { background: linear-gradient(135deg, #94a3b8, #64748b); }
+.forbid-rank.rank-d { background: linear-gradient(135deg, #22c55e, #16a34a); }
+.forbid-rank.rank-c { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+.forbid-rank.rank-b { background: linear-gradient(135deg, #a855f7, #9333ea); }
+.forbid-rank.rank-a { background: linear-gradient(135deg, #f59e0b, #d97706); }
+.forbid-rank.rank-s { background: linear-gradient(135deg, #ef4444, #dc2626); box-shadow: 0 0 8px rgba(239, 68, 68, 0.5); }
+.forbid-rank.rank-ss { background: linear-gradient(135deg, #ef4444, #f59e0b); animation: rankGlow 2s ease-in-out infinite; }
+.forbid-rank.rank-sss { background: linear-gradient(135deg, #ffd700, #ff6b6b, #a855f7); animation: rankGlow 1.5s ease-in-out infinite; box-shadow: 0 0 12px rgba(255, 215, 0, 0.5); }
+
+@keyframes rankGlow {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.2); }
+}
+
+/* 禁止事项卡片等级背景色（加强版） */
+.forbid-card.rank-f { background: linear-gradient(135deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.1) 100%); border-left: 5px solid #d1d5db; }
+.forbid-card.rank-e { background: linear-gradient(135deg, rgba(148,163,184,0.3) 0%, rgba(148,163,184,0.15) 100%); border-left: 5px solid #94a3b8; }
+.forbid-card.rank-d { background: linear-gradient(135deg, rgba(34,197,94,0.3) 0%, rgba(34,197,94,0.15) 100%); border-left: 5px solid #22c55e; }
+.forbid-card.rank-c { background: linear-gradient(135deg, rgba(59,130,246,0.35) 0%, rgba(59,130,246,0.2) 100%); border-left: 5px solid #3b82f6; box-shadow: inset 0 0 15px rgba(59, 130, 246, 0.15); }
+.forbid-card.rank-b { background: linear-gradient(135deg, rgba(168,85,247,0.35) 0%, rgba(168,85,247,0.2) 100%); border-left: 5px solid #a855f7; box-shadow: inset 0 0 15px rgba(168, 85, 247, 0.15); }
+.forbid-card.rank-a { background: linear-gradient(135deg, rgba(245,158,11,0.35) 0%, rgba(245,158,11,0.2) 100%); border-left: 5px solid #f59e0b; box-shadow: inset 0 0 15px rgba(245, 158, 11, 0.15); }
+.forbid-card.rank-s { background: linear-gradient(135deg, rgba(239,68,68,0.4) 0%, rgba(239,68,68,0.25) 100%); border-left: 5px solid #ef4444; box-shadow: inset 0 0 20px rgba(239, 68, 68, 0.2); }
+.forbid-card.rank-ss { background: linear-gradient(135deg, rgba(239,68,68,0.35) 0%, rgba(245,158,11,0.25) 100%); border-left: 5px solid transparent; border-image: linear-gradient(180deg, #ef4444, #f59e0b) 1; box-shadow: inset 0 0 20px rgba(239, 68, 68, 0.15); }
+.forbid-card.rank-sss { background: linear-gradient(135deg, rgba(255,215,0,0.4) 0%, rgba(255,107,107,0.3) 50%, rgba(168,85,247,0.35) 100%); border-left: 5px solid transparent; border-image: linear-gradient(180deg, #ffd700, #ff6b6b, #a855f7) 1; box-shadow: inset 0 0 25px rgba(255, 215, 0, 0.25); animation: forbidSssGlow 2s ease-in-out infinite; }
+
+@keyframes forbidSssGlow {
+  0%, 100% { box-shadow: inset 0 0 20px rgba(255, 215, 0, 0.25); }
+  50% { box-shadow: inset 0 0 35px rgba(255, 107, 107, 0.35); }
+}
+
+.forbid-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.forbid-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.forbid-status-badge {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.forbid-status-badge.completed {
+  background: rgba(34, 197, 94, 0.2);
+  color: #22c55e;
+}
+
+.forbid-status-badge.violated {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+}
+
+.forbid-stats {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--text2);
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--card-border);
+}
+
+.forbid-actions {
+  display: flex;
+}
+
+.forbid-actions .forbid-btn {
+  flex: 1;
+  padding: 8px;
+  font-size: 12px;
+}
+
+.forbid-btn.protect {
+  background: rgba(245, 158, 11, 0.2);
+  color: #f59e0b;
+  border: 1px solid #f59e0b;
+}
+
+.forbid-btn.protect:hover {
+  background: rgba(245, 158, 11, 0.3);
+}
+
+/* 违规模态框 */
+.violate-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 20px;
+}
+
+.violate-modal {
+  background: var(--card);
+  border: 1px solid #ef4444;
+  border-radius: 16px;
+  padding: 24px;
+  width: 100%;
+  max-width: 360px;
+}
+
+.violate-modal h3 {
+  color: #ef4444;
+  margin-bottom: 8px;
+}
+
+.violate-modal p {
+  color: var(--text2);
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+
+.violate-modal textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text);
+  font-size: 14px;
+  margin-bottom: 16px;
+  resize: vertical;
+  min-height: 80px;
+}
+
+.violate-modal textarea:focus {
+  outline: none;
+  border-color: #ef4444;
+}
+
+.violate-modal-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.violate-modal-btn {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.violate-modal-btn.confirm {
+  background: #ef4444;
+  color: white;
+}
+
+.violate-modal-btn.confirm:hover {
+  background: #dc2626;
+}
+
+.violate-modal-btn.cancel {
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  color: var(--text2);
+}
+
+.violate-modal-btn.cancel:hover {
+  background: var(--bg-tertiary);
+  color: var(--text);
+}
+
+/* Drag Sort Styles for Challenges */
+.challenge-card[draggable="true"],
+.forbid-card[draggable="true"] {
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.challenge-card[draggable="true"]:active,
+.forbid-card[draggable="true"]:active {
+  cursor: grabbing;
+}
+
+.challenge-card.dragging,
+.forbid-card.dragging {
+  opacity: 0.6;
+  transform: scale(1.02) rotate(2deg);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+}
+
+.challenges-grid .drag-placeholder,
+.forbids-list .drag-placeholder {
+  background: rgba(220, 38, 38, 0.1) !important;
+  border: 2px dashed var(--theme-accent, var(--accent)) !important;
+  border-radius: 12px !important;
+  box-shadow: inset 0 0 20px rgba(220, 38, 38, 0.1);
+  animation: placeholderPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes placeholderPulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 0.9; }
+}
+
+.is-dragging .challenge-card:not(.dragging),
+.is-dragging .forbid-card:not(.dragging) {
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.challenge-card.drag-over,
+.forbid-card.drag-over {
+  transform: scale(1.02);
+  border-color: var(--theme-accent, var(--accent));
+  box-shadow: 0 0 0 2px var(--theme-accent, var(--accent)), 0 4px 16px rgba(220, 38, 38, 0.3);
+}
+
+/* 拖拽时的整体容器效果 */
+.is-dragging .challenges-grid,
+.is-dragging .forbids-list {
+  background: rgba(220, 38, 38, 0.02);
+}
+
+/* Responsive - 双列布局在所有屏幕尺寸下保持 */
+@media (max-width: 380px) {
+  .challenges-grid,
+  .forbids-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==================== 添加每日挑战表单 ==================== */
+
+.challenge-form-page {
+  padding: 16px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.challenge-form-header {
+  text-align: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--card-border);
+}
+
+.challenge-form-header h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 8px 0;
+}
+
+.form-hint {
+  font-size: 13px;
+  color: var(--text2);
+  opacity: 0.8;
+}
+
+.challenge-form-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.form-group input,
+.form-group select {
+  padding: 12px 14px;
+  background: var(--bg2);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  color: var(--text);
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.1);
+}
+
+.field-hint {
+  font-size: 12px;
+  color: var(--text2);
+  opacity: 0.7;
+}
+
+.challenge-form-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  padding-top: 16px;
+  border-top: 1px solid var(--card-border);
+}
+
+.challenge-form-actions .cancel-btn,
+.challenge-form-actions .save-btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.challenge-form-actions .cancel-btn {
+  background: var(--bg2);
+  color: var(--text);
+  border: 1px solid var(--card-border);
+}
+
+.challenge-form-actions .cancel-btn:hover {
+  background: var(--bg-hover);
+}
+
+.challenge-form-actions .save-btn {
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+}
+
+.challenge-form-actions .save-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(34, 197, 94, 0.4);
+}
+
+
+/* ==================== 每日挑战等级颜色系统 ==================== */
+
+/* 基础卡片样式 */
+.challenge-card {
+  position: relative;
+  background: rgba(30, 41, 59, 0.6);
+  border: 2px solid transparent;
+  border-radius: 12px;
+  padding: 16px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+/* 等级边框效果 */
+.challenge-card-border {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 12px;
+  pointer-events: none;
+  opacity: 0.6;
+  transition: all 0.3s ease;
+}
+
+.challenge-card:hover .challenge-card-border {
+  opacity: 1;
+}
+
+/* F级 - 初心 - 灰色系 */
+.challenge-level-f {
+  background: linear-gradient(135deg, rgba(107, 114, 128, 0.25) 0%, rgba(75, 85, 99, 0.15) 100%);
+  border-color: #6b7280;
+  box-shadow: inset 0 0 15px rgba(107, 114, 128, 0.1);
+}
+
+/* E级 - 学徒 - 棕色系 */
+.challenge-level-e {
+  background: linear-gradient(135deg, rgba(139, 115, 85, 0.3) 0%, rgba(120, 53, 15, 0.2) 100%);
+  border-color: #8b7355;
+  box-shadow: inset 0 0 15px rgba(139, 115, 85, 0.15);
+}
+
+/* D级 - 熟练 - 蓝色系 */
+.challenge-level-d {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.3) 0%, rgba(30, 58, 138, 0.2) 100%);
+  border-color: #3b82f6;
+  box-shadow: inset 0 0 15px rgba(59, 130, 246, 0.2), 0 0 15px rgba(59, 130, 246, 0.2);
+}
+
+/* C级 - 进阶 - 绿色系 */
+.challenge-level-c {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.3) 0%, rgba(20, 83, 45, 0.2) 100%);
+  border-color: #22c55e;
+  box-shadow: inset 0 0 15px rgba(34, 197, 94, 0.2), 0 0 15px rgba(34, 197, 94, 0.2);
+}
+
+/* B级 - 专家 - 紫色系 */
+.challenge-level-b {
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.3) 0%, rgba(88, 28, 135, 0.2) 100%);
+  border-color: #a855f7;
+  box-shadow: inset 0 0 20px rgba(168, 85, 247, 0.2), 0 0 20px rgba(168, 85, 247, 0.3);
+}
+
+/* A级 - 大师 - 橙色系 */
+.challenge-level-a {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.3) 0%, rgba(154, 52, 18, 0.2) 100%);
+  border-color: #f59e0b;
+  box-shadow: inset 0 0 20px rgba(245, 158, 11, 0.2), 0 0 20px rgba(245, 158, 11, 0.3);
+}
+
+/* S级 - 史诗 - 红色系 */
+.challenge-level-s {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.35) 0%, rgba(185, 28, 28, 0.25) 100%);
+  border-color: #ef4444;
+  box-shadow: inset 0 0 25px rgba(239, 68, 68, 0.25), 0 0 25px rgba(239, 68, 68, 0.4);
+  animation: challenge-s-glow 2s ease-in-out infinite;
+}
+
+/* SS级 - 传说 - 红紫渐变 */
+.challenge-level-ss {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.3) 0%, rgba(168, 85, 247, 0.25) 50%, rgba(239, 68, 68, 0.2) 100%);
+  border: 2px solid transparent;
+  border-image: linear-gradient(90deg, #ef4444, #a855f7) 1;
+  box-shadow: inset 0 0 25px rgba(239, 68, 68, 0.25), 0 0 25px rgba(239, 68, 68, 0.4);
+  animation: challenge-ss-glow 3s ease-in-out infinite;
+}
+
+/* SSS级 - 神话 - 三色渐变 */
+.challenge-level-sss {
+  background: linear-gradient(135deg, rgba(236, 72, 153, 0.35) 0%, rgba(139, 92, 246, 0.3) 50%, rgba(59, 130, 246, 0.25) 100%);
+  border: 2px solid transparent;
+  border-image: linear-gradient(90deg, #ec4899, #8b5cf6, #3b82f6) 1;
+  box-shadow: inset 0 0 30px rgba(236, 72, 153, 0.3), 0 0 30px rgba(236, 72, 153, 0.5);
+  animation: challenge-sss-glow 2s ease-in-out infinite;
+}
+
+@keyframes challenge-s-glow {
+  0%, 100% { box-shadow: inset 0 0 25px rgba(239, 68, 68, 0.25), 0 0 25px rgba(239, 68, 68, 0.4); }
+  50% { box-shadow: inset 0 0 35px rgba(239, 68, 68, 0.35), 0 0 35px rgba(239, 68, 68, 0.6); }
+}
+
+@keyframes challenge-ss-glow {
+  0%, 100% { box-shadow: inset 0 0 25px rgba(239, 68, 68, 0.25), 0 0 25px rgba(239, 68, 68, 0.4); }
+  50% { box-shadow: inset 0 0 40px rgba(168, 85, 247, 0.35), 0 0 40px rgba(168, 85, 247, 0.5); }
+}
+
+@keyframes challenge-sss-glow {
+  0%, 100% { box-shadow: inset 0 0 30px rgba(236, 72, 153, 0.3), 0 0 30px rgba(236, 72, 153, 0.5); }
+  50% { box-shadow: inset 0 0 50px rgba(139, 92, 246, 0.4), 0 0 50px rgba(139, 92, 246, 0.6); }
+}
+
+/* 完成状态的挑战卡片 */
+.challenge-card.completed {
+  opacity: 0.6;
+  filter: grayscale(0.5);
+}
+
+.challenge-card.completed .challenge-name {
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+

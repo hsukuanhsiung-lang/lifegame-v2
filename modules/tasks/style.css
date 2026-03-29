@@ -1,0 +1,2272 @@
+/* Tasks Module Styles */
+
+/* Page Header with Back Button */
+.page-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+  background: var(--card);
+  border-bottom: 1px solid var(--card-border);
+}
+
+.page-back-btn {
+  padding: 8px 14px;
+  background: var(--bg2);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.page-back-btn:hover {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+.page-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  flex: 1;
+}
+
+.tasks-header {
+  padding: 0 16px 12px;
+  background: var(--card);
+  border-bottom: 1px solid var(--card-border);
+  margin-top: 0;
+}
+
+/* Main Tabs (今日/长期/收集箱) - 贴紧顶部 */
+.main-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 8px;
+  margin-top: 0;
+}
+
+.main-tab {
+  padding: 10px 8px;
+  background: var(--bg2);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  color: var(--text2);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.main-tab:hover {
+  background: var(--bg-hover);
+  color: var(--text);
+}
+
+.main-tab.active {
+  background: var(--accent);
+  color: var(--bg);
+  border-color: var(--accent);
+}
+
+/* Sub Tabs (全部/主线/支线/添加) - 与主标签区分 */
+.type-tabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  padding: 4px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 20px;
+  border: 1px dashed var(--card-border);
+  margin-bottom: 8px;
+}
+
+.type-btn {
+  padding: 5px 14px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.type-btn:hover {
+  background: #1e293b;
+  color: #f1f5f9;
+  border-color: #334155;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.type-btn.active {
+  background: linear-gradient(135deg, rgba(167, 139, 250, 0.15), rgba(139, 92, 246, 0.1));
+  color: #c4b5fd;
+  border: 1px solid rgba(167, 139, 250, 0.5);
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(167, 139, 250, 0.15);
+}
+
+/* active 状态悬停时保持蓝色主题 */
+.type-btn.active:hover {
+  background: linear-gradient(135deg, rgba(167, 139, 250, 0.25), rgba(139, 92, 246, 0.2));
+  color: #ddd6fe;
+  border-color: rgba(167, 139, 250, 0.7);
+  box-shadow: 0 4px 12px rgba(167, 139, 250, 0.25);
+}
+
+.type-btn::before {
+  content: '•';
+  margin-right: 4px;
+  opacity: 0;
+  transition: all 0.2s;
+}
+
+.type-btn.active::before {
+  opacity: 1;
+  color: #a78bfa;
+}
+
+/* 添加按钮特殊样式 */
+.type-btn-add {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(34, 197, 94, 0.05));
+  color: #22c55e;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  font-weight: 600;
+}
+
+.type-btn-add:hover {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.25), rgba(34, 197, 94, 0.15));
+  color: #4ade80;
+  border-color: rgba(34, 197, 94, 0.5);
+  transform: translateY(-1px);
+}
+
+/* Task Grid - 双列瀑布流 */
+.task-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  padding: 16px;
+}
+
+/* 响应式：小屏单列 */
+@media (max-width: 640px) {
+  .task-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 12px;
+  }
+}
+
+/* 收集箱卡片在网格中的样式 */
+.task-grid .long-task-card.inbox-type {
+  min-height: 120px;
+}
+
+/* Task Card - 今日/子任务双列网格卡片 */
+.task-card-grid {
+  position: relative;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 12px;
+  padding-top: 28px; /* 为右上角徽章留出空间 */
+  cursor: grab;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 80px;
+}
+
+.task-card-grid:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-color: var(--accent);
+}
+
+.task-card-grid:active {
+  cursor: grabbing;
+}
+
+.task-card-grid .task-card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.task-card-grid .task-name-grid {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.3;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.task-card-grid .task-tags-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+/* 网格卡片复选框 */
+.task-card-grid .task-chk {
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--card-border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+  color: var(--text2);
+}
+
+.task-card-grid .task-chk:hover {
+  border-color: var(--accent);
+}
+
+.task-card-grid .task-chk.done {
+  background: #22c55e;
+  border-color: #22c55e;
+  color: white;
+}
+
+/* 网格卡片难度徽章 - 右上角等级徽章 */
+.diff-badge-grid {
+  position: absolute;
+  top: -2px;
+  right: 10px;
+  font-size: 13px;
+  font-weight: 800;
+  padding: 4px 12px;
+  border-radius: 0 0 10px 10px;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  min-width: 32px;
+  text-align: center;
+  z-index: 10;
+}
+
+.diff-badge-grid.diff-f { background: linear-gradient(135deg, #9ca3af, #6b7280); color: #fff; }
+.diff-badge-grid.diff-e { background: linear-gradient(135deg, #a0826d, #8b7355); }
+.diff-badge-grid.diff-d { background: linear-gradient(135deg, #60a5fa, #3b82f6); }
+.diff-badge-grid.diff-c { background: linear-gradient(135deg, #4ade80, #22c55e); }
+.diff-badge-grid.diff-b { background: linear-gradient(135deg, #c084fc, #a855f7); }
+.diff-badge-grid.diff-a { background: linear-gradient(135deg, #fbbf24, #f59e0b); }
+.diff-badge-grid.diff-s { background: linear-gradient(135deg, #f87171, #ef4444); box-shadow: 0 0 10px rgba(239, 68, 68, 0.5); }
+.diff-badge-grid.diff-ss { background: linear-gradient(135deg, #ef4444, #a855f7); box-shadow: 0 0 12px rgba(239, 68, 68, 0.5); }
+.diff-badge-grid.diff-sss { background: linear-gradient(135deg, #ef4444, #3b82f6, #facc15); box-shadow: 0 0 15px rgba(239, 68, 68, 0.5); animation: sssBadgeGlow 2s ease-in-out infinite; }
+
+@keyframes sssBadgeGlow {
+  0%, 100% { filter: hue-rotate(0deg); }
+  33% { filter: hue-rotate(30deg); }
+  66% { filter: hue-rotate(-30deg); }
+}
+
+/* 类型标签 */
+.task-type-tag {
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.task-type-tag.type-main {
+  background: rgba(167, 139, 250, 0.2);
+  color: #a78bfa;
+}
+
+.task-type-tag.type-side {
+  background: rgba(56, 189, 248, 0.2);
+  color: #38bdf8;
+}
+
+.task-type-tag.type-normal {
+  background: rgba(148, 163, 184, 0.2);
+  color: #94a3b8;
+}
+
+.task-type-tag.type-inbox {
+  background: rgba(56, 189, 248, 0.2);
+  color: #38bdf8;
+}
+
+/* 周期标签 */
+.task-period-tag {
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 500;
+  background: rgba(34, 197, 94, 0.2);
+  color: #22c55e;
+}
+
+.task-period-tag.period-sub {
+  background: rgba(245, 158, 11, 0.2);
+  color: #f59e0b;
+}
+
+.task-period-tag.period-inbox {
+  background: rgba(56, 189, 248, 0.2);
+  color: #38bdf8;
+}
+
+/* ==================== 收集箱卡片 - 霓虹赛博风格 ==================== */
+
+/* 收集箱网格卡片 - 霓虹赛博风格 */
+.inbox-card-grid {
+  position: relative;
+  background: rgba(20, 20, 35, 0.7);
+  border: 2px solid;
+  border-color: #3b82f6;
+  border-radius: 16px;
+  padding: 12px;
+  padding-top: 28px;
+  cursor: grab;
+  transition: all 0.3s ease;
+  box-shadow: 
+    0 4px 20px rgba(59, 130, 246, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 100px;
+  overflow: visible;
+}
+
+.inbox-card-grid:hover {
+  transform: translateY(-4px);
+  box-shadow: 
+    0 8px 30px rgba(59, 130, 246, 0.4),
+    0 0 20px rgba(59, 130, 246, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  border-color: #60a5fa;
+}
+
+.inbox-card-grid:active {
+  cursor: grabbing;
+}
+
+/* 收集箱类型特殊光效 */
+.inbox-card-grid::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(59, 130, 246, 0.8), 
+    rgba(96, 165, 250, 1), 
+    rgba(59, 130, 246, 0.8), 
+    transparent
+  );
+  border-radius: 16px 16px 0 0;
+  animation: inboxGlow 3s ease-in-out infinite;
+}
+
+@keyframes inboxGlow {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+.inbox-card-grid .task-card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.inbox-card-grid .task-name-grid {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  line-height: 1.3;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  text-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+}
+
+.inbox-card-grid .task-tags-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.inbox-card-grid .task-chk {
+  width: 22px;
+  height: 22px;
+  border: 2px solid rgba(59, 130, 246, 0.5);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+  color: #38bdf8;
+  background: rgba(59, 130, 246, 0.1);
+}
+
+.inbox-card-grid .task-chk:hover {
+  border-color: #60a5fa;
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+}
+
+.inbox-card-grid .task-chk.done {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  border-color: #22c55e;
+  color: white;
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.5);
+}
+
+/* 收集箱操作按钮 - 霓虹风格 */
+.inbox-actions-grid {
+  display: flex;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.inbox-btn-grid {
+  flex: 1;
+  padding: 6px 8px;
+  border: 1px solid rgba(59, 130, 246, 0.4);
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: rgba(59, 130, 246, 0.15);
+  color: #60a5fa;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.inbox-btn-grid:hover {
+  background: rgba(59, 130, 246, 0.3);
+  border-color: rgba(96, 165, 250, 0.8);
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+  transform: translateY(-2px);
+  color: #93c5fd;
+}
+
+.inbox-btn-grid:active {
+  transform: translateY(0);
+}
+
+/* ==================== 过期角标样式（左上角）==================== */
+
+/* 基础角标样式 - 左上角 */
+.overdue-badge-corner {
+  position: absolute;
+  top: -2px;
+  left: 10px;
+  padding: 3px 10px;
+  border-radius: 0 0 8px 8px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  z-index: 15;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  white-space: nowrap;
+  letter-spacing: 0.3px;
+}
+
+/* 过期1天 - 橙色警告 */
+.overdue-badge-corner.overdue-warning {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  border: 1px solid rgba(245, 158, 11, 0.5);
+  animation: overduePulseWarning 2s ease-in-out infinite;
+}
+
+@keyframes overduePulseWarning {
+  0%, 100% { 
+    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.4); 
+    transform: scale(1);
+  }
+  50% { 
+    box-shadow: 0 4px 15px rgba(245, 158, 11, 0.7); 
+    transform: scale(1.03);
+  }
+}
+
+/* 过期2天+ - 红色危险 */
+.overdue-badge-corner.overdue-danger {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  border: 1px solid rgba(239, 68, 68, 0.5);
+  animation: overduePulseDanger 1.5s ease-in-out infinite;
+}
+
+@keyframes overduePulseDanger {
+  0%, 100% { 
+    box-shadow: 0 2px 10px rgba(239, 68, 68, 0.5); 
+    transform: scale(1);
+  }
+  50% { 
+    box-shadow: 0 5px 20px rgba(239, 68, 68, 0.8); 
+    transform: scale(1.05);
+  }
+}
+
+/* 旧版过期标记（保留但降级为备用） */
+.overdue-badge {
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+  font-weight: 500;
+}
+
+/* Task Card - 长期/收集箱列表卡片 */
+.task-card {
+  position: relative;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 12px;
+  cursor: grab;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.task-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-color: var(--accent);
+}
+
+.task-card:active {
+  cursor: grabbing;
+}
+
+/* 完成状态 - 网格卡片 */
+.task-card-grid.done {
+  opacity: 0.7;
+  border-color: #22c55e;
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(34, 197, 94, 0.05) 100%);
+}
+
+.task-card-grid.done .task-name-grid {
+  text-decoration: line-through;
+  color: #22c55e;
+}
+
+.task-card-grid.done .task-type-tag,
+.task-card-grid.done .task-period-tag {
+  opacity: 0.6;
+}
+
+/* 完成状态 - 列表卡片 */
+.task-card.completed {
+  opacity: 0.7;
+  border-color: #22c55e;
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(34, 197, 94, 0.05) 100%);
+}
+
+.task-card.completed .task-title {
+  text-decoration: line-through;
+  color: #22c55e;
+}
+
+.task-card.completed .task-reward {
+  color: #22c55e;
+}
+
+.task-card.completed .complete-btn {
+  background: #22c55e;
+  color: white;
+}
+
+.task-card.locked {
+  opacity: 0.6;
+  border-color: #ef4444;
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(239, 68, 68, 0.05) 100%);
+}
+
+.task-card.locked .task-title {
+  color: #ef4444;
+}
+
+/* 过期状态标识类（用于JS判断，不再显示红色边框） */
+.task-card.is-overdue {
+  /* 不再使用红色边框，避免与等级颜色冲突 */
+}
+
+/* 旧版过期样式（保留但降级，供兼容性使用） */
+.task-card.overdue {
+  border: 3px solid #ef4444 !important;
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, rgba(239, 68, 68, 0.08) 100%);
+  box-shadow: 0 0 12px rgba(239, 68, 68, 0.4), inset 0 0 20px rgba(239, 68, 68, 0.05);
+  animation: overdue-pulse 2s ease-in-out infinite;
+}
+
+@keyframes overdue-pulse {
+  0%, 100% { box-shadow: 0 0 12px rgba(239, 68, 68, 0.4), inset 0 0 20px rgba(239, 68, 68, 0.05); }
+  50% { box-shadow: 0 0 20px rgba(239, 68, 68, 0.6), inset 0 0 30px rgba(239, 68, 68, 0.1); }
+}
+
+.task-card.overdue::before {
+  content: '已逾期';
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background: #ef4444;
+  color: white;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.task-type-icon {
+  font-size: 28px;
+  margin-bottom: 8px;
+}
+
+.task-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.3;
+  margin-bottom: 8px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.task-difficulty {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 11px;
+  color: #fbbf24;
+  margin-bottom: 8px;
+}
+
+.task-reward {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: #38bdf8;
+  font-weight: 600;
+}
+
+.task-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--card-border);
+}
+
+.complete-btn {
+  padding: 6px 12px;
+  background: var(--bg2);
+  border: 1px solid var(--card-border);
+  border-radius: 6px;
+  color: var(--text2);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.complete-btn:hover {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+/* Locked Message */
+.locked-msg {
+  font-size: 11px;
+  color: #ef4444;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text2);
+}
+
+.empty-icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+  opacity: 0.5;
+}
+
+.empty-text {
+  font-size: 14px;
+}
+
+/* Long-term Task Card Special */
+.task-card.longterm {
+  border-left: 3px solid #a78bfa;
+}
+
+.task-card.inbox {
+  border-left: 3px solid #38bdf8;
+}
+
+/* Due Date Badge */
+.due-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  padding: 4px 8px;
+  background: var(--bg2);
+  border-radius: 6px;
+  margin-top: 6px;
+  color: var(--text2);
+}
+
+.due-badge.overdue {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+}
+
+.due-badge.soon {
+  background: rgba(251, 191, 36, 0.15);
+  color: #fbbf24;
+}
+
+/* Checkbox Style */
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--card-border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.task-checkbox:hover {
+  border-color: var(--accent);
+}
+
+.task-checkbox.checked {
+  background: #22c55e;
+  border-color: #22c55e;
+}
+
+/* Task Detail Page */
+.task-detail-page {
+  padding: 20px;
+}
+
+.task-detail-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.task-detail-icon {
+  font-size: 48px;
+}
+
+.task-detail-title {
+  flex: 1;
+}
+
+.task-detail-title h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.task-detail-type {
+  font-size: 14px;
+  color: var(--text2);
+}
+
+.task-detail-section {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.section-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text2);
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+.section-content {
+  font-size: 15px;
+  color: var(--text);
+  line-height: 1.6;
+}
+
+.task-rewards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.reward-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  background: var(--bg2);
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.reward-item.positive {
+  color: #22c55e;
+}
+
+.reward-item.negative {
+  color: #ef4444;
+}
+
+.task-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.task-action-btn {
+  flex: 1;
+  padding: 14px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+}
+
+.task-action-btn.primary {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+.task-action-btn.primary:hover {
+  background: #b794f6;
+}
+
+.task-action-btn.secondary {
+  background: var(--bg2);
+  color: var(--text);
+  border: 1px solid var(--card-border);
+}
+
+.task-action-btn.secondary:hover {
+  background: var(--bg-hover);
+}
+
+.task-action-btn.danger {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.task-action-btn.danger:hover {
+  background: rgba(239, 68, 68, 0.2);
+}
+
+/* Form Styles */
+.form-page {
+  padding: 16px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+  width: 100%;
+  padding: 12px;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 15px;
+  transition: all 0.2s;
+  box-sizing: border-box;
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.1);
+}
+
+.form-textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.form-select {
+  cursor: pointer;
+}
+
+/* Emoji Picker */
+.emoji-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 12px;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.emoji-option {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.emoji-option:hover {
+  background: var(--bg2);
+}
+
+.emoji-option.selected {
+  background: var(--accent);
+}
+
+/* Difficulty Selector */
+.difficulty-selector {
+  display: flex;
+  gap: 8px;
+}
+
+.difficulty-option {
+  flex: 1;
+  padding: 10px;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.difficulty-option:hover {
+  background: var(--bg2);
+}
+
+.difficulty-option.selected {
+  border-color: var(--accent);
+  background: rgba(167, 139, 250, 0.1);
+}
+
+.difficulty-option .stars {
+  color: #fbbf24;
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
+.difficulty-option .label {
+  font-size: 12px;
+  color: var(--text2);
+}
+
+/* Form Actions */
+.form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 32px;
+  position: sticky;
+  bottom: 20px;
+  background: var(--bg);
+  padding: 16px;
+  margin: 32px -16px -16px;
+  border-top: 1px solid var(--card-border);
+}
+
+.form-btn {
+  flex: 1;
+  padding: 14px 20px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+}
+
+.form-btn.primary {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+.form-btn.primary:hover {
+  background: #b794f6;
+}
+
+.form-btn.secondary {
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid var(--card-border);
+}
+
+.form-btn.secondary:hover {
+  background: var(--bg2);
+}
+
+.form-btn.danger {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.form-btn.danger:hover {
+  background: rgba(239, 68, 68, 0.2);
+}
+
+/* Form Help Text */
+.form-help {
+  font-size: 12px;
+  color: var(--text2);
+  margin-top: 4px;
+}
+
+/* Repeat Options */
+.repeat-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.repeat-option {
+  padding: 8px 12px;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--text2);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.repeat-option:hover {
+  background: var(--bg2);
+}
+
+.repeat-option.selected {
+  border-color: var(--accent);
+  background: rgba(167, 139, 250, 0.1);
+  color: var(--text);
+}
+
+/* Task List Container */
+.tasks-list {
+  padding: 0 0 80px 0;
+}
+
+/* Tooltip */
+.task-tooltip {
+  position: fixed;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 12px;
+  max-width: 280px;
+  z-index: 1000;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  display: none;
+  pointer-events: none;
+}
+
+.task-tooltip.visible {
+  display: block;
+}
+
+.tooltip-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.tooltip-type {
+  font-size: 11px;
+  color: var(--text2);
+  margin-bottom: 8px;
+}
+
+.tooltip-rewards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 11px;
+}
+
+.tooltip-reward {
+  padding: 2px 6px;
+  background: rgba(34, 197, 94, 0.1);
+  color: #22c55e;
+  border-radius: 4px;
+}
+
+.tooltip-reward.negative {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}
+
+.tooltip-overdue {
+  color: #ef4444;
+}
+
+.tooltip-desc {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--card-border);
+  font-size: 12px;
+  color: var(--text2);
+  line-height: 1.4;
+}
+
+/* Drag Sort Styles */
+.task-card[draggable="true"] {
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.task-card[draggable="true"]:active {
+  cursor: grabbing;
+}
+
+.task-card.dragging {
+  opacity: 0.6;
+  transform: scale(1.02) rotate(2deg);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+}
+
+.drag-placeholder {
+  background: rgba(167, 139, 250, 0.15) !important;
+  border: 2px dashed var(--accent, #a78bfa) !important;
+  border-radius: 12px !important;
+  box-shadow: inset 0 0 20px rgba(167, 139, 250, 0.1);
+  animation: placeholderPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes placeholderPulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 0.9; }
+}
+
+/* 拖拽样式 - 网格卡片 */
+.task-card-grid[draggable="true"] {
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.task-card-grid[draggable="true"]:active {
+  cursor: grabbing;
+}
+
+.task-card-grid.dragging {
+  opacity: 0.6;
+  transform: scale(1.02) rotate(2deg);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+}
+
+.task-card-grid.drag-over {
+  transform: scale(1.02);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent), 0 4px 16px rgba(167, 139, 250, 0.3);
+}
+
+/* 拖拽样式 - 列表卡片 */
+.is-dragging .task-card:not(.dragging) {
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.task-card.drag-over {
+  transform: scale(1.02);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent), 0 4px 16px rgba(167, 139, 250, 0.3);
+}
+
+/* 拖拽时的整体容器效果 */
+.is-dragging .task-grid {
+  background: rgba(167, 139, 250, 0.02);
+}
+
+/* Responsive - 双列布局在所有屏幕尺寸下保持 */
+@media (max-width: 380px) {
+  .task-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* 子任务列表折叠样式 */
+.subtasks {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  max-height: 1000px;
+  opacity: 1;
+}
+
+.subtasks.collapsed {
+  max-height: 0;
+  margin-top: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+
+/* 折叠/展开按钮 */
+.toggle-subtasks {
+  padding: 4px 10px;
+  background: var(--bg2);
+  border: 1px solid var(--card-border);
+  border-radius: 6px;
+  color: var(--text2);
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.toggle-subtasks:hover {
+  background: var(--accent);
+  color: var(--bg);
+  border-color: var(--accent);
+}
+
+/* 子任务统计信息 */
+.subtask-stats {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text2);
+}
+
+/* 子任务行 */
+.subtask-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  background: var(--bg2);
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.subtask-row:hover {
+  background: var(--bg-hover);
+}
+
+.subtask-row .subtask-chk {
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--card-border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+
+.subtask-row .subtask-chk.done {
+  background: #22c55e;
+  border-color: #22c55e;
+  color: white;
+}
+
+.subtask-row .subtask-name {
+  flex: 1;
+  color: var(--text);
+}
+
+.subtask-row .subtask-date {
+  font-size: 11px;
+  color: var(--text2);
+  background: var(--bg);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+/* ==================== 任务卡片9级颜色系统 - 最终版 ==================== */
+
+/* 基础任务等级颜色 - 整个卡片背景 */
+.task-level-f { 
+  background: linear-gradient(135deg, rgba(107, 114, 128, 0.25) 0%, rgba(75, 85, 99, 0.15) 100%) !important; 
+  border-left: 4px solid #6b7280 !important; 
+  box-shadow: inset 0 0 20px rgba(107, 114, 128, 0.1) !important;
+}
+
+.task-level-e { 
+  background: linear-gradient(135deg, rgba(139, 115, 85, 0.25) 0%, rgba(120, 53, 15, 0.15) 100%) !important; 
+  border-left: 4px solid #8b7355 !important; 
+  box-shadow: inset 0 0 20px rgba(139, 115, 85, 0.15) !important;
+}
+
+.task-level-d { 
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.25) 0%, rgba(30, 58, 138, 0.15) 100%) !important; 
+  border-left: 4px solid #3b82f6 !important; 
+  box-shadow: inset 0 0 20px rgba(59, 130, 246, 0.15), 0 0 15px rgba(59, 130, 246, 0.2) !important;
+}
+
+.task-level-c { 
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.25) 0%, rgba(20, 83, 45, 0.15) 100%) !important; 
+  border-left: 4px solid #22c55e !important; 
+  box-shadow: inset 0 0 20px rgba(34, 197, 94, 0.15), 0 0 15px rgba(34, 197, 94, 0.2) !important;
+}
+
+.task-level-b { 
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.25) 0%, rgba(88, 28, 135, 0.15) 100%) !important; 
+  border-left: 4px solid #a855f7 !important; 
+  box-shadow: inset 0 0 20px rgba(168, 85, 247, 0.15), 0 0 15px rgba(168, 85, 247, 0.2) !important;
+}
+
+.task-level-a { 
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.25) 0%, rgba(154, 52, 18, 0.15) 100%) !important; 
+  border-left: 4px solid #f59e0b !important; 
+  box-shadow: inset 0 0 20px rgba(245, 158, 11, 0.15), 0 0 15px rgba(245, 158, 11, 0.2) !important;
+}
+
+.task-level-s { 
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.3) 0%, rgba(185, 28, 28, 0.2) 100%) !important; 
+  border-left: 4px solid #ef4444 !important; 
+  box-shadow: inset 0 0 30px rgba(239, 68, 68, 0.2), 0 0 20px rgba(239, 68, 68, 0.3) !important;
+  animation: sGlow 2s ease-in-out infinite !important;
+}
+
+.task-level-ss { 
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.25) 0%, rgba(168, 85, 247, 0.2) 50%, rgba(239, 68, 68, 0.15) 100%) !important; 
+  border-left: 4px solid transparent !important; 
+  border-image: linear-gradient(180deg, #ef4444, #a855f7) 1 !important;
+  box-shadow: inset 0 0 30px rgba(239, 68, 68, 0.2), 0 0 25px rgba(239, 68, 68, 0.3) !important;
+  animation: ssGlow 3s ease-in-out infinite !important;
+}
+
+.task-level-sss { 
+  background: linear-gradient(135deg, rgba(236, 72, 153, 0.3) 0%, rgba(139, 92, 246, 0.25) 50%, rgba(59, 130, 246, 0.2) 100%) !important; 
+  border-left: 4px solid transparent !important; 
+  border-image: linear-gradient(180deg, #ec4899, #8b5cf6, #3b82f6) 1 !important;
+  box-shadow: inset 0 0 40px rgba(236, 72, 153, 0.25), 0 0 30px rgba(236, 72, 153, 0.35) !important;
+  animation: sssGlow 2s ease-in-out infinite !important;
+}
+
+/* S级脉冲动画 */
+@keyframes sGlow {
+  0%, 100% { box-shadow: inset 0 0 30px rgba(239, 68, 68, 0.2), 0 0 20px rgba(239, 68, 68, 0.3); }
+  50% { box-shadow: inset 0 0 40px rgba(239, 68, 68, 0.3), 0 0 35px rgba(239, 68, 68, 0.5); }
+}
+
+/* SS级色相旋转 */
+@keyframes ssGlow {
+  0%, 100% { box-shadow: inset 0 0 30px rgba(239, 68, 68, 0.2), 0 0 25px rgba(239, 68, 68, 0.3); filter: hue-rotate(0deg); }
+  50% { box-shadow: inset 0 0 45px rgba(168, 85, 247, 0.3), 0 0 40px rgba(168, 85, 247, 0.4); filter: hue-rotate(15deg); }
+}
+
+/* SSS级三色呼吸 */
+@keyframes sssGlow {
+  0%, 100% { box-shadow: inset 0 0 40px rgba(236, 72, 153, 0.25), 0 0 30px rgba(236, 72, 153, 0.35); filter: hue-rotate(0deg) brightness(1); }
+  33% { box-shadow: inset 0 0 50px rgba(139, 92, 246, 0.35), 0 0 45px rgba(139, 92, 246, 0.45); filter: hue-rotate(30deg) brightness(1.1); }
+  66% { box-shadow: inset 0 0 50px rgba(59, 130, 246, 0.35), 0 0 45px rgba(59, 130, 246, 0.45); filter: hue-rotate(60deg) brightness(1.1); }
+}
+
+/* 收集箱网格卡片等级颜色 */
+.inbox-card-grid.task-level-f { background: linear-gradient(135deg, rgba(107, 114, 128, 0.35) 0%, rgba(75, 85, 99, 0.2) 100%) !important; border: 2px solid #6b7280 !important; }
+.inbox-card-grid.task-level-e { background: linear-gradient(135deg, rgba(139, 115, 85, 0.4) 0%, rgba(120, 53, 15, 0.25) 100%) !important; border: 2px solid #8b7355 !important; }
+.inbox-card-grid.task-level-d { background: linear-gradient(135deg, rgba(59, 130, 246, 0.4) 0%, rgba(30, 58, 138, 0.25) 100%) !important; border: 2px solid #3b82f6 !important; box-shadow: inset 0 0 25px rgba(59, 130, 246, 0.2), 0 0 15px rgba(59, 130, 246, 0.3) !important; }
+.inbox-card-grid.task-level-c { background: linear-gradient(135deg, rgba(34, 197, 94, 0.4) 0%, rgba(20, 83, 45, 0.25) 100%) !important; border: 2px solid #22c55e !important; box-shadow: inset 0 0 25px rgba(34, 197, 94, 0.2), 0 0 15px rgba(34, 197, 94, 0.3) !important; }
+.inbox-card-grid.task-level-b { background: linear-gradient(135deg, rgba(168, 85, 247, 0.4) 0%, rgba(88, 28, 135, 0.25) 100%) !important; border: 2px solid #a855f7 !important; box-shadow: inset 0 0 25px rgba(168, 85, 247, 0.2), 0 0 15px rgba(168, 85, 247, 0.3) !important; }
+.inbox-card-grid.task-level-a { background: linear-gradient(135deg, rgba(245, 158, 11, 0.4) 0%, rgba(154, 52, 18, 0.25) 100%) !important; border: 2px solid #f59e0b !important; box-shadow: inset 0 0 25px rgba(245, 158, 11, 0.2), 0 0 15px rgba(245, 158, 11, 0.3) !important; }
+.inbox-card-grid.task-level-s { background: linear-gradient(135deg, rgba(239, 68, 68, 0.45) 0%, rgba(185, 28, 28, 0.3) 100%) !important; border: 2px solid #ef4444 !important; box-shadow: inset 0 0 30px rgba(239, 68, 68, 0.25), 0 0 20px rgba(239, 68, 68, 0.4) !important; animation: sGlow 2s ease-in-out infinite !important; }
+.inbox-card-grid.task-level-ss { background: linear-gradient(135deg, rgba(239, 68, 68, 0.4) 0%, rgba(168, 85, 247, 0.35) 50%, rgba(239, 68, 68, 0.3) 100%) !important; border: 2px solid transparent !important; border-image: linear-gradient(90deg, #ef4444, #a855f7) 1 !important; box-shadow: inset 0 0 30px rgba(239, 68, 68, 0.25), 0 0 25px rgba(239, 68, 68, 0.35) !important; animation: ssGlow 3s ease-in-out infinite !important; }
+.inbox-card-grid.task-level-sss { background: linear-gradient(135deg, rgba(236, 72, 153, 0.5) 0%, rgba(139, 92, 246, 0.45) 50%, rgba(59, 130, 246, 0.4) 100%) !important; border: 2px solid transparent !important; border-image: linear-gradient(90deg, #ec4899, #8b5cf6, #3b82f6) 1 !important; box-shadow: inset 0 0 40px rgba(236, 72, 153, 0.3), 0 0 30px rgba(236, 72, 153, 0.4) !important; animation: sssGlow 2s ease-in-out infinite !important; }
+
+/* ==================== 统一任务卡片样式 ==================== */
+.unified-task-card {
+  position: relative;
+  background: var(--card);
+  border: 2px solid var(--card-border);
+  border-radius: 12px;
+  padding: 12px;
+  cursor: grab;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 140px;
+  overflow: hidden;
+}
+
+.unified-task-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-color: var(--accent);
+}
+
+.unified-task-card:active {
+  cursor: grabbing;
+}
+
+/* 今日任务卡片 */
+.today-task-card {
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%);
+}
+
+/* 收集箱任务卡片 */
+.inbox-task-card {
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%);
+}
+
+/* 长期任务卡片 */
+.long-task-card {
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%);
+}
+
+/* 统一卡片等级颜色 */
+.unified-task-card.grade-f { border-color: #6b6b6b; box-shadow: inset 0 0 20px rgba(107, 114, 128, 0.1); }
+.unified-task-card.grade-e { border-color: #8b7355; box-shadow: inset 0 0 20px rgba(139, 115, 85, 0.15); }
+.unified-task-card.grade-d { border-color: #3b82f6; box-shadow: inset 0 0 20px rgba(59, 130, 246, 0.2), 0 0 10px rgba(59, 130, 246, 0.2); }
+.unified-task-card.grade-c { border-color: #22c55e; box-shadow: inset 0 0 20px rgba(34, 197, 94, 0.2), 0 0 10px rgba(34, 197, 94, 0.2); }
+.unified-task-card.grade-b { border-color: #a855f7; box-shadow: inset 0 0 20px rgba(168, 85, 247, 0.2), 0 0 10px rgba(168, 85, 247, 0.2); }
+.unified-task-card.grade-a { border-color: #f59e0b; box-shadow: inset 0 0 20px rgba(245, 158, 11, 0.2), 0 0 10px rgba(245, 158, 11, 0.2); }
+.unified-task-card.grade-s { border-color: #ef4444; box-shadow: inset 0 0 25px rgba(239, 68, 68, 0.25), 0 0 15px rgba(239, 68, 68, 0.3); animation: sGlow 2s ease-in-out infinite; }
+.unified-task-card.grade-ss { border-color: transparent; border-image: linear-gradient(90deg, #ef4444, #a855f7) 1; box-shadow: inset 0 0 25px rgba(239, 68, 68, 0.25), 0 0 15px rgba(239, 68, 68, 0.3); animation: ssGlow 3s ease-in-out infinite; }
+.unified-task-card.grade-sss { border-color: transparent; border-image: linear-gradient(90deg, #ec4899, #8b5cf6, #3b82f6) 1; box-shadow: inset 0 0 30px rgba(236, 72, 153, 0.3), 0 0 20px rgba(236, 72, 153, 0.35); animation: sssGlow 2s ease-in-out infinite; }
+
+/* 收集箱操作按钮行 */
+.inbox-actions-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.inbox-btn-card {
+  flex: 1;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.2) 0%, rgba(14, 165, 233, 0.3) 100%);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+.inbox-btn-card:hover {
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.3) 0%, rgba(14, 165, 233, 0.4) 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(56, 189, 248, 0.2);
+}
+
+.inbox-btn-card:active {
+  transform: translateY(0);
+}
+
+/* 收集箱底部样式 */
+.inbox-footer {
+  margin-bottom: 4px;
+}
+
+/* 周期标签样式 */
+.long-card-type-tag.today {
+  background: rgba(34, 197, 94, 0.2);
+  color: #22c55e;
+}
+
+.long-card-type-tag.inbox {
+  background: rgba(56, 189, 248, 0.2);
+  color: #38bdf8;
+}
+
+.long-card-type-tag.subtask {
+  background: rgba(245, 158, 11, 0.2);
+  color: #f59e0b;
+}
+
+/* 微信风格消息提醒徽章 */
+.tab-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  background: #ff4d4f;
+  border-radius: 9px;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  margin-left: 6px;
+  box-shadow: 0 1px 3px rgba(255, 77, 79, 0.3);
+  animation: badgePulse 2s ease-in-out infinite;
+}
+
+@keyframes badgePulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.main-tab.active .tab-badge {
+  background: #fff;
+  color: #ff4d4f;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.tab-text {
+  vertical-align: middle;
+}
+
+.tab-hint {
+  font-size: 11px;
+  opacity: 0.7;
+  margin-left: 4px;
+  font-weight: 400;
+}
+
+/* 表单标题样式 */
+.form-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0 0 16px 0;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--card-border);
+}
+
+
+/* ============================================
+   任务卡片等级背景色 - 整个卡片背景（9级颜色系统）
+   ============================================ */
+
+/* 网格卡片等级背景 - 完整外圈边框 */
+.task-card-grid.task-level-f { background: linear-gradient(135deg, rgba(107, 114, 128, 0.35) 0%, rgba(75, 85, 99, 0.2) 100%) !important; border: 2px solid #6b7280 !important; }
+.task-card-grid.task-level-e { background: linear-gradient(135deg, rgba(139, 115, 85, 0.4) 0%, rgba(120, 53, 15, 0.25) 100%) !important; border: 2px solid #8b7355 !important; }
+.task-card-grid.task-level-d { background: linear-gradient(135deg, rgba(59, 130, 246, 0.4) 0%, rgba(30, 58, 138, 0.25) 100%) !important; border: 2px solid #3b82f6 !important; box-shadow: inset 0 0 25px rgba(59, 130, 246, 0.2), 0 0 15px rgba(59, 130, 246, 0.3) !important; }
+.task-card-grid.task-level-c { background: linear-gradient(135deg, rgba(34, 197, 94, 0.4) 0%, rgba(20, 83, 45, 0.25) 100%) !important; border: 2px solid #22c55e !important; box-shadow: inset 0 0 25px rgba(34, 197, 94, 0.2), 0 0 15px rgba(34, 197, 94, 0.3) !important; }
+.task-card-grid.task-level-b { background: linear-gradient(135deg, rgba(168, 85, 247, 0.4) 0%, rgba(88, 28, 135, 0.25) 100%) !important; border: 2px solid #a855f7 !important; box-shadow: inset 0 0 25px rgba(168, 85, 247, 0.2), 0 0 15px rgba(168, 85, 247, 0.3) !important; }
+.task-card-grid.task-level-a { background: linear-gradient(135deg, rgba(245, 158, 11, 0.4) 0%, rgba(154, 52, 18, 0.25) 100%) !important; border: 2px solid #f59e0b !important; box-shadow: inset 0 0 25px rgba(245, 158, 11, 0.2), 0 0 15px rgba(245, 158, 11, 0.3) !important; }
+.task-card-grid.task-level-s { background: linear-gradient(135deg, rgba(239, 68, 68, 0.45) 0%, rgba(185, 28, 28, 0.3) 100%) !important; border: 2px solid #ef4444 !important; box-shadow: inset 0 0 25px rgba(239, 68, 68, 0.2), 0 0 20px rgba(239, 68, 68, 0.4) !important; }
+.task-card-grid.task-level-ss { background: linear-gradient(135deg, rgba(239, 68, 68, 0.35) 0%, rgba(168, 85, 247, 0.25) 50%, rgba(239, 68, 68, 0.2) 100%) !important; border: 2px solid transparent !important; border-image: linear-gradient(135deg, #ef4444, #a855f7) 1 !important; box-shadow: 0 0 20px rgba(239, 68, 68, 0.4) !important; }
+.task-card-grid.task-level-sss { background: linear-gradient(135deg, rgba(239, 68, 68, 0.3) 0%, rgba(59, 130, 246, 0.25) 30%, rgba(250, 204, 21, 0.2) 70%, rgba(239, 68, 68, 0.25) 100%) !important; border: 2px solid transparent !important; border-image: linear-gradient(135deg, #ef4444, #3b82f6, #facc15) 1 !important; box-shadow: 0 0 25px rgba(239, 68, 68, 0.5) !important; }
+
+/* 列表卡片等级背景 */
+.task-card.task-level-f { background: linear-gradient(135deg, rgba(107, 114, 128, 0.35) 0%, rgba(75, 85, 99, 0.2) 100%) !important; border-left: 6px solid #6b7280 !important; }
+.task-card.task-level-e { background: linear-gradient(135deg, rgba(139, 115, 85, 0.4) 0%, rgba(120, 53, 15, 0.25) 100%) !important; border-left: 6px solid #8b7355 !important; }
+.task-card.task-level-d { background: linear-gradient(135deg, rgba(59, 130, 246, 0.4) 0%, rgba(30, 58, 138, 0.25) 100%) !important; border-left: 6px solid #3b82f6 !important; box-shadow: inset 0 0 25px rgba(59, 130, 246, 0.2) !important; }
+.task-card.task-level-c { background: linear-gradient(135deg, rgba(34, 197, 94, 0.4) 0%, rgba(20, 83, 45, 0.25) 100%) !important; border-left: 6px solid #22c55e !important; box-shadow: inset 0 0 25px rgba(34, 197, 94, 0.2) !important; }
+.task-card.task-level-b { background: linear-gradient(135deg, rgba(168, 85, 247, 0.4) 0%, rgba(88, 28, 135, 0.25) 100%) !important; border-left: 6px solid #a855f7 !important; box-shadow: inset 0 0 25px rgba(168, 85, 247, 0.2) !important; }
+.task-card.task-level-a { background: linear-gradient(135deg, rgba(245, 158, 11, 0.4) 0%, rgba(154, 52, 18, 0.25) 100%) !important; border-left: 6px solid #f59e0b !important; box-shadow: inset 0 0 25px rgba(245, 158, 11, 0.2) !important; }
+.task-card.task-level-s { background: linear-gradient(135deg, rgba(239, 68, 68, 0.45) 0%, rgba(185, 28, 28, 0.3) 100%) !important; border-left: 6px solid #ef4444 !important; box-shadow: inset 0 0 25px rgba(239, 68, 68, 0.2) !important; }
+.task-card.task-level-ss { background: linear-gradient(135deg, rgba(239, 68, 68, 0.35) 0%, rgba(168, 85, 247, 0.25) 50%, rgba(239, 68, 68, 0.2) 100%) !important; border-left: 6px solid transparent !important; border-image: linear-gradient(180deg, #ef4444, #a855f7) 1 !important; }
+.task-card.task-level-sss { background: linear-gradient(135deg, rgba(236, 72, 153, 0.4) 0%, rgba(139, 92, 246, 0.3) 30%, rgba(168, 85, 247, 0.35) 70%, rgba(236, 72, 153, 0.25) 100%) !important; border-left: 6px solid transparent !important; border-image: linear-gradient(180deg, #ec4899, #8b5cf6, #3b82f6) 1 !important; }
+
+/* 长期任务卡片等级背景 */
+.long-card.task-level-f { background: linear-gradient(135deg, rgba(107, 114, 128, 0.3) 0%, rgba(75, 85, 99, 0.15) 100%) !important; }
+.long-card.task-level-e { background: linear-gradient(135deg, rgba(139, 115, 85, 0.3) 0%, rgba(120, 53, 15, 0.15) 100%) !important; }
+.long-card.task-level-d { background: linear-gradient(135deg, rgba(59, 130, 246, 0.3) 0%, rgba(30, 58, 138, 0.15) 100%) !important; }
+.long-card.task-level-c { background: linear-gradient(135deg, rgba(34, 197, 94, 0.3) 0%, rgba(20, 83, 45, 0.15) 100%) !important; }
+.long-card.task-level-b { background: linear-gradient(135deg, rgba(168, 85, 247, 0.3) 0%, rgba(88, 28, 135, 0.15) 100%) !important; }
+.long-card.task-level-a { background: linear-gradient(135deg, rgba(245, 158, 11, 0.3) 0%, rgba(154, 52, 18, 0.15) 100%) !important; }
+.long-card.task-level-s { background: linear-gradient(135deg, rgba(239, 68, 68, 0.35) 0%, rgba(185, 28, 28, 0.2) 100%) !important; }
+.long-card.task-level-ss { background: linear-gradient(135deg, rgba(239, 68, 68, 0.3) 0%, rgba(168, 85, 247, 0.2) 50%, rgba(239, 68, 68, 0.15) 100%) !important; }
+.long-card.task-level-sss { background: linear-gradient(135deg, rgba(236, 72, 153, 0.35) 0%, rgba(139, 92, 246, 0.25) 50%, rgba(59, 130, 246, 0.2) 100%) !important; }
+
+/* 等级徽章颜色 */
+.long-card.task-level-f .long-card-level { background: rgba(107, 114, 128, 0.3); color: #9ca3af; }
+.long-card.task-level-e .long-card-level { background: rgba(139, 115, 85, 0.3); color: #d4a574; }
+.long-card.task-level-d .long-card-level { background: rgba(59, 130, 246, 0.3); color: #60a5fa; }
+.long-card.task-level-c .long-card-level { background: rgba(34, 197, 94, 0.3); color: #4ade80; }
+.long-card.task-level-b .long-card-level { background: rgba(168, 85, 247, 0.3); color: #c084fc; }
+.long-card.task-level-a .long-card-level { background: rgba(245, 158, 11, 0.3); color: #fbbf24; }
+.long-card.task-level-s .long-card-level { background: rgba(239, 68, 68, 0.3); color: #ef4444; }
+.long-card.task-level-ss .long-card-level { background: linear-gradient(135deg, rgba(239, 68, 68, 0.3), rgba(168, 85, 247, 0.3)); color: #f472b6; }
+.long-card.task-level-sss .long-card-level { background: linear-gradient(135deg, rgba(236, 72, 153, 0.3), rgba(139, 92, 246, 0.3), rgba(59, 130, 246, 0.3)); color: #ec4899; }
+/* ==================== 长期任务卡片新设计 ==================== */
+
+/* 长期任务卡片容器 */
+.long-card {
+  padding: 16px !important;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+}
+
+/* 顶部横线 - 主线/支线标识 */
+.long-card-line {
+  height: 3px;
+  width: 100%;
+  background: linear-gradient(90deg, transparent, #94a3b8, transparent);
+  position: relative;
+  margin-bottom: 4px;
+}
+
+.long-card-line.main {
+  background: linear-gradient(90deg, transparent, #ef4444, #ef4444, transparent);
+}
+
+.long-card-line.side {
+  background: linear-gradient(90deg, transparent, #f59e0b, #f59e0b, transparent);
+}
+
+.long-card-line span {
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 0 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.long-card-line.main span {
+  background: #ef4444;
+  color: white;
+}
+
+.long-card-line.side span {
+  background: #f59e0b;
+  color: white;
+}
+
+/* 卡片头部 - 名称和等级 */
+.long-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.long-card-name {
+  flex: 1;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+/* 等级徽章 - 右上角纯字母 */
+.long-card-level {
+  font-size: 20px;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 6px;
+  flex-shrink: 0;
+  min-width: 36px;
+  text-align: center;
+  font-family: 'Press Start 2P', monospace;
+}
+
+/* 等级徽章颜色 */
+.long-card.task-level-f .long-card-level { background: rgba(107, 114, 128, 0.3); color: #9ca3af; }
+.long-card.task-level-e .long-card-level { background: rgba(139, 115, 85, 0.3); color: #d4a574; }
+.long-card.task-level-d .long-card-level { background: rgba(59, 130, 246, 0.3); color: #60a5fa; }
+.long-card.task-level-c .long-card-level { background: rgba(34, 197, 94, 0.3); color: #4ade80; }
+.long-card.task-level-b .long-card-level { background: rgba(168, 85, 247, 0.3); color: #c084fc; }
+.long-card.task-level-a .long-card-level { background: rgba(245, 158, 11, 0.3); color: #fbbf24; }
+.long-card.task-level-s .long-card-level { background: rgba(239, 68, 68, 0.3); color: #ef4444; }
+.long-card.task-level-ss .long-card-level { background: linear-gradient(135deg, rgba(239, 68, 68, 0.3), rgba(168, 85, 247, 0.3)); color: #f472b6; }
+.long-card.task-level-sss .long-card-level { background: linear-gradient(135deg, rgba(236, 72, 153, 0.3), rgba(139, 92, 246, 0.3), rgba(59, 130, 246, 0.3)); color: #ec4899; }
+
+/* 进度条容器 */
+.long-progress-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 4px;
+}
+
+/* 大进度条 */
+.long-progress-bar {
+  width: 80%;
+  height: 24px;
+  background: rgba(0,0,0,0.3);
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.long-progress-bar.completeable {
+  border-color: #fbbf24;
+  box-shadow: 0 0 10px rgba(251, 191, 36, 0.3), inset 0 0 10px rgba(251, 191, 36, 0.1);
+  animation: goldPulse 2s ease-in-out infinite;
+}
+
+@keyframes goldPulse {
+  0%, 100% { box-shadow: 0 0 10px rgba(251, 191, 36, 0.3), inset 0 0 10px rgba(251, 191, 36, 0.1); }
+  50% { box-shadow: 0 0 20px rgba(251, 191, 36, 0.6), inset 0 0 20px rgba(251, 191, 36, 0.2); }
+}
+
+/* 进度条填充 */
+.long-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6, #60a5fa);
+  border-radius: 8px;
+  transition: width 0.5s ease;
+}
+
+.long-progress-fill.completeable {
+  background: linear-gradient(90deg, #f59e0b, #fbbf24, #f59e0b);
+  background-size: 200% 100%;
+  animation: goldShine 2s linear infinite;
+}
+
+@keyframes goldShine {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+/* 进度条文字 - 内部居中 */
+.long-progress-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+  white-space: nowrap;
+  letter-spacing: 0.5px;
+}
+
+/* 完成按钮 */
+.long-complete-btn {
+  width: 100%;
+  padding: 10px 16px;
+  margin-top: 4px;
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  border: none;
+  border-radius: 8px;
+  color: #1f2937;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3);
+}
+
+.long-complete-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(251, 191, 36, 0.5);
+}
+
+.long-complete-btn:active {
+  transform: translateY(0);
+}
+
+
+/* ==================== 日期选择器样式 ==================== */
+
+/* 日期快速选择按钮容器 */
+.date-quick-btns {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+/* 日期快速选择按钮 */
+.date-quick-btn {
+  flex: 1;
+  padding: 8px 12px;
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  border-radius: 6px;
+  color: #38bdf8;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.date-quick-btn:hover {
+  background: rgba(56, 189, 248, 0.2);
+  border-color: rgba(56, 189, 248, 0.5);
+  transform: translateY(-1px);
+}
+
+.date-quick-btn.active {
+  background: rgba(56, 189, 248, 0.3);
+  border-color: #38bdf8;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+}
+
+/* 日期输入框 */
+#task-date {
+  width: 100%;
+  padding: 10px 12px;
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  border-radius: 6px;
+  color: #e2e8f0;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+#task-date:focus {
+  outline: none;
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+}
+
+/* 日期选择器提示文字 */
+.date-hint {
+  margin-top: 6px;
+  font-size: 11px;
+  color: #94a3b8;
+}
+
+/* 日期选择器下拉图标 */
+#task-date::-webkit-calendar-picker-indicator {
+  filter: invert(0.8);
+  cursor: pointer;
+}
+
+
+/* ==================== 任务日期标签样式 - 蓝色 ==================== */
+
+/* 长期任务卡片上的日期徽章 */
+.task-date-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  background: rgba(30, 58, 138, 0.9);
+  border: 2px solid #3b82f6;
+  border-radius: 12px;
+  font-size: 11px;
+  color: #60a5fa;
+  font-weight: 700;
+  margin-bottom: 8px;
+  width: fit-content;
+  box-shadow: 0 0 12px rgba(59, 130, 246, 0.6);
+}
+
+/* 网格卡片上的日期标签 */
+.task-date-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px 6px;
+  background: rgba(30, 58, 138, 0.9);
+  border: 1.5px solid #3b82f6;
+  border-radius: 4px;
+  font-size: 10px;
+  color: #60a5fa;
+  font-weight: 700;
+  box-shadow: 0 0 8px rgba(59, 130, 246, 0.5);
+}
+
+
+/* ==================== 关联对话框长期任务卡片 ==================== */
+
+.link-task-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 12px;
+}
+
+@media (max-width: 640px) {
+  .link-task-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+.link-long-card {
+  position: relative;
+  background: rgba(30, 30, 40, 0.8);
+  border-radius: 12px;
+  padding: 14px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  overflow: hidden;
+}
+
+.link-long-card-border {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 2px solid;
+  border-radius: 12px;
+  opacity: 0.6;
+  transition: all 0.25s ease;
+}
+
+.link-long-card:hover {
+  transform: translateY(-3px);
+}
+
+.link-long-card:hover .link-long-card-border {
+  opacity: 1;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.link-long-card-content {
+  position: relative;
+  z-index: 1;
+}
+
+.link-long-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.link-long-card-grade {
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 800;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.link-long-card-name {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.link-long-card-type {
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.link-long-card-type.main {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: #fff;
+}
+
+.link-long-card-type.side {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: #fff;
+}
+
+.link-long-card-progress {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.link-long-card-bar-bg {
+  flex: 1;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.link-long-card-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+.link-long-card-exp {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+
+/* ==================== 收集箱任务卡片（关联界面） ==================== */
+
+.link-section-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 16px 0 10px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.link-inbox-card {
+  position: relative;
+  background: rgba(30, 30, 40, 0.9);
+  border-radius: 14px;
+  padding: 16px;
+  border: 2px solid;
+  overflow: hidden;
+}
+
+.link-inbox-card-border {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  opacity: 0.8;
+}
+
+.link-inbox-card-content {
+  position: relative;
+  z-index: 1;
+  margin-left: 8px;
+}
+
+.link-inbox-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.link-inbox-card-grade {
+  padding: 4px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 800;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.link-inbox-card-name {
+  flex: 1;
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.link-inbox-card-type {
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.link-inbox-card-type.main {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: #fff;
+}
+
+.link-inbox-card-type.side {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: #fff;
+}
+
+.link-inbox-card-sub {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
+  margin-left: 4px;
+}
+
+/* 分隔线 */
+.link-or-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.4);
+  position: relative;
+}
+
+.link-or-divider::before,
+.link-or-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 0 12px;
+}
+
+/* 创建新任务按钮 */
+.link-create-new-btn {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(59, 130, 246, 0.1));
+  border: 2px dashed rgba(59, 130, 246, 0.5);
+  border-radius: 12px;
+  color: #60a5fa;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.link-create-new-btn:hover {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(59, 130, 246, 0.2));
+  border-color: #60a5fa;
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
+}
+
+/* 关联对话框头部 - 无返回按钮（使用NavController的返回按钮） */
+.link-dialog-header-no-back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 8px;
+}
+
+.link-dialog-header-no-back h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  margin: 0;
+}
+
+/* ==================== 任务完成动画 ==================== */
+
+/* 任务完成中的状态 */
+.task-completing {
+  animation: task-complete-pulse 1.2s ease-out;
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.4) 0%, rgba(22, 163, 74, 0.3) 100%) !important;
+  border-color: #22c55e !important;
+  box-shadow: 0 0 30px rgba(34, 197, 94, 0.5), inset 0 0 30px rgba(34, 197, 94, 0.2) !important;
+}
+
+/* 复选框打勾动画 */
+.task-completing .task-chk-square {
+  background: #22c55e !important;
+  border-color: #22c55e !important;
+  animation: check-bounce 0.3s ease-out;
+}
+
+.task-completing .task-chk-square::after {
+  content: '✓';
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* 任务隐藏动画 */
+.task-completed-hidden {
+  animation: task-hide-out 0.3s ease-out forwards;
+}
+
+/* 动画关键帧 */
+@keyframes task-complete-pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 rgba(34, 197, 94, 0);
+  }
+  30% {
+    transform: scale(1.02);
+    box-shadow: 0 0 40px rgba(34, 197, 94, 0.6);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 30px rgba(34, 197, 94, 0.5);
+  }
+}
+
+@keyframes check-bounce {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes task-hide-out {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+    max-height: 200px;
+    margin-bottom: 10px;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.9);
+    max-height: 0;
+    margin-bottom: 0;
+    padding: 0;
+  }
+}

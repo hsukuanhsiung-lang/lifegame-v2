@@ -1,0 +1,1040 @@
+/* ==================== 长期任务卡片 - 仿左侧设计 ==================== */
+
+/* 基础卡片样式 */
+.long-task-card {
+  position: relative;
+  padding: 12px;
+  padding-top: 28px; /* 为右上角徽章留出空间 */
+  border-radius: 16px;
+  background: rgba(20, 20, 30, 0.6);
+  border: 2px solid;
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 100px;
+  transition: all 0.3s ease;
+  overflow: visible; /* 允许徽章突出 */
+  cursor: grab;
+}
+
+/* Hover上浮效果 */
+.long-task-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* 拖拽时的样式 */
+.long-task-card:active {
+  cursor: grabbing;
+}
+
+/* ==================== 过期任务样式（左上角角标）==================== */
+
+/* 过期标识类（用于JS判断，不再修改边框） */
+.long-task-card.is-overdue {
+  /* 角标通过HTML元素添加，不使用伪元素 */
+}
+
+/* 兼容旧版overdue类 */
+.long-task-card.overdue {
+  /* 不再使用红色边框，避免与等级颜色冲突 */
+}
+
+/* 过期任务视觉反馈（降级为微红背景，保留等级边框） */
+.long-task-card.is-overdue,
+.long-task-card.overdue {
+  background: linear-gradient(135deg, rgba(20, 20, 30, 0.7) 0%, rgba(50, 20, 20, 0.5) 100%);
+}
+
+/* 过期任务名称微红 */
+.long-task-card.is-overdue .long-card-name,
+.long-task-card.is-overdue .long-card-name-compact,
+.long-task-card.overdue .long-card-name,
+.long-task-card.overdue .long-card-name-compact {
+  color: #fca5a5;
+}
+
+/* 过期任务描述微红 */
+.long-task-card.is-overdue .long-card-desc,
+.long-task-card.is-overdue .long-card-desc.compact,
+.long-task-card.overdue .long-card-desc,
+.long-task-card.overdue .long-card-desc.compact {
+  color: rgba(252, 165, 165, 0.7);
+}
+
+/* ==================== 过期角标位置适配 ==================== */
+
+/* 长期任务卡片中的角标位置 */
+.long-task-card .overdue-badge-corner {
+  top: -2px;
+  left: 10px;
+}
+
+/* 今日任务/收集箱卡片中的角标位置 */
+.task-card-grid .overdue-badge-corner,
+.inbox-card-grid .overdue-badge-corner {
+  top: -2px;
+  left: 8px;
+}
+
+/* 顶部行：图标 + 等级 */
+.long-card-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 4px;
+}
+
+/* 紧凑布局 - 图标、名称、标签在同一行 */
+.long-card-header-row.compact {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 6px;
+  padding-right: 50px; /* 为右边徽章留出空间 */
+}
+
+/* 右侧徽章容器 - 类型标签 + 等级徽章 */
+.long-card-right-badges {
+  position: absolute;
+  top: -2px;
+  right: 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  z-index: 10;
+}
+
+/* 等级和经验值包裹器 - 垂直排列 */
+.grade-exp-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 经验值徽章 - 在等级下方 */
+.long-card-exp-badge {
+  padding: 2px 6px;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 0 0 8px 8px;
+  font-size: 9px;
+  font-weight: 700;
+  color: #fbbf24;
+  border: 1px solid rgba(251, 191, 36, 0.3);
+  border-top: none;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+  white-space: nowrap;
+  letter-spacing: 0.3px;
+}
+
+/* 类型徽章 - 在等级徽章左边 */
+.long-card-type-badge {
+  padding: 4px 10px;
+  border-radius: 0 0 10px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  margin-top: 0;
+}
+
+/* 主线类型徽章 - 鲜红色 */
+.long-card-type-badge.main {
+  background: linear-gradient(135deg, #ff4444, #cc0000);
+  border: 1px solid rgba(255, 100, 100, 0.5);
+}
+
+/* 支线类型徽章 - 亮橙色 */
+.long-card-type-badge.side {
+  background: linear-gradient(135deg, #ff9500, #cc7700);
+  border: 1px solid rgba(255, 180, 100, 0.5);
+}
+
+/* 收集箱类型徽章 - 蓝色 */
+.long-card-type-badge.inbox {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+}
+
+/* 今日类型徽章 - 绿色 */
+.long-card-type-badge.today {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+}
+
+/* 子任务类型徽章 - 黄色 */
+.long-card-type-badge.subtask {
+  background: linear-gradient(135deg, #eab308, #ca8a04);
+}
+
+/* 标题包装器 - 包含名称和标签 */
+.long-card-title-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0; /* 允许文本截断 */
+}
+
+/* 任务名称行 - 包含名称和来源 */
+.long-card-name-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+/* 紧凑模式任务名称 */
+.long-card-name-compact {
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+/* 来源信息 */
+.long-card-from {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 400;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 标签容器 */
+.long-card-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+/* 紧凑模式描述 */
+.long-card-desc.compact {
+  font-size: 11px;
+  margin-top: 2px;
+}
+
+/* 图标 */
+.long-card-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  flex-shrink: 0;
+}
+
+/* 等级徽章 - 在右侧徽章容器内 */
+.long-card-grade {
+  padding: 4px 12px;
+  border-radius: 0 0 10px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 13px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-top: none;
+  color: #fff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  min-width: 32px;
+  position: relative;
+  top: -2px;
+}
+
+/* 类型标签 */
+.long-card-type-tag {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  width: fit-content;
+  line-height: 1.2;
+}
+
+.long-card-type-tag.main {
+  background: rgba(239, 68, 68, 0.3);
+  color: #fca5a5;
+  border: 1px solid rgba(239, 68, 68, 0.5);
+}
+
+.long-card-type-tag.side {
+  background: rgba(245, 158, 11, 0.3);
+  color: #fcd34d;
+  border: 1px solid rgba(245, 158, 11, 0.5);
+}
+
+/* 周期标签 - 在任务名称下方 */
+.long-card-period-tag {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 9px;
+  font-weight: 600;
+  width: fit-content;
+  line-height: 1.2;
+}
+
+.long-card-period-tag.today {
+  background: rgba(34, 197, 94, 0.2);
+  color: #22c55e;
+}
+
+.long-card-period-tag.inbox {
+  background: rgba(56, 189, 248, 0.2);
+  color: #38bdf8;
+}
+
+.long-card-period-tag.subtask {
+  background: rgba(245, 158, 11, 0.2);
+  color: #f59e0b;
+}
+
+/* 任务名称 */
+.long-card-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  line-height: 1.3;
+  margin-bottom: 2px;
+}
+
+/* 描述 */
+.long-card-desc {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.3;
+  margin-bottom: 6px;
+  flex: 1;
+}
+
+/* 进度条容器 */
+.long-card-progress-wrap {
+  margin-bottom: 6px;
+}
+
+/* 经验值信息 */
+.long-card-progress-info {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 2px;
+  font-size: 11px;
+  margin-bottom: 4px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.long-card-exp-current {
+  color: #22c55e;
+  font-weight: 600;
+}
+
+.long-card-exp-separator {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.long-card-exp-target {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.long-card-exp-percent {
+  color: rgba(255, 255, 255, 0.5);
+  margin-left: 4px;
+}
+
+/* 进度条 */
+.long-card-progress {
+  height: 3px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.long-card-progress-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.5s ease;
+}
+
+/* 底部信息 */
+.long-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+}
+
+.long-card-exp {
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 500;
+}
+
+.long-card-title {
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* 完成按钮 */
+.long-card-complete-btn {
+  width: 100%;
+  padding: 8px;
+  margin-top: 8px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+}
+
+.long-card-complete-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(34, 197, 94, 0.5);
+}
+
+/* ==================== 各等级颜色配置 ==================== */
+
+/* F级 - 初心 - 灰色 */
+.long-task-card.grade-f {
+  border-color: #6b6b6b;
+  box-shadow: 0 4px 20px rgba(107, 107, 107, 0.2);
+}
+.long-task-card.grade-f .long-card-progress-fill { background: #6b6b6b; }
+.long-task-card.grade-f .long-card-grade { 
+  background: linear-gradient(135deg, #9ca3af, #6b7280);
+  color: #fff;
+}
+
+/* E级 - 学徒 - 铜色 */
+.long-task-card.grade-e {
+  border-color: #cd7f32;
+  box-shadow: 0 4px 20px rgba(205, 127, 50, 0.2);
+}
+.long-task-card.grade-e .long-card-progress-fill { background: #cd7f32; }
+.long-task-card.grade-e .long-card-grade { 
+  background: linear-gradient(135deg, #a0826d, #8b7355);
+  color: #fff;
+}
+
+/* D级 - 熟练 - 蓝色 */
+.long-task-card.grade-d {
+  border-color: #3b82f6;
+  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.2);
+}
+.long-task-card.grade-d .long-card-progress-fill { background: #3b82f6; }
+.long-task-card.grade-d .long-card-grade { 
+  background: linear-gradient(135deg, #60a5fa, #3b82f6);
+  color: #fff;
+}
+
+/* C级 - 进阶 - 绿色 */
+.long-task-card.grade-c {
+  border-color: #22c55e;
+  box-shadow: 0 4px 20px rgba(34, 197, 94, 0.2);
+}
+.long-task-card.grade-c .long-card-progress-fill { background: #22c55e; }
+.long-task-card.grade-c .long-card-grade { 
+  background: linear-gradient(135deg, #4ade80, #22c55e);
+  color: #fff;
+}
+
+/* B级 - 专家 - 紫色 */
+.long-task-card.grade-b {
+  border-color: #a855f7;
+  box-shadow: 0 4px 20px rgba(168, 85, 247, 0.2);
+}
+.long-task-card.grade-b .long-card-progress-fill { background: #a855f7; }
+.long-task-card.grade-b .long-card-grade { 
+  background: linear-gradient(135deg, #c084fc, #a855f7);
+  color: #fff;
+}
+
+/* A级 - 大师 - 橙色 */
+.long-task-card.grade-a {
+  border-color: #f59e0b;
+  box-shadow: 0 4px 20px rgba(245, 158, 11, 0.2);
+}
+.long-task-card.grade-a .long-card-progress-fill { background: #f59e0b; }
+.long-task-card.grade-a .long-card-grade { 
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  color: #fff;
+}
+
+/* S级 - 史诗 - 红色 + 脉冲效果 */
+.long-task-card.grade-s {
+  border-color: #ef4444;
+  box-shadow: 0 4px 20px rgba(239, 68, 68, 0.3);
+  position: relative;
+}
+.long-task-card.grade-s::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 16px;
+  border: 2px solid #ef4444;
+  opacity: 0;
+  animation: sCardPulse 2s ease-out infinite;
+  pointer-events: none;
+}
+.long-task-card.grade-s .long-card-progress-fill { 
+  background: linear-gradient(90deg, #ef4444, #ff6b6b);
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+}
+.long-task-card.grade-s .long-card-grade { 
+  background: linear-gradient(135deg, #f87171, #ef4444);
+  color: #fff;
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+}
+
+@keyframes sCardPulse {
+  0% { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(1.05); opacity: 0; }
+}
+
+/* SS级 - 传说 - 红紫渐变 + 旋转效果 */
+.long-task-card.grade-ss {
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  position: relative;
+}
+.long-task-card.grade-ss::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 16px;
+  padding: 2px;
+  background: linear-gradient(45deg, #ef4444, #a855f7);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: ssBorderRotate 3s linear infinite;
+}
+.long-task-card.grade-ss::after {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 20px;
+  background: conic-gradient(from 0deg, #ef4444, #a855f7, #ec4899, #ef4444);
+  opacity: 0.2;
+  animation: ssRotate 4s linear infinite;
+  pointer-events: none;
+  z-index: -1;
+}
+.long-task-card.grade-ss .long-card-progress-fill { 
+  background: linear-gradient(90deg, #ef4444, #a855f7);
+}
+.long-task-card.grade-ss .long-card-grade { 
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.3), rgba(168, 85, 247, 0.3));
+  color: #f472b6;
+}
+
+@keyframes ssBorderRotate {
+  0% { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
+}
+@keyframes ssRotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* SSS级 - 神话 - 红蓝金三色 + 终极效果 */
+.long-task-card.grade-sss {
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  position: relative;
+  overflow: visible;
+}
+
+/* SSS级脉冲环 */
+.long-task-card.grade-sss .sss-pulse-ring {
+  position: absolute;
+  inset: -4px;
+  border-radius: 18px;
+  border: 2px solid transparent;
+  background: linear-gradient(45deg, #ef4444, #3b82f6, #facc15) border-box;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  animation: sssPulseRing 2s ease-out infinite;
+  pointer-events: none;
+}
+
+.long-task-card.grade-sss .sss-pulse-ring:nth-child(2) { animation-delay: 0.5s; }
+.long-task-card.grade-sss .sss-pulse-ring:nth-child(3) { animation-delay: 1s; }
+
+@keyframes sssPulseRing {
+  0% { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(1.15); opacity: 0; }
+}
+
+/* 三色旋转边框 */
+.long-task-card.grade-sss::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 16px;
+  padding: 2px;
+  background: conic-gradient(from 0deg, #ef4444, #3b82f6, #facc15, #ef4444);
+  animation: sssBorderRotate 2s linear infinite;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+/* 外层光晕 */
+.long-task-card.grade-sss::after {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border-radius: 22px;
+  background: conic-gradient(from 0deg, #ef4444, #3b82f6, #facc15, #ef4444);
+  opacity: 0.2;
+  filter: blur(8px);
+  animation: sssAuraRotate 3s linear infinite;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* 进度条四色流动 */
+.long-task-card.grade-sss .long-card-progress-fill { 
+  background: linear-gradient(90deg, #ef4444, #3b82f6, #facc15, #ef4444);
+  background-size: 300% 100%;
+  animation: sssProgressFlow 2s linear infinite;
+}
+
+/* 等级徽章 */
+.long-task-card.grade-sss .long-card-grade { 
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.3), rgba(59, 130, 246, 0.3), rgba(250, 204, 21, 0.3));
+  color: #fff;
+  text-shadow: 0 0 10px rgba(239, 68, 68, 0.8);
+  animation: sssBadgePulse 1s ease-in-out infinite;
+}
+
+@keyframes sssBorderRotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes sssAuraRotate {
+  0% { transform: rotate(0deg); opacity: 0.2; }
+  50% { opacity: 0.4; }
+  100% { transform: rotate(360deg); opacity: 0.2; }
+}
+
+@keyframes sssBadgePulse {
+  0%, 100% { 
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.5), 0 0 20px rgba(59, 130, 246, 0.3);
+    transform: scale(1);
+  }
+  33% {
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.7), 0 0 30px rgba(250, 204, 21, 0.4);
+    transform: scale(1.05);
+  }
+  66% { 
+    box-shadow: 0 0 20px rgba(250, 204, 21, 0.8), 0 0 40px rgba(239, 68, 68, 0.5);
+    transform: scale(1.1);
+  }
+}
+
+@keyframes sssProgressFlow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 300% 50%; }
+}
+
+/* 悬停效果 */
+.long-task-card.grade-sss:hover {
+  animation: sssLevitate 2s ease-in-out infinite;
+}
+
+@keyframes sssLevitate {
+  0%, 100% { transform: translateY(-4px) scale(1.01); }
+  50% { transform: translateY(-8px) scale(1.03); }
+}
+
+.long-task-card.grade-sss:hover::before {
+  animation-duration: 1s;
+}
+
+.long-task-card.grade-sss:hover::after {
+  animation-duration: 1.5s;
+  opacity: 0.4;
+}
+
+/* ==================== 收集箱卡片专用样式 ==================== */
+
+/* 收集箱卡片基础样式 */
+.long-task-card.inbox-type {
+  background: rgba(20, 20, 40, 0.7);
+  border: 2px solid;
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  position: relative;
+  overflow: visible;
+}
+
+/* 收集箱卡片等级颜色 - F级灰白 */
+.long-task-card.inbox-type.grade-f {
+  border-color: #9ca3af;
+  box-shadow: 0 4px 20px rgba(156, 163, 175, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+.long-task-card.inbox-type.grade-f::before {
+  background: linear-gradient(90deg, transparent, rgba(156, 163, 175, 0.8), rgba(209, 213, 219, 1), rgba(156, 163, 175, 0.8), transparent);
+}
+
+/* 收集箱卡片等级颜色 - E级铜色 */
+.long-task-card.inbox-type.grade-e {
+  border-color: #a0826d;
+  box-shadow: 0 4px 20px rgba(160, 130, 109, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+.long-task-card.inbox-type.grade-e::before {
+  background: linear-gradient(90deg, transparent, rgba(160, 130, 109, 0.8), rgba(205, 127, 50, 1), rgba(160, 130, 109, 0.8), transparent);
+}
+
+/* 收集箱卡片等级颜色 - D级蓝色 */
+.long-task-card.inbox-type.grade-d {
+  border-color: #60a5fa;
+  box-shadow: 0 4px 20px rgba(96, 165, 250, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+.long-task-card.inbox-type.grade-d::before {
+  background: linear-gradient(90deg, transparent, rgba(96, 165, 250, 0.8), rgba(59, 130, 246, 1), rgba(96, 165, 250, 0.8), transparent);
+}
+
+/* 收集箱卡片等级颜色 - C级绿色 */
+.long-task-card.inbox-type.grade-c {
+  border-color: #4ade80;
+  box-shadow: 0 4px 20px rgba(74, 222, 128, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+.long-task-card.inbox-type.grade-c::before {
+  background: linear-gradient(90deg, transparent, rgba(74, 222, 128, 0.8), rgba(34, 197, 94, 1), rgba(74, 222, 128, 0.8), transparent);
+}
+
+/* 收集箱卡片等级颜色 - B级紫色 */
+.long-task-card.inbox-type.grade-b {
+  border-color: #c084fc;
+  box-shadow: 0 4px 20px rgba(192, 132, 252, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+.long-task-card.inbox-type.grade-b::before {
+  background: linear-gradient(90deg, transparent, rgba(192, 132, 252, 0.8), rgba(168, 85, 247, 1), rgba(192, 132, 252, 0.8), transparent);
+}
+
+/* 收集箱卡片等级颜色 - A级橙色 */
+.long-task-card.inbox-type.grade-a {
+  border-color: #fbbf24;
+  box-shadow: 0 4px 20px rgba(251, 191, 36, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+.long-task-card.inbox-type.grade-a::before {
+  background: linear-gradient(90deg, transparent, rgba(251, 191, 36, 0.8), rgba(245, 158, 11, 1), rgba(251, 191, 36, 0.8), transparent);
+}
+
+/* 收集箱卡片等级颜色 - S级红色 */
+.long-task-card.inbox-type.grade-s {
+  border-color: #f87171;
+  box-shadow: 0 4px 20px rgba(248, 113, 113, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+.long-task-card.inbox-type.grade-s::before {
+  background: linear-gradient(90deg, transparent, rgba(248, 113, 113, 0.8), rgba(239, 68, 68, 1), rgba(248, 113, 113, 0.8), transparent);
+}
+
+/* 收集箱卡片等级颜色 - SS级金红 */
+.long-task-card.inbox-type.grade-ss {
+  border-color: #f59e0b;
+  box-shadow: 0 4px 20px rgba(245, 158, 11, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+.long-task-card.inbox-type.grade-ss::before {
+  background: linear-gradient(90deg, transparent, rgba(245, 158, 11, 0.8), rgba(239, 68, 68, 0.9), rgba(245, 158, 11, 0.8), transparent);
+  animation: ssGlow 2s ease-in-out infinite;
+}
+
+/* 收集箱卡片等级颜色 - SSS级彩虹 */
+.long-task-card.inbox-type.grade-sss {
+  border-color: #fcd34d;
+  box-shadow: 0 4px 20px rgba(252, 211, 77, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+.long-task-card.inbox-type.grade-sss::before {
+  background: linear-gradient(90deg, transparent, rgba(239, 68, 68, 0.8), rgba(59, 130, 246, 0.9), rgba(252, 211, 77, 0.9), rgba(239, 68, 68, 0.8), transparent);
+  animation: sssGlow 1.5s ease-in-out infinite;
+}
+
+/* 收集箱顶部发光条 - 默认 */
+.long-task-card.inbox-type::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: 10%;
+  right: 10%;
+  height: 2px;
+  border-radius: 2px;
+  animation: inboxTopGlow 3s ease-in-out infinite;
+}
+
+@keyframes inboxTopGlow {
+  0%, 100% { opacity: 0.4; filter: blur(1px); }
+  50% { opacity: 1; filter: blur(2px); }
+}
+
+/* 收集箱卡片hover效果 - 根据等级调整 */
+.long-task-card.inbox-type.grade-f:hover { border-color: #d1d5db; box-shadow: 0 8px 30px rgba(156, 163, 175, 0.35), 0 0 30px rgba(156, 163, 175, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1); }
+.long-task-card.inbox-type.grade-e:hover { border-color: #cd7f32; box-shadow: 0 8px 30px rgba(160, 130, 109, 0.35), 0 0 30px rgba(160, 130, 109, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1); }
+.long-task-card.inbox-type.grade-d:hover { border-color: #3b82f6; box-shadow: 0 8px 30px rgba(96, 165, 250, 0.35), 0 0 30px rgba(96, 165, 250, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1); }
+.long-task-card.inbox-type.grade-c:hover { border-color: #22c55e; box-shadow: 0 8px 30px rgba(74, 222, 128, 0.35), 0 0 30px rgba(74, 222, 128, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1); }
+.long-task-card.inbox-type.grade-b:hover { border-color: #a855f7; box-shadow: 0 8px 30px rgba(192, 132, 252, 0.35), 0 0 30px rgba(192, 132, 252, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1); }
+.long-task-card.inbox-type.grade-a:hover { border-color: #f59e0b; box-shadow: 0 8px 30px rgba(251, 191, 36, 0.35), 0 0 30px rgba(251, 191, 36, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1); }
+.long-task-card.inbox-type.grade-s:hover { border-color: #ef4444; box-shadow: 0 8px 30px rgba(248, 113, 113, 0.35), 0 0 30px rgba(248, 113, 113, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1); }
+.long-task-card.inbox-type.grade-ss:hover { border-color: #fbbf24; box-shadow: 0 8px 30px rgba(245, 158, 11, 0.4), 0 0 30px rgba(245, 158, 11, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.1); }
+.long-task-card.inbox-type.grade-sss:hover { border-color: #fbbf24; box-shadow: 0 8px 30px rgba(252, 211, 77, 0.45), 0 0 30px rgba(252, 211, 77, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1); }
+
+/* 收集箱类型标签 */
+.long-task-card.inbox-type .long-card-period-tag.inbox {
+  background: rgba(59, 130, 246, 0.25);
+  color: #60a5fa;
+  border: 1px solid rgba(59, 130, 246, 0.5);
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.2);
+}
+
+/* 收集箱卡片任务名称 */
+.long-task-card.inbox-type .long-card-name-compact {
+  color: #fff;
+  text-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+}
+
+/* 收集箱卡片描述 */
+.long-task-card.inbox-type .long-card-desc {
+  color: rgba(147, 197, 253, 0.7);
+}
+
+/* 收集箱操作按钮行 */
+.long-task-card.inbox-type .inbox-actions-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+/* 收集箱按钮样式 */
+.long-task-card.inbox-type .inbox-btn-card {
+  flex: 1;
+  padding: 8px 10px;
+  border: 1px solid rgba(59, 130, 246, 0.4);
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  background: rgba(59, 130, 246, 0.15);
+  color: #60a5fa;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 按钮发光效果 */
+.long-task-card.inbox-type .inbox-btn-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(96, 165, 250, 0.3), 
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.long-task-card.inbox-type .inbox-btn-card:hover::before {
+  left: 100%;
+}
+
+.long-task-card.inbox-type .inbox-btn-card:hover {
+  background: rgba(59, 130, 246, 0.3);
+  border-color: rgba(96, 165, 250, 0.8);
+  box-shadow: 
+    0 4px 15px rgba(59, 130, 246, 0.4),
+    0 0 20px rgba(59, 130, 246, 0.2);
+  transform: translateY(-2px);
+  color: #93c5fd;
+}
+
+.long-task-card.inbox-type .inbox-btn-card:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
+
+/* 收集箱footer */
+.long-task-card.inbox-type .inbox-footer {
+  border-top: 1px solid rgba(59, 130, 246, 0.15);
+  padding-top: 8px;
+  margin-top: 8px;
+}
+
+/* ==================== 网格布局适配 ==================== */
+.task-grid .long-task-card {
+  height: auto;
+  min-height: 90px;
+}
+
+/* 收集箱在网格中的样式 */
+.task-grid .long-task-card.inbox-type {
+  min-height: 120px;
+}
+
+/* 子任务区域适配 */
+.long-task-card .subtask-stats {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 11px;
+}
+
+.long-task-card .toggle-subtasks {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  font-size: 11px;
+}
+
+.long-task-card .subtasks {
+  margin-top: 8px;
+  max-height: 100px;
+  overflow-y: auto;
+}
+
+.long-task-card .subtasks.collapsed {
+  display: none;
+}
+
+.long-task-card .subtask-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.long-task-card .subtask-chk {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: #22c55e;
+}
+
+.long-task-card .subtask-chk.done {
+  background: rgba(34, 197, 94, 0.2);
+  border-color: #22c55e;
+}
+
+
+/* ==================== 今日任务勾选框样式 ==================== */
+
+.long-task-card .task-chk {
+  width: 22px;
+  height: 22px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: #22c55e;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.long-task-card .task-chk:hover {
+  border-color: #22c55e;
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.3);
+}
+
+.long-task-card .task-chk.checked {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  border-color: #22c55e;
+  color: white;
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.5);
+}
+
+.long-task-card .task-chk.checked:hover {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  border-color: #ef4444;
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+}
+
+
+/* ==================== 正方形完成框样式 ==================== */
+
+.task-chk-square {
+  width: 40px;
+  height: 40px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.task-chk-square:hover {
+  border-color: #22c55e;
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.3);
+}
+
+.task-chk-square.checked {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  border-color: #22c55e;
+  box-shadow: 0 0 15px rgba(34, 197, 94, 0.5);
+}
+
+.task-chk-square.checked::after {
+  content: '✓';
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.task-chk-square.checked:hover {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  border-color: #ef4444;
+  box-shadow: 0 0 15px rgba(239, 68, 68, 0.5);
+}
+
+.task-chk-square.checked:hover::after {
+  content: '✕';
+}

@@ -1,0 +1,283 @@
+/* Idle Module Styles - 里世界挂机系统 */
+
+.idle-container {
+  padding: 0 16px 16px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.idle-header {
+  text-align: center;
+  margin-bottom: 24px;
+  padding: 20px;
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(147, 51, 234, 0.1));
+  border-radius: 16px;
+  border: 1px solid rgba(168, 85, 247, 0.3);
+}
+
+.idle-header h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #a855f7;
+  margin-bottom: 8px;
+}
+
+/* 区域网格 */
+.region-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.region-card {
+  background: var(--bg2);
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.region-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+}
+
+.region-card.locked {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.region-card.locked:hover {
+  transform: none;
+  border-color: var(--border);
+}
+
+.region-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  margin: 0 auto 12px;
+}
+
+.region-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.region-level {
+  font-size: 11px;
+  color: var(--text2);
+  margin-bottom: 8px;
+}
+
+.region-reward {
+  font-size: 12px;
+  color: var(--accent);
+  font-weight: 600;
+  padding: 6px 12px;
+  background: rgba(245, 166, 35, 0.1);
+  border-radius: 20px;
+  display: inline-block;
+}
+
+.region-locked {
+  font-size: 11px;
+  color: var(--text3);
+}
+
+/* 统计区域 */
+.idle-stats {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.idle-stats h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+
+/* 碎片网格 */
+.fragments-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.fragment-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px;
+  background: var(--bg3);
+  border-radius: 10px;
+}
+
+.fragment-icon {
+  font-size: 24px;
+  margin-bottom: 4px;
+}
+
+.fragment-name {
+  font-size: 11px;
+  color: var(--text2);
+  margin-bottom: 4px;
+}
+
+.fragment-count {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.fragments-mini {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+/* 战斗界面 */
+.battle-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.battle-header {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  gap: 16px;
+}
+
+.back-btn {
+  padding: 8px 16px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.battle-info {
+  flex: 1;
+}
+
+.battle-info .region-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.battle-time {
+  font-size: 13px;
+  color: var(--text2);
+  margin-top: 4px;
+}
+
+/* 战斗画布 */
+.battle-canvas {
+  flex: 1;
+  position: relative;
+  background: linear-gradient(180deg, #0a0a0a 0%, #1a1a2e 100%);
+  overflow: hidden;
+}
+
+.player-soul {
+  position: absolute;
+  font-size: 32px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 0 10px rgba(100, 200, 255, 0.8));
+  transition: all 0.1s;
+  z-index: 10;
+}
+
+.monster {
+  position: absolute;
+  font-size: 24px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.1s;
+}
+
+.battle-log {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.8);
+  padding: 12px 20px;
+  border-radius: 20px;
+  font-size: 13px;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+/* 战斗统计 */
+.battle-stats {
+  display: flex;
+  padding: 20px;
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  gap: 24px;
+}
+
+.stat-item {
+  flex: 1;
+  text-align: center;
+}
+
+.stat-item.fragments {
+  flex: 2;
+}
+
+.stat-value {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--accent);
+  font-family: monospace;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: var(--text2);
+  margin-top: 4px;
+}
+
+/* 响应式 */
+@media (max-width: 480px) {
+  .region-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .fragments-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .battle-stats {
+    flex-direction: column;
+    gap: 12px;
+  }
+}

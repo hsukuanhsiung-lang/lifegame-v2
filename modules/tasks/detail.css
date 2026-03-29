@@ -1,0 +1,1091 @@
+/* Task Detail Page Styles */
+
+.task-detail-page {
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+.detail-header {
+  padding: 16px;
+  background: rgba(15, 23, 42, 0.8);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.detail-header h2,
+.detail-title {
+  font-size: 18px;
+  font-weight: 600;
+  flex: 1;
+  text-align: center;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9));
+  border: 2px solid rgba(56, 189, 248, 0.5);
+  border-radius: 12px;
+  box-shadow: 
+    0 0 20px rgba(56, 189, 248, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+  letter-spacing: 1px;
+}
+
+/* 任务等级边框颜色 */
+.detail-title.rank-border-s { border-color: #ef4444; box-shadow: 0 0 20px rgba(239, 68, 68, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1); text-shadow: 0 0 10px rgba(239, 68, 68, 0.5); }
+.detail-title.rank-border-a { border-color: #f59e0b; box-shadow: 0 0 20px rgba(245, 158, 11, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1); text-shadow: 0 0 10px rgba(245, 158, 11, 0.5); }
+.detail-title.rank-border-b { border-color: #a855f7; box-shadow: 0 0 20px rgba(168, 85, 247, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1); text-shadow: 0 0 10px rgba(168, 85, 247, 0.5); }
+.detail-title.rank-border-c { border-color: #3b82f6; box-shadow: 0 0 20px rgba(59, 130, 246, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1); text-shadow: 0 0 10px rgba(59, 130, 246, 0.5); }
+.detail-title.rank-border-d { border-color: #22c55e; box-shadow: 0 0 20px rgba(34, 197, 94, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1); text-shadow: 0 0 10px rgba(34, 197, 94, 0.5); }
+.detail-title.rank-border-e { border-color: #94a3b8; box-shadow: 0 0 20px rgba(148, 163, 184, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1); text-shadow: 0 0 10px rgba(148, 163, 184, 0.5); }
+.detail-title.rank-border-f { border-color: #ffffff; box-shadow: 0 0 20px rgba(255, 255, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1); text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
+.detail-title.rank-border-ss { border-image: linear-gradient(135deg, #fbbf24, #ef4444) 1; box-shadow: 0 0 20px rgba(251, 191, 36, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1); }
+.detail-title.rank-border-sss { border-image: linear-gradient(135deg, #fbbf24, #ef4444, #a855f7) 1; box-shadow: 0 0 20px rgba(251, 191, 36, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1); }
+
+.detail-header-spacer {
+  width: 80px;
+  flex-shrink: 0;
+}
+
+.detail-stats {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  padding: 20px 16px;
+  background: rgba(30, 41, 59, 0.3);
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-value {
+  display: block;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.stat-value.rank-sss {
+  background: linear-gradient(135deg, #fbbf24, #ef4444, #a855f7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.stat-value.rank-ss {
+  background: linear-gradient(135deg, #fbbf24, #ef4444);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.stat-value.rank-s { color: #ef4444; }
+.stat-value.rank-a { color: #fbbf24; }
+.stat-value.rank-b { color: #a855f7; }
+.stat-value.rank-c { color: #3b82f6; }
+.stat-value.rank-d { color: #22c55e; }
+.stat-value.rank-e { color: #94a3b8; }
+.stat-value.rank-f { color: #ffffff; }
+
+.stat-label {
+  font-size: 12px;
+  color: var(--text3);
+}
+
+/* Tabs */
+.detail-tabs {
+  display: flex;
+  gap: 4px;
+  padding: 8px 16px;
+  background: rgba(15, 23, 42, 0.5);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+}
+
+.detail-tab {
+  flex: 1;
+  padding: 10px;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  color: var(--text2);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.detail-tab:hover {
+  background: rgba(56, 189, 248, 0.1);
+}
+
+.detail-tab.active {
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(129, 140, 248, 0.2));
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.tab-hint {
+  font-size: 10px;
+  opacity: 0.6;
+  font-weight: 400;
+  margin-left: 4px;
+}
+
+/* Content */
+.detail-content {
+  padding: 16px;
+}
+
+/* Subtask Tree */
+.subtask-tree {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tree-item {
+  background: rgba(30, 41, 59, 0.4);
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.tree-item.done {
+  opacity: 0.6;
+}
+
+.tree-item-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+}
+
+.tree-chk {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--accent);
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: var(--accent);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.tree-chk.done {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: var(--bg);
+}
+
+.tree-name {
+  flex: 1;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.tree-name:hover {
+  color: var(--accent);
+}
+
+.tree-date {
+  padding: 2px 6px;
+  background: rgba(56, 189, 248, 0.1);
+  border-radius: 4px;
+  font-size: 11px;
+  color: var(--accent);
+}
+
+.tree-date.today {
+  background: rgba(34, 197, 94, 0.15);
+  color: #22c55e;
+}
+
+.tree-date.overdue {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+}
+
+.tree-priority {
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+.tree-priority.high {
+  filter: drop-shadow(0 0 4px rgba(239, 68, 68, 0.5));
+}
+
+.tree-daily {
+  font-size: 12px;
+}
+
+.tree-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.tree-btn {
+  padding: 4px 8px;
+  background: rgba(30, 41, 59, 0.6);
+  border: none;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: all 0.2s;
+}
+
+.tree-btn:hover {
+  opacity: 1;
+  background: rgba(56, 189, 248, 0.2);
+}
+
+/* Tree Children */
+.tree-children {
+  margin-left: 20px;
+  padding-left: 12px;
+  border-left: 2px solid rgba(148, 163, 184, 0.1);
+}
+
+.tree-children.collapsed {
+  display: none;
+}
+
+.toggle-children {
+  width: 100%;
+  padding: 6px;
+  background: rgba(30, 41, 59, 0.3);
+  border: none;
+  color: var(--text3);
+  font-size: 11px;
+  cursor: pointer;
+}
+
+/* Add Button */
+.add-subtask-btn {
+  width: 100%;
+  padding: 14px;
+  margin-top: 16px;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  border: none;
+  border-radius: 10px;
+  color: var(--bg);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.add-subtask-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(56, 189, 248, 0.3);
+}
+
+/* Empty State */
+.empty-subtasks {
+  text-align: center;
+  padding: 40px;
+  color: var(--text3);
+}
+
+/* Subtask Form */
+.subtask-form {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.subtask-form h4 {
+  margin-bottom: 12px;
+  color: var(--text);
+}
+
+.diff-limit-hint {
+  padding: 10px 14px;
+  margin-bottom: 16px;
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  border-radius: 8px;
+  color: #f59e0b;
+  font-size: 13px;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 13px;
+  color: var(--text2);
+  margin-bottom: 6px;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 10px 14px;
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 14px;
+}
+
+/* 修复下拉框选项样式 */
+.form-group select option {
+  background: #1e293b;
+  color: #f1f5f9;
+  padding: 8px;
+}
+
+.form-group.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.form-group.checkbox input[type="checkbox"] {
+  width: auto;
+}
+
+.form-group.checkbox label {
+  margin-bottom: 0;
+}
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.delete-btn {
+  padding: 12px 16px;
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 8px;
+  color: #ef4444;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.delete-btn:hover {
+  background: rgba(239, 68, 68, 0.25);
+  transform: translateY(-2px);
+}
+
+.secondary-actions {
+  margin-top: 12px;
+  justify-content: center;
+}
+
+.add-child-btn {
+  padding: 10px 20px;
+  background: rgba(34, 197, 94, 0.15);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  border-radius: 8px;
+  color: #22c55e;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.add-child-btn:hover {
+  background: rgba(34, 197, 94, 0.25);
+  transform: translateY(-2px);
+}
+
+.form-actions button {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cancel-btn {
+  background: rgba(30, 41, 59, 0.6);
+  color: var(--text2);
+}
+
+.cancel-btn:hover {
+  background: rgba(30, 41, 59, 0.8);
+}
+
+.save-btn {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: var(--bg);
+}
+
+.save-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
+}
+
+/* Settings */
+.settings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.setting-btn {
+  padding: 16px;
+  background: rgba(30, 41, 59, 0.4);
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  border-radius: 10px;
+  color: var(--text);
+  font-size: 14px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.setting-btn:hover {
+  background: rgba(30, 41, 59, 0.6);
+}
+
+.setting-btn.danger {
+  color: #ef4444;
+  border-color: rgba(239, 68, 68, 0.2);
+}
+
+.setting-btn.danger:hover {
+  background: rgba(239, 68, 68, 0.1);
+}
+
+/* Stats Placeholder */
+.stats-placeholder {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text3);
+}
+
+/* ====== 思维导图样式 ====== */
+.mindmap-view {
+  min-height: 100vh;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+}
+
+.mindmap-container {
+  flex: 1;
+  overflow: auto;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mindmap-svg {
+  max-width: 100%;
+  max-height: calc(100vh - 200px);
+}
+
+.mindmap-node {
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.mindmap-node:hover circle {
+  filter: brightness(1.2);
+  transform: scale(1.05);
+}
+
+.mindmap-node.done {
+  opacity: 0.6;
+}
+
+.mindmap-node text {
+  pointer-events: none;
+  user-select: none;
+}
+
+.mindmap-hint {
+  padding: 12px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--text3);
+  background: rgba(15, 23, 42, 0.8);
+  border-top: 1px solid rgba(148, 163, 184, 0.1);
+}
+
+/* 思维导图图例 */
+.mindmap-legend {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 10px 12px;
+  background: rgba(15, 23, 42, 0.8);
+  border-top: 1px solid rgba(148, 163, 184, 0.1);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text2);
+}
+
+.legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.legend-dot.done {
+  background: #22c55e;
+  box-shadow: 0 0 6px #22c55e;
+}
+
+.legend-dot.overdue {
+  background: #ef4444;
+  box-shadow: 0 0 6px #ef4444;
+}
+
+.legend-dot.normal {
+  background: #3b82f6;
+  box-shadow: 0 0 6px #3b82f6;
+}
+
+.legend-dot.high-priority {
+  background: transparent;
+  border: 2px dashed #f59e0b;
+}
+
+/* 确认弹窗 */
+.confirm-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  backdrop-filter: blur(4px);
+}
+
+.confirm-dialog {
+  background: rgba(30, 41, 59, 0.95);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 16px;
+  padding: 24px;
+  min-width: 280px;
+  max-width: 90vw;
+  text-align: center;
+}
+
+.confirm-dialog h4 {
+  margin: 0 0 12px 0;
+  font-size: 18px;
+  color: var(--text);
+}
+
+.confirm-dialog p {
+  margin: 0 0 16px 0;
+  font-size: 14px;
+  color: var(--text2);
+}
+
+.confirm-reward {
+  font-size: 24px;
+  font-weight: 700;
+  color: #22c55e;
+  margin-bottom: 20px;
+}
+
+.confirm-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.confirm-actions button {
+  flex: 1;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.confirm-cancel {
+  background: rgba(30, 41, 59, 0.8);
+  color: var(--text2);
+}
+
+.confirm-cancel:hover {
+  background: rgba(30, 41, 59, 1);
+}
+
+.confirm-ok {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: white;
+}
+
+.confirm-ok:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+}
+
+/* ====== 完整子任务树状图一览 ====== */
+
+.full-tree-view {
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+.full-tree-container {
+  padding: 16px;
+  overflow-x: auto;
+}
+
+.full-tree-level {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* 层级标题 */
+.tree-level-header {
+  margin-top: 8px;
+  margin-bottom: 4px;
+  padding: 4px 0;
+}
+
+.level-badge {
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.level-badge.level-1 {
+  background: rgba(56, 189, 248, 0.15);
+  color: #38bdf8;
+}
+
+.level-badge.level-2 {
+  background: rgba(168, 85, 247, 0.15);
+  color: #a855f7;
+}
+
+/* 节点样式 */
+.full-tree-node {
+  border-radius: 8px;
+  transition: all 0.2s;
+  margin: 2px 0;
+}
+
+/* 子任务（第一层） */
+.node-child {
+  background: rgba(56, 189, 248, 0.1);
+  border-left: 3px solid #38bdf8;
+}
+
+.node-child:hover {
+  background: rgba(56, 189, 248, 0.2);
+}
+
+/* 子子任务（第二层） */
+.node-grandchild {
+  background: rgba(168, 85, 247, 0.1);
+  border-left: 3px solid #a855f7;
+}
+
+.node-grandchild:hover {
+  background: rgba(168, 85, 247, 0.2);
+}
+
+.full-tree-node.done {
+  opacity: 0.6;
+}
+
+.full-tree-node.done .tree-node-name {
+  text-decoration: line-through;
+  color: #64748b;
+}
+
+.tree-node-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  position: relative;
+}
+
+/* 分支图标 */
+.tree-branch-icon {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.tree-branch-icon.level-0 {
+  background: #fbbf24;
+  box-shadow: 0 0 8px rgba(251, 191, 36, 0.5);
+}
+
+.tree-branch-icon.level-1 {
+  background: #38bdf8;
+  box-shadow: 0 0 6px rgba(56, 189, 248, 0.4);
+}
+
+.tree-branch-icon.level-2 {
+  background: #a855f7;
+  box-shadow: 0 0 4px rgba(168, 85, 247, 0.3);
+}
+
+.tree-node-chk {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--accent);
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: var(--accent);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+
+.tree-node-chk.done {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: var(--bg);
+}
+
+.tree-node-rank {
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  min-width: 24px;
+  text-align: center;
+}
+
+.tree-node-name {
+  flex: 1;
+  cursor: pointer;
+}
+
+/* 子任务名称 - 较大 */
+.node-child .tree-node-name {
+  font-size: 15px;
+  font-weight: 500;
+  color: #f1f5f9;
+}
+
+/* 子子任务名称 - 较小 */
+.node-grandchild .tree-node-name {
+  font-size: 13px;
+  color: #cbd5e1;
+}
+
+.tree-node-name:hover {
+  color: var(--accent);
+}
+
+.tree-node-daily {
+  font-size: 12px;
+}
+
+.tree-node-date {
+  padding: 2px 6px;
+  background: rgba(56, 189, 248, 0.1);
+  border-radius: 4px;
+  font-size: 10px;
+  color: var(--accent);
+}
+
+/* 折叠/展开按钮 */
+.tree-node-toggle {
+  width: 22px;
+  height: 22px;
+  background: rgba(148, 163, 184, 0.2);
+  border: none;
+  border-radius: 5px;
+  color: #94a3b8;
+  font-size: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-right: 4px;
+}
+
+.tree-node-toggle:hover {
+  background: rgba(148, 163, 184, 0.4);
+  color: #f1f5f9;
+}
+
+/* 有子任务的节点指示 */
+.full-tree-node.has-children .tree-node-name::after {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  margin-left: 6px;
+  opacity: 0.5;
+}
+
+/* 子任务容器 */
+.tree-children-container {
+  transition: all 0.3s ease;
+}
+
+.tree-children-container.collapsed {
+  display: none;
+}
+
+.tree-node-add {
+  width: 24px;
+  height: 24px;
+  background: rgba(34, 197, 94, 0.15);
+  border: none;
+  border-radius: 6px;
+  color: #22c55e;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  opacity: 0;
+  transition: all 0.2s;
+}
+
+.full-tree-node:hover .tree-node-add {
+  opacity: 1;
+}
+
+.full-tree-node:hover .tree-node-toggle {
+  opacity: 1;
+}
+
+.tree-node-add:hover {
+  background: rgba(34, 197, 94, 0.3);
+  transform: scale(1.1);
+}
+
+.tree-view-hint {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px 20px;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  border-radius: 20px;
+  font-size: 12px;
+  color: var(--text2);
+  backdrop-filter: blur(10px);
+}
+
+/* ====== 子任务详情页 ====== */
+
+.subtask-detail-page {
+  min-height: 100vh;
+  background: var(--bg);
+  padding-bottom: 20px;
+}
+
+/* 路径面包屑 */
+.path-breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 16px;
+  background: rgba(30, 41, 59, 0.3);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+  font-size: 14px;
+}
+
+.path-root {
+  color: var(--text2);
+  font-weight: 500;
+}
+
+.path-separator {
+  color: var(--text3);
+  font-size: 12px;
+}
+
+.path-item {
+  color: var(--text);
+  padding: 4px 8px;
+  background: rgba(30, 41, 59, 0.5);
+  border-radius: 4px;
+}
+
+.path-item.current {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: var(--bg);
+  font-weight: 600;
+}
+
+/* 当前子任务卡片 */
+.current-subtask-card {
+  margin: 16px;
+  padding: 20px;
+  background: rgba(30, 41, 59, 0.5);
+  border: 2px solid var(--accent);
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.1);
+}
+
+.subtask-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.subtask-rank {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.subtask-header h3 {
+  flex: 1;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.daily-badge {
+  padding: 4px 10px;
+  background: rgba(245, 158, 11, 0.15);
+  border-radius: 20px;
+  font-size: 12px;
+  color: #f59e0b;
+}
+
+.subtask-date {
+  font-size: 13px;
+  color: var(--text2);
+  margin-bottom: 12px;
+}
+
+.subtask-status {
+  display: flex;
+  gap: 12px;
+}
+
+.status-chk {
+  padding: 8px 16px;
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.status-chk.done {
+  background: rgba(34, 197, 94, 0.15);
+  border-color: rgba(34, 197, 94, 0.3);
+  color: #22c55e;
+}
+
+/* 下级子任务 */
+.children-section {
+  margin: 16px;
+  padding: 16px;
+  background: rgba(30, 41, 59, 0.3);
+  border-radius: 12px;
+}
+
+.children-section h4 {
+  font-size: 14px;
+  color: var(--text2);
+  margin-bottom: 12px;
+}
+
+.no-children {
+  text-align: center;
+  padding: 20px;
+  color: var(--text3);
+  font-size: 13px;
+}
+
+.children-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.child-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  background: rgba(30, 41, 59, 0.4);
+  border-radius: 8px;
+}
+
+.child-item.done {
+  opacity: 0.5;
+}
+
+.child-rank {
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.child-name {
+  flex: 1;
+  font-size: 14px;
+}
+
+.child-done {
+  color: #22c55e;
+}
+
+/* 操作按钮 */
+.subtask-actions {
+  display: flex;
+  gap: 12px;
+  padding: 16px;
+}
+
+.action-btn {
+  flex: 1;
+  padding: 14px;
+  background: rgba(30, 41, 59, 0.5);
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  border-radius: 10px;
+  color: var(--text);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.action-btn:hover {
+  background: rgba(56, 189, 248, 0.1);
+  border-color: rgba(56, 189, 248, 0.3);
+}
+
+.action-btn.danger {
+  color: #ef4444;
+  border-color: rgba(239, 68, 68, 0.2);
+}
+
+.action-btn.danger:hover {
+  background: rgba(239, 68, 68, 0.1);
+}

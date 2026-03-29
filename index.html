@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#0a0a0e">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+
+<!-- 开发模式 - 自动防缓存 -->
+<script src="dev-mode.js"></script>
+<script>
+if (location.port === '5500' || location.hostname === '127.0.0.1' || location.hostname === 'localhost') {
+  document.addEventListener('DOMContentLoaded', function() {
+    console.log('🚀 开发模式');
+    var links = document.querySelectorAll('link[rel="stylesheet"]');
+    links.forEach(function(link) {
+      link.href = link.href.replace(/\?.*$/, '') + '?_=' + Date.now();
+    });
+  });
+}
+</script>
+<title>Life Game v2.0</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/main.css?v=6">
+
+<!-- Module Styles -->
+<style>
+/* World Selector Styles - 重写版 - 内联绕过缓存 */
+.world-select-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0a0a1a 0%, #1a1a2e 50%, #0d0d1a 100%);
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.world-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.world-header h1 {
+  font-size: 2.5rem;
+  background: linear-gradient(135deg, #38bdf8, #a855f7, #f472b6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 8px;
+  text-shadow: 0 0 30px rgba(56, 189, 248, 0.3);
+}
+
+.world-header p {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1.1rem;
+}
+
+.world-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: 800px;
+  height: calc(100vh - 180px);
+  min-height: 400px;
+}
+
+/* 世界卡片行 - 双列布局，占80%高度 */
+.world-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  flex: 4;
+}
+
+.world-row .surface,
+.world-row .inner {
+  height: 100%;
+}
+
+.world-row .world-card {
+  height: 100%;
+}
+
+.world-row .card-content {
+  height: 100%;
+  justify-content: center;
+}
+
+/* 下线行 - 占20%高度 */
+.offline-row {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.offline-row .offline {
+  width: 100%;
+  max-width: none;
+}
+
+.offline-row .world-card {
+  width: 100%;
+}
+
+/* 下线布局 - emoji放中间 */
+.offline-row .card-content {
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 15px 30px;
+}
+
+/* 下线左侧：名称和描述 */
+.offline .world-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+}
+
+.offline .world-name {
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.offline .world-desc {
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+/* 下线中间：emoji和魔法圈 */
+.offline .magic-circle-container {
+  width: 80px;
+  height: 80px;
+  margin: 0;
+  order: 0;
+}
+
+.offline .magic-core {
+  width: 55px;
+  height: 55px;
+  font-size: 1.8rem;
+}
+
+/* 下线右侧：标签和按钮 */
+.offline .world-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.offline .world-features {
+  margin: 0;
+}
+
+.offline .enter-btn {
+  opacity: 0;
+  transform: translateY(10px);
+  padding: 10px 25px;
+  transition: all 0.3s;
+}
+
+.offline .world-card:hover .enter-btn {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.world-card {
+  position: relative;
+  border-radius: 20px;
+  overflow: visible;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-content {
+  position: relative;
+  padding: 30px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+  border: 2px solid rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  z-index: 1;
+}
+
+.world-card:hover .card-content {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+
+.magic-circle-container {
+  position: relative;
+  width: 160px;
+  height: 160px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.magic-core {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+  z-index: 10;
+  transition: all 0.3s;
+}
+
+.world-card:hover .magic-core {
+  transform: scale(1.1);
+}
+
+/* 表世界 - 冰霜蓝晶 */
+.surface .world-card .card-content {
+  background: linear-gradient(135deg, rgba(30, 58, 138, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
+  border: 2px solid rgba(56, 189, 248, 0.4);
+}
+
+.surface .world-card:hover .card-content {
+  border-color: rgba(56, 189, 248, 0.8);
+  box-shadow: 0 0 40px rgba(56, 189, 248, 0.3), inset 0 0 40px rgba(56, 189, 248, 0.1);
+}
+
+/* 表世界图标圆圈 - 冰霜蓝晶（参考设计） */
+.surface .magic-core {
+  background: linear-gradient(145deg, rgba(59, 130, 246, 0.4), rgba(147, 197, 253, 0.4));
+  border: 3px solid rgba(96, 165, 250, 0.6);
+  box-shadow: 0 0 35px rgba(59, 130, 246, 0.4), inset 0 0 25px rgba(147, 197, 253, 0.3);
+}
+
+.surface .ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  opacity: 0;
+  transition: all 0.4s;
+  top: 50%;
+  left: 50%;
+}
+
+/* 表世界圆环 - 冰霜蓝晶（参考设计） */
+.surface .ring-1 {
+  width: 95px;
+  height: 95px;
+  border: 2px solid rgba(96, 165, 250, 0.5);
+  border-top: 2px solid rgba(147, 197, 253, 0.9);
+  border-bottom: 2px solid rgba(147, 197, 253, 0.9);
+  animation: rotateClockwise 8s linear infinite;
+  margin-top: -47.5px;
+  margin-left: -47.5px;
+}
+
+.surface .ring-2 {
+  width: 115px;
+  height: 115px;
+  border: 2px dashed rgba(147, 197, 253, 0.4);
+  animation: rotateCounterClockwise 12s linear infinite;
+  margin-top: -57.5px;
+  margin-left: -57.5px;
+}
+
+.surface .world-card:hover .ring {
+  opacity: 1;
+}
+
+.surface .magic-core {
+  border-color: rgba(56, 189, 248, 0.5);
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+}
+
+.surface .world-card:hover .magic-core {
+  box-shadow: 0 0 25px rgba(56, 189, 248, 0.5);
+}
+
+/* 里世界 - 彩虹奥术（紫色背景 + 彩虹边框） */
+.inner .world-card .card-content {
+  background: linear-gradient(180deg, rgba(60, 20, 60, 0.4), rgba(40, 15, 50, 0.5));
+  border: 2px solid transparent;
+  border-image: linear-gradient(180deg, #f472b6, #a78bfa, #60a5fa, #4ade80, #fbbf24) 1;
+  position: relative;
+}
+
+.inner .world-card:hover .card-content {
+  box-shadow: 0 0 70px rgba(167, 139, 250, 0.4), inset 0 0 70px rgba(167, 139, 250, 0.15);
+  animation: borderShift 3s linear infinite;
+}
+
+@keyframes borderShift {
+  0% { border-image: linear-gradient(0deg, #f472b6, #a78bfa, #60a5fa, #4ade80, #fbbf24) 1; }
+  25% { border-image: linear-gradient(90deg, #f472b6, #a78bfa, #60a5fa, #4ade80, #fbbf24) 1; }
+  50% { border-image: linear-gradient(180deg, #f472b6, #a78bfa, #60a5fa, #4ade80, #fbbf24) 1; }
+  75% { border-image: linear-gradient(270deg, #f472b6, #a78bfa, #60a5fa, #4ade80, #fbbf24) 1; }
+  100% { border-image: linear-gradient(360deg, #f472b6, #a78bfa, #60a5fa, #4ade80, #fbbf24) 1; }
+}
+
+.inner .world-card:hover .card-content {
+  box-shadow: 0 0 50px rgba(167, 139, 247, 0.4), inset 0 0 40px rgba(167, 139, 247, 0.15);
+}
+
+/* 里世界图标圆圈 - 彩虹奥术（参考设计） */
+.inner .magic-core {
+  background: linear-gradient(145deg, rgba(167, 139, 250, 0.35), rgba(244, 114, 182, 0.35));
+  border: 3px solid transparent;
+  background-clip: padding-box;
+  position: relative;
+  box-shadow: 0 0 35px rgba(167, 139, 250, 0.4);
+}
+
+.inner .magic-core::before {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, #f472b6, #a78bfa, #60a5fa, #4ade80);
+  z-index: -1;
+}
+
+.inner .square-ring {
+  position: absolute;
+  opacity: 0;
+  transition: all 0.4s;
+  top: 50%;
+  left: 50%;
+}
+
+/* 里世界方环 - 彩虹奥术（参考设计） */
+.inner .square-1 {
+  width: 95px;
+  height: 95px;
+  border: 3px solid transparent;
+  border-image: linear-gradient(45deg, #f472b6, #a78bfa) 1;
+  animation: rainbowRotate1 4s linear infinite;
+  margin-top: -47.5px;
+  margin-left: -47.5px;
+}
+
+.inner .square-2 {
+  width: 115px;
+  height: 115px;
+  border: 2px solid transparent;
+  border-image: linear-gradient(135deg, #a78bfa, #60a5fa) 1;
+  border-radius: 8px;
+  animation: rainbowRotate2 6s linear infinite reverse;
+  margin-top: -57.5px;
+  margin-left: -57.5px;
+}
+
+.inner .square-3 {
+  width: 135px;
+  height: 135px;
+  border: 2px dashed rgba(74, 222, 128, 0.5);
+  border-radius: 12px;
+  animation: rainbowRotate3 8s linear infinite;
+  margin-top: -67.5px;
+  margin-left: -67.5px;
+}
+
+.inner .square-4 {
+  width: 155px;
+  height: 155px;
+  border: 1px solid transparent;
+  border-image: linear-gradient(180deg, #f472b6, #a78bfa, #60a5fa, #4ade80, #fbbf24) 1;
+  border-radius: 16px;
+  animation: rainbowRotate4 10s linear infinite reverse;
+  margin-top: -77.5px;
+  margin-left: -77.5px;
+}
+
+.inner .world-card:hover .square-ring {
+  opacity: 1;
+}
+
+@keyframes rotateClockwise {
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes rotateCounterClockwise {
+  100% { transform: rotate(-360deg); }
+}
+
+@keyframes rainbowRotate1 {
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes rainbowRotate2 {
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes rainbowRotate3 {
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes rainbowRotate4 {
+  100% { transform: rotate(360deg); }
+}
+
+.inner .magic-core {
+  border-color: rgba(168, 85, 247, 0.5);
+  box-shadow: 0 0 15px rgba(168, 85, 247, 0.3);
+}
+
+.inner .world-card:hover .magic-core {
+  box-shadow: 0 0 25px rgba(168, 85, 247, 0.5);
+}
+
+/* 下线 - 暗影血月 */
+.offline .world-card .card-content {
+  background: linear-gradient(135deg, rgba(127, 29, 29, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
+  border: 2px solid rgba(239, 68, 68, 0.4);
+  transition: all 0.5s ease;
+}
+
+.offline .world-card:hover {
+  transform: translateY(-5px) scale(1.02);
+}
+
+.offline .world-card:hover .card-content {
+  border-color: rgba(248, 113, 113, 0.8);
+  box-shadow: 0 0 60px rgba(239, 68, 68, 0.4), inset 0 0 60px rgba(239, 68, 68, 0.15);
+}
+
+/* 下线图标圆圈 - 暗影血月（参考设计） */
+.offline .magic-core {
+  background: linear-gradient(145deg, rgba(239, 68, 68, 0.4), rgba(153, 27, 27, 0.4));
+  border: 3px solid rgba(248, 113, 113, 0.6);
+  box-shadow: 0 0 35px rgba(239, 68, 68, 0.4), inset 0 0 25px rgba(248, 113, 113, 0.3);
+}
+
+/* 下线圆环 - 暗影血月（参考设计） */
+.offline .magic-ring {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0;
+  transition: all 0.6s ease;
+  top: 50%;
+  left: 50%;
+}
+
+.offline .ring-1 {
+  width: 90px;
+  height: 90px;
+  border: 3px solid rgba(220, 38, 38, 0.6);
+  margin-top: -45px;
+  margin-left: -45px;
+}
+
+.offline .ring-2 {
+  width: 110px;
+  height: 110px;
+  border: 2px solid rgba(239, 68, 68, 0.5);
+  margin-top: -55px;
+  margin-left: -55px;
+}
+
+.offline .ring-3 {
+  width: 130px;
+  height: 130px;
+  border: 2px dashed rgba(252, 165, 165, 0.4);
+  margin-top: -65px;
+  margin-left: -65px;
+}
+
+/* 悬停时显示魔法圈 */
+.offline .world-card:hover .magic-ring {
+  opacity: 1;
+  animation: shadowPulse 2s ease-in-out infinite;
+}
+
+.offline .world-card:hover .ring-2 {
+  animation-delay: 0.15s;
+}
+
+.offline .world-card:hover .ring-3 {
+  animation-delay: 0.3s;
+}
+
+.offline .world-card:hover .ring-1 {
+  transform: scale(1.25);
+  box-shadow: 0 0 20px rgba(220, 38, 38, 0.6);
+}
+
+.offline .world-card:hover .ring-2 {
+  transform: scale(1.45);
+  box-shadow: 0 0 25px rgba(239, 68, 68, 0.5);
+}
+
+.offline .world-card:hover .ring-3 {
+  transform: scale(1.65);
+  box-shadow: 0 0 30px rgba(252, 165, 165, 0.4);
+}
+
+@keyframes shadowPulse {
+  0%, 100% { 
+    opacity: 0.5;
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
+  }
+  50% { 
+    opacity: 1;
+    box-shadow: 0 0 35px rgba(239, 68, 68, 0.6);
+  }
+}
+
+@keyframes bloodGlow {
+  0%, 100% { 
+    box-shadow: 0 0 35px rgba(239, 68, 68, 0.4), inset 0 0 25px rgba(248, 113, 113, 0.2);
+  }
+  50% { 
+    box-shadow: 0 0 70px rgba(239, 68, 68, 0.7), inset 0 0 40px rgba(248, 113, 113, 0.4);
+  }
+}
+
+@keyframes bloodPulse1 {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.05); opacity: 1; }
+}
+
+@keyframes bloodPulse2 {
+  0%, 100% { transform: scale(1); opacity: 0.4; }
+  50% { transform: scale(1.08); opacity: 0.8; }
+}
+
+@keyframes bloodPulse3 {
+  0%, 100% { transform: scale(1); opacity: 0.3; }
+  50% { transform: scale(1.1); opacity: 0.6; }
+}
+
+.offline .magic-core {
+  border-color: rgba(239, 68, 68, 0.5);
+  box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
+}
+
+.world-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.95);
+  margin-bottom: 8px;
+}
+
+.world-desc {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-style: italic;
+  margin-bottom: 16px;
+}
+
+.world-features {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.feature-tag {
+  padding: 4px 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.enter-btn {
+  padding: 12px 32px;
+  border: none;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s;
+}
+
+.surface .enter-btn {
+  background: linear-gradient(135deg, #38bdf8, #0284c7);
+  color: white;
+  box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
+}
+
+.inner .enter-btn {
+  background: linear-gradient(135deg, #a855f7, #7c3aed);
+  color: white;
+  box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);
+}
+
+.offline .enter-btn {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: white;
+  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+}
+
+.world-card:hover .enter-btn {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.enter-btn:hover {
+  transform: scale(1.05);
+}
+
+@media (min-width: 768px) {
+  .world-grid {
+    max-width: 800px;
+  }
+  
+  .magic-circle-container {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .magic-core {
+    width: 75px;
+    height: 75px;
+    font-size: 2.2rem;
+  }
+}
+
+/* 移动端适配 - 单列布局 */
+@media (max-width: 767px) {
+  .world-grid {
+    height: auto;
+    min-height: auto;
+  }
+  
+  .world-row {
+    grid-template-columns: 1fr;
+    flex: none;
+  }
+  
+  .world-row .surface,
+  .world-row .inner {
+    height: auto;
+  }
+  
+  .offline-row {
+    flex: none;
+  }
+  
+  .offline-row .card-content {
+    flex-direction: column;
+    padding: 20px;
+  }
+  
+  .offline .magic-circle-container {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 10px;
+  }
+  
+  .offline .world-name {
+    margin: 10px 0;
+  }
+  
+  .offline .world-desc {
+    text-align: center;
+  }
+  
+  .offline .world-features {
+    margin: 10px 0;
+  }
+}
+</style>
+<link rel="stylesheet" href="modules/overview/style.css?v=2">
+<link rel="stylesheet" href="core/drag-sort.css?v=3">
+  <link rel="stylesheet" href="core/drag-sort-simple.css?v=2">
+
+<!-- 任务系统CSS - 按依赖顺序：基础样式 → 等级系统 → 详情样式 → 长期卡片 -->
+<link rel="stylesheet" href="modules/tasks/grade-system.css">
+<link rel="stylesheet" href="modules/tasks/style.css?v=14">
+<link rel="stylesheet" href="modules/tasks/detail.css">
+<link rel="stylesheet" href="modules/tasks/long-card.css?v=3">
+<link rel="stylesheet" href="modules/challenges/style.css?v=13">
+<link rel="stylesheet" href="modules/action/style.css?v=6">
+<link rel="stylesheet" href="modules/profile/style.css?v=5">
+<link rel="stylesheet" href="modules/guide/style.css">
+<link rel="stylesheet" href="modules/history/style.css?v=3">
+<link rel="stylesheet" href="modules/stats/style.css">
+<link rel="stylesheet" href="modules/settings/style.css">
+
+<!-- Favicon - 使用emoji作为图标 -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
+</head>
+<body>
+
+<!-- Main App Container -->
+<div id="app"></div>
+
+<!-- Core System -->
+<script src="core/namespace.js?v=2"></script>
+<script src="core/utils.js"></script>
+<script src="core/mobile-utils.js"></script>
+<script src="core/storage.js"></script>
+<script src="core/renderer.js?v=5"></script>
+<script src="core/theme-manager.js"></script>
+<script src="core/affinity-manager.js"></script>
+<script src="core/nav-controller.js?v=5"></script>
+<script src="core/drag-sort.js?v=5"></script>
+  <script src="core/drag-sort-simple.js?v=2"></script>
+  <script src="core/drag-mouse.js?v=4"></script>
+  <script src="core/loading-manager.js"></script>
+
+<!-- Modules -->
+<script>
+// World Selector - 重写版 - 内联绕过缓存
+(function() {
+  'use strict';
+  var MODULE_NAME = 'world-selector';
+  
+  var WorldSelector = {
+    init: function() {
+      console.log('[world-selector] 初始化');
+      this.bindEvents();
+    },
+    
+    bindEvents: function() {
+      var self = this;
+      LifeGame.on('nav:showWorldSelector', function() {
+        self.render();
+      });
+    },
+    
+    render: function() {
+      var container = document.getElementById('app');
+      if (!container) return;
+      
+      // 隐藏导航栏
+      var navBar = document.getElementById('nav-bar');
+      if (navBar) navBar.style.display = 'none';
+      
+      container.innerHTML = 
+        '<div class="world-select-container">' +
+          '<div class="world-header">' +
+            '<h1>🎮 Life Game</h1>' +
+            '<p>选择你的世界</p>' +
+          '</div>' +
+          '<div class="world-grid">' +
+            // 表世界 - 冰霜蓝晶
+            '<div class="surface">' +
+              '<div class="world-card" data-world="surface">' +
+                '<div class="card-content">' +
+                  '<div class="magic-circle-container">' +
+                    '<div class="ring ring-2"></div>' +
+                    '<div class="ring ring-1"></div>' +
+                    '<div class="magic-core">🌍</div>' +
+                  '</div>' +
+                  '<div class="world-name">表世界</div>' +
+                  '<div class="world-desc">"冰霜覆盖的现实维度"</div>' +
+                  '<div class="world-features">' +
+                    '<span class="feature-tag">⚡ 行动</span>' +
+                    '<span class="feature-tag">📋 任务</span>' +
+                    '<span class="feature-tag">📅 时间轴</span>' +
+                  '</div>' +
+                  '<button class="enter-btn">❄️ 进入冰域 ❄️</button>' +
+                '</div>' +
+              '</div>' +
+            '</div>' +
+            // 里世界 - 彩虹奥术
+            '<div class="inner">' +
+              '<div class="world-card" data-world="inner">' +
+                '<div class="card-content">' +
+                  '<div class="magic-circle-container">' +
+                    '<div class="square-ring square-4"></div>' +
+                    '<div class="square-ring square-3"></div>' +
+                    '<div class="square-ring square-2"></div>' +
+                    '<div class="square-ring square-1"></div>' +
+                    '<div class="magic-core">🏰</div>' +
+                  '</div>' +
+                  '<div class="world-name">里世界</div>' +
+                  '<div class="world-desc">"无限领域的元素融合"</div>' +
+                  '<div class="world-features">' +
+                    '<span class="feature-tag">💎 进化</span>' +
+                    '<span class="feature-tag">⚔️ 战斗</span>' +
+                    '<span class="feature-tag">🔮 探索</span>' +
+                  '</div>' +
+                  '<button class="enter-btn">🌈 进入无限 🌈</button>' +
+                '</div>' +
+              '</div>' +
+            '</div>' +
+            // 下线 - 暗影血月
+            '<div class="offline">' +
+              '<div class="world-card" data-world="offline">' +
+                '<div class="card-content">' +
+                  '<div class="magic-circle-container">' +
+                    '<div class="magic-ring ring-3"></div>' +
+                    '<div class="magic-ring ring-2"></div>' +
+                    '<div class="magic-ring ring-1"></div>' +
+                    '<div class="magic-core">⚔️</div>' +
+                  '</div>' +
+                  '<div class="world-name">下线</div>' +
+                  '<div class="world-desc">"血月之下的暗影试炼"</div>' +
+                  '<div class="world-features">' +
+                    '<span class="feature-tag">😴 挂机</span>' +
+                    '<span class="feature-tag">⚔️ 自动战斗</span>' +
+                    '<span class="feature-tag">🎁 收益</span>' +
+                  '</div>' +
+                  '<button class="enter-btn">🌙 进入暗影 🌙</button>' +
+                '</div>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+      
+      // 使用事件委托绑定点击事件，避免内存泄漏
+      this.bindWorldCardEvents();
+    },
+    
+    /**
+     * 绑定世界卡片点击事件（使用事件委托，只绑定一次）
+     */
+    _eventsBound: false,
+    bindWorldCardEvents: function() {
+      if (this._eventsBound) return;
+      
+      var self = this;
+      // 使用事件委托，绑定在 document 上，只触发一次
+      document.addEventListener('click', function(e) {
+        var card = e.target.closest('.world-card');
+        if (card) {
+          var world = card.dataset.world;
+          if (world) {
+            self.selectWorld(world);
+          }
+        }
+      });
+      
+      this._eventsBound = true;
+      LifeGame.log('[world-selector] 事件委托已绑定');
+    },
+    
+    selectWorld: function(world) {
+      console.log('[world-selector] 选择世界:', world);
+      
+      // 保存选择
+      LifeGame.core.Storage.set('currentWorld', world);
+      
+      // 显示导航栏
+      var navBar = document.getElementById('nav-bar');
+      if (navBar) navBar.style.display = 'flex';
+      
+      // 触发世界选择事件
+      LifeGame.emit('world:selected', { world: world });
+    }
+  };
+  
+  LifeGame.registerModule(MODULE_NAME, WorldSelector);
+})();
+</script>
+<script src="modules/overview/index.js?v=9"></script>
+
+<script src="modules/tasks/grade-card-renderer.js"></script>
+<script src="modules/tasks/index.js?v=26"></script>
+<script src="modules/challenges/index.js?v=14"></script>
+<script src="modules/action/index.js?v=9"></script>
+<script src="modules/profile/index.js?v=7"></script>
+<script src="modules/guide/index.js"></script>
+<script src="modules/idle/index.js?v=2"></script>
+<script src="modules/inventory/index.js?v=2"></script>
+<script src="modules/shop/index.js?v=2"></script>
+<script src="modules/town/index.js?v=2"></script>
+<script src="modules/history/index.js?v=3"></script>
+<script src="modules/stats/index.js"></script>
+<script src="modules/settings/index.js?v=3"></script>
+
+<!-- App Bootstrap -->
+<script src="main.js"></script>
+
+<!-- 调试工具：在控制台运行 showMagicCircles() 可强制显示魔法阵 -->
+<script>
+function showMagicCircles() {
+  document.querySelectorAll('.magic-circle').forEach(function(el) {
+    el.style.opacity = '1';
+    el.style.border = '2px solid red';
+    console.log('Magic circle found:', el.className);
+  });
+  console.log('Magic circles should now be visible!');
+}
+function hideMagicCircles() {
+  document.querySelectorAll('.magic-circle').forEach(function(el) {
+    el.style.opacity = '';
+    el.style.border = '';
+  });
+}
+</script>
+
+<!-- 世界选择器样式已在上方内联定义，无需额外修复 -->
+
+</body>
+</html>

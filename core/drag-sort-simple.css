@@ -1,0 +1,43 @@
+/* DragSort Simple - 拖拽样式 */
+
+/* 占位符 - 使用 !important 确保优先级 */
+.drag-placeholder-simple {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.3) 0%, rgba(139, 92, 246, 0.3) 100%) !important;
+  border: 3px dashed #3b82f6 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.5) !important;
+  animation: drag-pulse 0.8s ease-in-out infinite !important;
+  box-sizing: border-box !important;
+}
+
+@keyframes drag-pulse {
+  0%, 100% {
+    opacity: 0.6;
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+  }
+  50% {
+    opacity: 1;
+    box-shadow: 0 0 30px rgba(59, 130, 246, 0.8);
+  }
+}
+
+/* 被拖拽的元素 */
+.dragging-source {
+  opacity: 0.3 !important;
+  transform: scale(0.98);
+  filter: grayscale(0.5);
+}
+
+/* 拖拽时的光标 */
+[draggable="true"] {
+  cursor: grab !important;
+}
+
+[draggable="true"]:active {
+  cursor: grabbing !important;
+}
+
+/* 拖拽过程中的容器 */
+.is-dragging {
+  background: rgba(59, 130, 246, 0.05);
+}
