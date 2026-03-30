@@ -32,70 +32,74 @@
       container.innerHTML = 
         '<div class="world-select-container">' +
           '<div class="world-header">' +
-            '<h1>🎮 Life Game</h1>' +
+            '<h1>Life Game</h1>' +
             '<p>选择你的世界</p>' +
           '</div>' +
           '<div class="world-grid">' +
-            // 表世界 - 冰霜蓝晶
-            '<div class="surface">' +
-              '<div class="world-card" data-world="surface">' +
-                '<div class="card-content">' +
-                  '<div class="magic-circle-container">' +
-                    '<div class="ring ring-2"></div>' +
-                    '<div class="ring ring-1"></div>' +
-                    '<div class="magic-core">🌍</div>' +
+            '<div class="world-row">' +
+              // 表世界 - 冰霜蓝晶
+              '<div class="surface">' +
+                '<div class="world-card" data-world="surface">' +
+                  '<div class="card-content">' +
+                    '<div class="magic-circle-container">' +
+                      '<div class="ring ring-2"></div>' +
+                      '<div class="ring ring-1"></div>' +
+                      '<div class="magic-core">🌍</div>' +
+                    '</div>' +
+                    '<div class="world-name">表世界</div>' +
+                    '<div class="world-desc">"冰霜覆盖的现实维度"</div>' +
+                    '<div class="world-features">' +
+                      '<span class="feature-tag">⚡ 行动</span>' +
+                      '<span class="feature-tag">📋 任务</span>' +
+                      '<span class="feature-tag">📅 时间轴</span>' +
+                    '</div>' +
+                    '<button class="enter-btn">❄️ 进入冰域 ❄️</button>' +
                   '</div>' +
-                  '<div class="world-name">表世界</div>' +
-                  '<div class="world-desc">"冰霜覆盖的现实维度"</div>' +
-                  '<div class="world-features">' +
-                    '<span class="feature-tag">⚡ 行动</span>' +
-                    '<span class="feature-tag">📋 任务</span>' +
-                    '<span class="feature-tag">📅 时间轴</span>' +
+                '</div>' +
+              '</div>' +
+              // 里世界 - 彩虹奥术
+              '<div class="inner">' +
+                '<div class="world-card" data-world="inner">' +
+                  '<div class="card-content">' +
+                    '<div class="magic-circle-container">' +
+                      '<div class="square-ring square-4"></div>' +
+                      '<div class="square-ring square-3"></div>' +
+                      '<div class="square-ring square-2"></div>' +
+                      '<div class="square-ring square-1"></div>' +
+                      '<div class="magic-core">🏰</div>' +
+                    '</div>' +
+                    '<div class="world-name">里世界</div>' +
+                    '<div class="world-desc">"无限领域的元素融合"</div>' +
+                    '<div class="world-features">' +
+                      '<span class="feature-tag">💎 进化</span>' +
+                      '<span class="feature-tag">⚔️ 战斗</span>' +
+                      '<span class="feature-tag">🔮 探索</span>' +
+                    '</div>' +
+                    '<button class="enter-btn">🌈 进入无限 🌈</button>' +
                   '</div>' +
-                  '<button class="enter-btn">❄️ 进入冰域 ❄️</button>' +
                 '</div>' +
               '</div>' +
             '</div>' +
-            // 里世界 - 彩虹奥术
-            '<div class="inner">' +
-              '<div class="world-card" data-world="inner">' +
-                '<div class="card-content">' +
-                  '<div class="magic-circle-container">' +
-                    '<div class="square-ring square-4"></div>' +
-                    '<div class="square-ring square-3"></div>' +
-                    '<div class="square-ring square-2"></div>' +
-                    '<div class="square-ring square-1"></div>' +
-                    '<div class="magic-core">🏰</div>' +
+            '<div class="offline-row">' +
+              // 下线 - 暗影血月
+              '<div class="offline">' +
+                '<div class="world-card" data-world="offline">' +
+                  '<div class="card-content">' +
+                    '<div class="magic-circle-container">' +
+                      '<div class="magic-ring ring-3"></div>' +
+                      '<div class="magic-ring ring-2"></div>' +
+                      '<div class="magic-ring ring-1"></div>' +
+                      '<div class="magic-core">⚔️</div>' +
+                    '</div>' +
+                    '<div class="world-name">下线</div>' +
+                    '<div class="world-desc">"血月之下的暗影试炼"</div>' +
+                    '<div class="world-features">' +
+                      '<span class="feature-tag">😴 挂机</span>' +
+                      '<span class="feature-tag">⚔️ 自动战斗</span>' +
+                      '<span class="feature-tag">🎁 收益</span>' +
+                    '</div>' +
+                    '<button class="enter-btn">🌙 进入暗影 🌙</button>' +
                   '</div>' +
-                  '<div class="world-name">里世界</div>' +
-                  '<div class="world-desc">"无限领域的元素融合"</div>' +
-                  '<div class="world-features">' +
-                    '<span class="feature-tag">💎 进化</span>' +
-                    '<span class="feature-tag">⚔️ 战斗</span>' +
-                    '<span class="feature-tag">🔮 探索</span>' +
-                  '</div>' +
-                  '<button class="enter-btn">🌈 进入无限 🌈</button>' +
-                '</div>' +
-              '</div>' +
-            '</div>' +
-            // 下线 - 暗影血月
-            '<div class="offline">' +
-              '<div class="world-card" data-world="offline">' +
-                '<div class="card-content">' +
-                  '<div class="magic-circle-container">' +
-                    '<div class="magic-ring ring-3"></div>' +
-                    '<div class="magic-ring ring-2"></div>' +
-                    '<div class="magic-ring ring-1"></div>' +
-                    '<div class="magic-core">⚔️</div>' +
-                  '</div>' +
-                  '<div class="world-name">下线</div>' +
-                  '<div class="world-desc">"血月之下的暗影试炼"</div>' +
-                  '<div class="world-features">' +
-                    '<span class="feature-tag">😴 挂机</span>' +
-                    '<span class="feature-tag">⚔️ 自动战斗</span>' +
-                    '<span class="feature-tag">🎁 收益</span>' +
-                  '</div>' +
-                  '<button class="enter-btn">🌙 进入暗影 🌙</button>' +
                 '</div>' +
               '</div>' +
             '</div>' +

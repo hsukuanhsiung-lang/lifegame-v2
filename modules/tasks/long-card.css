@@ -485,6 +485,15 @@
   box-shadow: 0 4px 20px rgba(239, 68, 68, 0.3);
   position: relative;
 }
+/* S级文字颜色 */
+.long-task-card.grade-s .long-card-name,
+.long-task-card.grade-s .long-card-name-compact {
+  color: #fff;
+}
+.long-task-card.grade-s .long-card-desc,
+.long-task-card.grade-s .long-card-desc.compact {
+  color: rgba(255, 255, 255, 0.9);
+}
 .long-task-card.grade-s::before {
   content: '';
   position: absolute;
@@ -516,6 +525,16 @@
   background-clip: padding-box;
   position: relative;
 }
+/* SS级文字颜色 */
+.long-task-card.grade-ss .long-card-name,
+.long-task-card.grade-ss .long-card-name-compact {
+  color: #fff;
+  text-shadow: 0 0 8px rgba(239, 68, 68, 0.5);
+}
+.long-task-card.grade-ss .long-card-desc,
+.long-task-card.grade-ss .long-card-desc.compact {
+  color: rgba(255, 255, 255, 0.9);
+}
 .long-task-card.grade-ss::before {
   content: '';
   position: absolute;
@@ -545,7 +564,8 @@
 }
 .long-task-card.grade-ss .long-card-grade { 
   background: linear-gradient(135deg, rgba(239, 68, 68, 0.3), rgba(168, 85, 247, 0.3));
-  color: #f472b6;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(239, 68, 68, 0.8), 0 0 20px rgba(168, 85, 247, 0.5);
 }
 
 @keyframes ssBorderRotate {
@@ -563,6 +583,16 @@
   background-clip: padding-box;
   position: relative;
   overflow: visible;
+}
+/* SSS级文字颜色 */
+.long-task-card.grade-sss .long-card-name,
+.long-task-card.grade-sss .long-card-name-compact {
+  color: #fff;
+  text-shadow: 0 0 10px rgba(239, 68, 68, 0.6), 0 0 20px rgba(59, 130, 246, 0.4);
+}
+.long-task-card.grade-sss .long-card-desc,
+.long-task-card.grade-sss .long-card-desc.compact {
+  color: rgba(255, 255, 255, 0.95);
 }
 
 /* SSS级脉冲环 */

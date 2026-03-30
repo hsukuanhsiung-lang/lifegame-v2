@@ -145,8 +145,13 @@
           name: 'Kuan',
           level: 1,
           exp: 0,
-          diamonds: 0
+          diamonds: 0,
+          avatar: null
         };
+      }
+      // 确保 avatar 字段存在（兼容旧数据）
+      if (storage.profile && storage.profile.avatar === undefined) {
+        storage.profile.avatar = null;
       }
       
       LifeGame.core.Storage.save();
@@ -197,10 +202,16 @@
     renderHeader: function(data) {
       var soulForm = data.soulForms.forms[data.soulForms.current];
       var affinityLevel = this.getAffinityLevel(data.affinity.current);
+      var customAvatar = data.profile.avatar;
+      
+      var avatarHtml = customAvatar 
+        ? '<img src="' + customAvatar + '" class="profile-avatar-img" alt="头像">'
+        : '<div class="profile-avatar-default">' + soulForm.icon + '</div>';
       
       return '<div class="profile-header">' +
         '<div class="profile-avatar-section">' +
-          '<div class="profile-avatar">' + soulForm.icon + '</div>' +
+          '<div class="profile-avatar" id="profile-avatar" title="点击上传头像">' + avatarHtml + '</div>' +
+          '<input type="file" id="avatar-input" accept="image/*" style="display:none">' +
           '<div class="profile-soul-name">' + soulForm.name + '</div>' +
           '<div class="profile-name">' + data.profile.name + '</div>' +
         '</div>' +
@@ -501,9 +512,84 @@
           self.unlockForm(formId);
           return;
         }
+        
+        // 头像上传点击
+        var avatar = e.target.closest('#profile-avatar');
+        if (avatar) {
+          var input = document.getElementById('avatar-input');
+          if (input) input.click();
+          return;
+        }
       };
       
       container.addEventListener('click', this._eventHandlers.click);
+      
+      // 头像文件选择事件
+      var avatarInput = document.getElementById('avatar-input');
+      if (avatarInput) {
+        avatarInput.addEventListener('change', function(e) {
+          var file = e.target.files[0];
+          if (file) self.handleAvatarUpload(file);
+        });
+      }
+    },
+    
+    // 处理头像上传
+    handleAvatarUpload: function(file) {
+      var self = this;
+      
+      // 验证文件类型
+      if (!file.type.startsWith('image/')) {
+        LifeGame.emit('notification', { message: '请选择图片文件', type: 'error' });
+        return;
+      }
+      
+      // 验证文件大小（最大 2MB）
+      if (file.size > 2 * 1024 * 1024) {
+        LifeGame.emit('notification', { message: '图片大小不能超过 2MB', type: 'error' });
+        return;
+      }
+      
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        var img = new Image();
+        img.onload = function() {
+          // 使用 Canvas 裁剪为圆形
+          var canvas = document.createElement('canvas');
+          var ctx = canvas.getContext('2d');
+          var size = 200; // 输出尺寸
+          
+          canvas.width = size;
+          canvas.height = size;
+          
+          // 创建圆形裁剪路径
+          ctx.beginPath();
+          ctx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2);
+          ctx.closePath();
+          ctx.clip();
+          
+          // 绘制图片（保持比例填充）
+          var scale = Math.max(size / img.width, size / img.height);
+          var x = (size - img.width * scale) / 2;
+          var y = (size - img.height * scale) / 2;
+          ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
+          
+          // 转换为 Base64
+          var avatarData = canvas.toDataURL('image/jpeg', 0.8);
+          
+          // 保存到 storage
+          var storage = LifeGame.core.Storage.data;
+          storage.profile.avatar = avatarData;
+          LifeGame.core.Storage.save();
+          
+          // 重新渲染
+          self.render();
+          
+          LifeGame.emit('notification', { message: '头像上传成功！', type: 'success' });
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
     },
     
     switchForm: function(formId) {

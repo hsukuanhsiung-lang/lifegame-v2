@@ -102,6 +102,11 @@
       if (settingsModule && settingsModule.applyTimebarColor) {
         settingsModule.applyTimebarColor();
       }
+      
+      // 应用用户设置的统计页面风格
+      if (settingsModule && settingsModule.applyStatsStyle) {
+        settingsModule.applyStatsStyle();
+      }
     }
   };
   

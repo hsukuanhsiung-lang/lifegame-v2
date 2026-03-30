@@ -26,6 +26,11 @@
     showDateSwitcher: false,
     showCompleted: false,
     
+    // 虚拟滚动配置
+    virtualScrollThreshold: 50, // 超过50个任务启用虚拟滚动
+    virtualScroll: null, // VirtualScroll 实例
+    virtualScrollEnabled: false,
+    
     /**
      * 初始化模块
      */
@@ -69,6 +74,13 @@
           }
           this._eventHandlers = {};
         }
+      }
+      
+      // 清理虚拟滚动实例
+      if (this.virtualScroll) {
+        this.virtualScroll.destroy();
+        this.virtualScroll = null;
+        this.virtualScrollEnabled = false;
       }
     },
     
@@ -646,13 +658,58 @@
         return '<div class="tasks-empty">暂无任务<br>点击上方按钮添加</div>';
       }
       
-      var html = '<div class="task-grid" data-draggable-container="true">';
       var self = this;
+      
+      // 判断是否启用虚拟滚动
+      this.virtualScrollEnabled = tasks.length > this.virtualScrollThreshold;
+      
+      if (this.virtualScrollEnabled && window.VirtualScroll) {
+        // 使用虚拟滚动
+        // 延迟初始化，确保容器已插入 DOM
+        setTimeout(function() {
+          self.initVirtualScroll(tasks);
+        }, 0);
+        
+        return '<div id="task-virtual-container" class="task-virtual-container" data-virtual-scroll="true"></div>';
+      }
+      
+      // 普通渲染
+      var html = '<div class="task-grid" data-draggable-container="true">';
       tasks.forEach(function(t) {
         html += self.renderTaskCard(t);
       });
       html += '</div>';
       return html;
+    },
+    
+    /**
+     * 初始化虚拟滚动
+     * @param {Array} tasks - 任务数组
+     */
+    initVirtualScroll: function(tasks) {
+      var container = document.getElementById('task-virtual-container');
+      if (!container) return;
+      
+      var self = this;
+      
+      // 销毁旧的实例
+      if (this.virtualScroll) {
+        this.virtualScroll.destroy();
+      }
+      
+      // 创建新的虚拟滚动实例
+      this.virtualScroll = Object.create(VirtualScroll);
+      this.virtualScroll.init({
+        container: container,
+        data: tasks,
+        renderFn: function(task, index) {
+          return self.renderTaskCard(task);
+        },
+        itemHeight: self.currentFilter === 'long' ? 120 : 80, // 长期任务卡片更高
+        bufferSize: 5
+      });
+      
+      LifeGame.log('[tasks] 虚拟滚动已启用，任务数:', tasks.length);
     },
     
     /**

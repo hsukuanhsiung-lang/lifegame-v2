@@ -151,6 +151,21 @@
             '</div>',
           '</div>',
           
+          
+          // 统计页面风格卡片
+          '<div class="settings-card">',
+            '<div class="settings-card-header">',
+              '<span class="settings-card-icon">📊</span>',
+              '<span class="settings-card-title">统计页面风格</span>',
+            '</div>',
+            '<div class="settings-card-body">',
+              '<div class="stats-style-desc">选择统计页面的视觉风格</div>',
+              '<div class="stats-style-options">',
+                this.buildStatsStyleOptions(),
+              '</div>',
+            '</div>',
+          '</div>',
+          
           // GitHub 同步卡片
           '<div class="settings-card">',
             '<div class="settings-card-header">',
@@ -285,6 +300,47 @@
             '<span class="timebar-color-desc">' + item.desc + '</span>' +
           '</span>' +
           (isActive ? '<span class="timebar-color-check">✓</span>' : '') +
+        '</button>';
+      }).join('');
+    },
+    
+    // 构建统计页面风格选项
+    buildStatsStyleOptions: function() {
+      var currentStyle = LifeGame.core.Storage.get('statsStyle') || 'modern';
+      
+      var styles = [
+        { 
+          id: 'modern', 
+          name: '简约现代', 
+          icon: '◻️', 
+          desc: '白色背景、扁平化设计、清晰简洁',
+          preview: 'linear-gradient(135deg, #f8fafc, #e2e8f0)'
+        },
+        { 
+          id: 'cyberpunk', 
+          name: '霓虹赛博', 
+          icon: '🌃', 
+          desc: '深色背景、霓虹发光、科技感十足',
+          preview: 'linear-gradient(135deg, #0f172a, #1e1b4b)'
+        },
+        { 
+          id: 'pixel', 
+          name: '像素游戏', 
+          icon: '👾', 
+          desc: '像素边框、复古字体、游戏风格',
+          preview: 'linear-gradient(135deg, #0f0f23, #1a1a2e)'
+        }
+      ];
+      
+      return styles.map(function(item) {
+        var isActive = currentStyle === item.id;
+        return '<button class="stats-style-btn ' + (isActive ? 'active' : '') + '" data-style="' + item.id + '">' +
+          '<span class="stats-style-preview" style="background: ' + item.preview + '"></span>' +
+          '<span class="stats-style-info">' +
+            '<span class="stats-style-name">' + item.icon + ' ' + item.name + '</span>' +
+            '<span class="stats-style-desc">' + item.desc + '</span>' +
+          '</span>' +
+          (isActive ? '<span class="stats-style-check">✓</span>' : '') +
         '</button>';
       }).join('');
     },
@@ -556,6 +612,19 @@
           return;
         }
         
+        // 统计页面风格选择
+        var styleBtn = e.target.closest('.stats-style-btn');
+        if (styleBtn) {
+          var style = styleBtn.dataset.style;
+          LifeGame.core.Storage.set('statsStyle', style);
+          self.applyStatsStyle(style);
+          self.render(container);
+          if (LifeGame.showSuccess) {
+            LifeGame.showSuccess('统计页面风格已更新');
+          }
+          return;
+        }
+        
         // 导出数据
         if (e.target.closest('#export-data-btn')) {
           self.exportData();
@@ -781,6 +850,19 @@
       LifeGame.core.Storage.set('timebarColor', color);
       
       LifeGame.log('[Settings] 时间栏颜色已切换为:', color);
+    },
+    
+    // 应用统计页面风格
+    applyStatsStyle: function(style) {
+      style = style || LifeGame.core.Storage.get('statsStyle') || 'modern';
+      
+      // 保存选择
+      LifeGame.core.Storage.set('statsStyle', style);
+      
+      // 更新 body 的 data 属性，供统计页面使用
+      document.body.setAttribute('data-stats-style', style);
+      
+      LifeGame.log('[Settings] 统计页面风格已切换为:', style);
     },
     
     // 清除所有数据

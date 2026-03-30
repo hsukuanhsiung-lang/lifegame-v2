@@ -4,9 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#0a0a0e">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Life Game">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
+<link rel="manifest" href="manifest.json">
 
 <!-- 开发模式 - 自动防缓存 -->
 <script src="dev-mode.js"></script>
@@ -39,22 +43,22 @@ if (location.port === '5500' || location.hostname === '127.0.0.1' || location.ho
 
 .world-header {
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 24px;
 }
 
 .world-header h1 {
-  font-size: 2.5rem;
+  font-size: 1.8rem;
   background: linear-gradient(135deg, #38bdf8, #a855f7, #f472b6);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  margin-bottom: 8px;
-  text-shadow: 0 0 30px rgba(56, 189, 248, 0.3);
+  margin-bottom: 4px;
+  text-shadow: 0 0 20px rgba(56, 189, 248, 0.2);
 }
 
 .world-header p {
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.85rem;
 }
 
 .world-grid {
@@ -628,15 +632,30 @@ if (location.port === '5500' || location.hostname === '127.0.0.1' || location.ho
   }
 }
 
-/* 移动端适配 - 单列布局 */
+/* 移动端适配 - 保持左右下布局，调整尺寸 */
 @media (max-width: 767px) {
+  .world-header {
+    margin-bottom: 12px;
+  }
+  
+  .world-header h1 {
+    font-size: 1.4rem;
+    margin-bottom: 2px;
+  }
+  
+  .world-header p {
+    font-size: 0.75rem;
+  }
+  
   .world-grid {
     height: auto;
     min-height: auto;
+    gap: 12px;
   }
   
   .world-row {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
     flex: none;
   }
   
@@ -645,31 +664,91 @@ if (location.port === '5500' || location.hostname === '127.0.0.1' || location.ho
     height: auto;
   }
   
+  .world-row .card-content {
+    padding: 16px 10px;
+  }
+  
+  .world-row .magic-circle-container {
+    width: 90px;
+    height: 90px;
+    margin-bottom: 10px;
+  }
+  
+  .world-row .magic-core {
+    width: 50px;
+    height: 50px;
+    font-size: 1.6rem;
+  }
+  
+  .world-row .world-name {
+    font-size: 1.1rem;
+  }
+  
+  .world-row .world-desc {
+    font-size: 0.75rem;
+    margin-bottom: 8px;
+  }
+  
+  .world-row .world-features {
+    gap: 4px;
+    margin-bottom: 10px;
+  }
+  
+  .world-row .feature-tag {
+    padding: 3px 8px;
+    font-size: 0.7rem;
+  }
+  
+  .world-row .enter-btn {
+    padding: 8px 16px;
+    font-size: 0.8rem;
+  }
+  
   .offline-row {
     flex: none;
   }
   
   .offline-row .card-content {
-    flex-direction: column;
-    padding: 20px;
+    flex-direction: row;
+    padding: 15px 20px;
+    gap: 15px;
   }
   
   .offline .magic-circle-container {
-    width: 100px;
-    height: 100px;
-    margin-bottom: 10px;
+    width: 70px;
+    height: 70px;
+    margin: 0;
+  }
+  
+  .offline .magic-core {
+    width: 45px;
+    height: 45px;
+    font-size: 1.4rem;
   }
   
   .offline .world-name {
-    margin: 10px 0;
+    font-size: 1.1rem;
+    margin: 0;
   }
   
   .offline .world-desc {
-    text-align: center;
+    text-align: right;
+    font-size: 0.75rem;
   }
   
   .offline .world-features {
-    margin: 10px 0;
+    margin: 0;
+    gap: 4px;
+  }
+  
+  .offline .feature-tag {
+    padding: 3px 8px;
+    font-size: 0.7rem;
+  }
+  
+  .offline .enter-btn {
+    padding: 8px 16px;
+    font-size: 0.8rem;
   }
 }
 </style>
@@ -679,7 +758,7 @@ if (location.port === '5500' || location.hostname === '127.0.0.1' || location.ho
 
 <!-- 任务系统CSS - 按依赖顺序：基础样式 → 等级系统 → 详情样式 → 长期卡片 -->
 <link rel="stylesheet" href="modules/tasks/grade-system.css">
-<link rel="stylesheet" href="modules/tasks/style.css?v=14">
+<link rel="stylesheet" href="modules/tasks/style.css?v=15">
 <link rel="stylesheet" href="modules/tasks/detail.css">
 <link rel="stylesheet" href="modules/tasks/long-card.css?v=3">
 <link rel="stylesheet" href="modules/challenges/style.css?v=13">
@@ -687,8 +766,8 @@ if (location.port === '5500' || location.hostname === '127.0.0.1' || location.ho
 <link rel="stylesheet" href="modules/profile/style.css?v=5">
 <link rel="stylesheet" href="modules/guide/style.css">
 <link rel="stylesheet" href="modules/history/style.css?v=3">
-<link rel="stylesheet" href="modules/stats/style.css">
-<link rel="stylesheet" href="modules/settings/style.css">
+<link rel="stylesheet" href="modules/stats/style.css?v=2">
+<link rel="stylesheet" href="modules/settings/style.css?v=2">
 
 <!-- Favicon - 使用emoji作为图标 -->
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
@@ -864,18 +943,18 @@ if (location.port === '5500' || location.hostname === '127.0.0.1' || location.ho
 <script src="modules/overview/index.js?v=9"></script>
 
 <script src="modules/tasks/grade-card-renderer.js"></script>
-<script src="modules/tasks/index.js?v=26"></script>
+<script src="modules/tasks/index.js?v=27"></script>
 <script src="modules/challenges/index.js?v=14"></script>
 <script src="modules/action/index.js?v=9"></script>
-<script src="modules/profile/index.js?v=7"></script>
+<script src="modules/profile/index.js?v=8"></script>
 <script src="modules/guide/index.js"></script>
 <script src="modules/idle/index.js?v=2"></script>
 <script src="modules/inventory/index.js?v=2"></script>
 <script src="modules/shop/index.js?v=2"></script>
 <script src="modules/town/index.js?v=2"></script>
 <script src="modules/history/index.js?v=3"></script>
-<script src="modules/stats/index.js"></script>
-<script src="modules/settings/index.js?v=3"></script>
+<script src="modules/stats/index.js?v=2"></script>
+<script src="modules/settings/index.js?v=4"></script>
 
 <!-- App Bootstrap -->
 <script src="main.js"></script>

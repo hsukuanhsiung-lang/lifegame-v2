@@ -289,10 +289,6 @@
               '</div>' +
             '</div>' +
             '<div class="time-right">' +
-              '<span class="day-badge" id="day-badge" title="双击查看统计">' +
-                '<span class="day-badge-icon">⭐</span>' +
-                '<span>DAY ' + this.getDayNumber() + '</span>' +
-              '</span>' +
             '</div>' +
           '</div>' +
           // 标题栏 - 返回按钮 + 动态标题 + 世界选择按钮 同一行
@@ -340,15 +336,7 @@
         });
       }
       
-      // 绑定 Day 徽章点击事件 - 显示统计页面
-      var dayBadge = document.getElementById('day-badge');
-      if (dayBadge) {
-        // 点击显示统计页面（移动端和桌面端统一）
-        dayBadge.addEventListener('click', function(e) {
-          self.showStatsPage();
-        });
-      }
-      
+
       // 绑定二级标签点击
       container.querySelectorAll('.sub-nav-item').forEach(function(item) {
         item.addEventListener('click', function() {

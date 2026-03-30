@@ -287,3 +287,275 @@
 .stats-chart-container::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.3);
 }
+
+
+/* ==================== 统计页面风格切换 ==================== */
+
+/* 基础风格（默认） */
+.stats-container {
+  --stats-bg: transparent;
+  --stats-card-bg: rgba(255, 255, 255, 0.05);
+  --stats-card-border: rgba(255, 255, 255, 0.1);
+  --stats-text: rgba(255, 255, 255, 0.9);
+  --stats-text-secondary: rgba(255, 255, 255, 0.6);
+  --stats-accent: var(--accent, #3b82f6);
+}
+
+/* 风格1：简约现代 (modern) */
+body[data-stats-style="modern"] .stats-container {
+  --stats-bg: #f8fafc;
+  --stats-card-bg: #ffffff;
+  --stats-card-border: #e2e8f0;
+  --stats-text: #1e293b;
+  --stats-text-secondary: #64748b;
+  --stats-accent: #3b82f6;
+  background: var(--stats-bg);
+}
+
+body[data-stats-style="modern"] .stats-container .page-title {
+  color: var(--stats-text);
+}
+
+body[data-stats-style="modern"] .stats-container .page-back-btn {
+  background: #e2e8f0;
+  color: #475569;
+}
+
+body[data-stats-style="modern"] .stats-container .page-back-btn:hover {
+  background: #cbd5e1;
+}
+
+body[data-stats-style="modern"] .stats-summary-card {
+  background: var(--stats-card-bg);
+  border: 1px solid var(--stats-card-border);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+body[data-stats-style="modern"] .stats-summary-card .card-label {
+  color: var(--stats-text-secondary);
+}
+
+body[data-stats-style="modern"] .stats-summary-card .card-value {
+  color: var(--stats-text);
+}
+
+body[data-stats-style="modern"] .stats-section {
+  background: var(--stats-card-bg);
+  border: 1px solid var(--stats-card-border);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+body[data-stats-style="modern"] .stats-section-title {
+  color: var(--stats-text);
+  border-bottom-color: var(--stats-card-border);
+}
+
+body[data-stats-style="modern"] .radar-legend-item {
+  color: var(--stats-text-secondary);
+}
+
+body[data-stats-style="modern"] .completion-legend-item {
+  color: var(--stats-text-secondary);
+}
+
+body[data-stats-style="modern"] .stats-chart-container::-webkit-scrollbar-track {
+  background: #e2e8f0;
+}
+
+body[data-stats-style="modern"] .stats-chart-container::-webkit-scrollbar-thumb {
+  background: #94a3b8;
+}
+
+/* 风格2：霓虹赛博 (cyberpunk) */
+body[data-stats-style="cyberpunk"] .stats-container {
+  --stats-bg: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
+  --stats-card-bg: rgba(15, 23, 42, 0.8);
+  --stats-card-border: rgba(103, 232, 249, 0.3);
+  --stats-text: #67e8f9;
+  --stats-text-secondary: rgba(103, 232, 249, 0.7);
+  --stats-accent: #f0abfc;
+  background: var(--stats-bg);
+  min-height: 100vh;
+}
+
+body[data-stats-style="cyberpunk"] .stats-container .page-title {
+  color: #f0abfc;
+  text-shadow: 0 0 10px rgba(240, 171, 252, 0.5);
+}
+
+body[data-stats-style="cyberpunk"] .stats-container .page-back-btn {
+  background: rgba(103, 232, 249, 0.1);
+  color: #67e8f9;
+  border: 1px solid rgba(103, 232, 249, 0.3);
+  box-shadow: 0 0 10px rgba(103, 232, 249, 0.2);
+}
+
+body[data-stats-style="cyberpunk"] .stats-container .page-back-btn:hover {
+  background: rgba(103, 232, 249, 0.2);
+  box-shadow: 0 0 20px rgba(103, 232, 249, 0.4);
+}
+
+body[data-stats-style="cyberpunk"] .stats-summary-card {
+  background: var(--stats-card-bg);
+  border: 1px solid var(--stats-card-border);
+  box-shadow: 0 0 20px rgba(103, 232, 249, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+}
+
+body[data-stats-style="cyberpunk"] .stats-summary-card:hover {
+  box-shadow: 0 0 30px rgba(103, 232, 249, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  border-color: rgba(103, 232, 249, 0.5);
+}
+
+body[data-stats-style="cyberpunk"] .stats-summary-card .card-icon {
+  filter: drop-shadow(0 0 5px rgba(103, 232, 249, 0.5));
+}
+
+body[data-stats-style="cyberpunk"] .stats-summary-card .card-value {
+  color: #f0abfc;
+  text-shadow: 0 0 10px rgba(240, 171, 252, 0.3);
+}
+
+body[data-stats-style="cyberpunk"] .stats-section {
+  background: var(--stats-card-bg);
+  border: 1px solid var(--stats-card-border);
+  box-shadow: 0 0 20px rgba(103, 232, 249, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+}
+
+body[data-stats-style="cyberpunk"] .stats-section-title {
+  color: #67e8f9;
+  border-bottom-color: rgba(103, 232, 249, 0.3);
+  text-shadow: 0 0 5px rgba(103, 232, 249, 0.3);
+}
+
+body[data-stats-style="cyberpunk"] .radar-legend-item {
+  color: var(--stats-text-secondary);
+}
+
+body[data-stats-style="cyberpunk"] .radar-legend-color {
+  box-shadow: 0 0 8px currentColor;
+}
+
+body[data-stats-style="cyberpunk"] .completion-legend-item {
+  color: var(--stats-text-secondary);
+}
+
+/* 风格3：像素游戏 (pixel) */
+body[data-stats-style="pixel"] .stats-container {
+  --stats-bg: #0f0f23;
+  --stats-card-bg: #1a1a2e;
+  --stats-card-border: #4ade80;
+  --stats-text: #4ade80;
+  --stats-text-secondary: #22c55e;
+  --stats-accent: #facc15;
+  background: var(--stats-bg);
+  font-family: 'Courier New', monospace;
+}
+
+body[data-stats-style="pixel"] .stats-container .page-title {
+  color: #facc15;
+  text-shadow: 2px 2px 0 #000;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 2px;
+}
+
+body[data-stats-style="pixel"] .stats-container .page-back-btn {
+  background: #1a1a2e;
+  color: #4ade80;
+  border: 2px solid #4ade80;
+  box-shadow: 4px 4px 0 #000;
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+}
+
+body[data-stats-style="pixel"] .stats-container .page-back-btn:hover {
+  background: #4ade80;
+  color: #0f0f23;
+  box-shadow: 2px 2px 0 #000;
+  transform: translate(2px, 2px);
+}
+
+body[data-stats-style="pixel"] .stats-summary-card {
+  background: var(--stats-card-bg);
+  border: 3px solid var(--stats-card-border);
+  box-shadow: 4px 4px 0 #000;
+  image-rendering: pixelated;
+}
+
+body[data-stats-style="pixel"] .stats-summary-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 #000;
+}
+
+body[data-stats-style="pixel"] .stats-summary-card .card-label {
+  color: #22c55e;
+  font-family: 'Courier New', monospace;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+body[data-stats-style="pixel"] .stats-summary-card .card-value {
+  color: #facc15;
+  font-family: 'Courier New', monospace;
+  text-shadow: 2px 2px 0 #000;
+}
+
+body[data-stats-style="pixel"] .stats-section {
+  background: var(--stats-card-bg);
+  border: 3px solid var(--stats-card-border);
+  box-shadow: 4px 4px 0 #000;
+  image-rendering: pixelated;
+}
+
+body[data-stats-style="pixel"] .stats-section-title {
+  color: #facc15;
+  border-bottom: 3px solid #4ade80;
+  font-family: 'Courier New', monospace;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-shadow: 2px 2px 0 #000;
+}
+
+body[data-stats-style="pixel"] .radar-legend-item {
+  color: #4ade80;
+  font-family: 'Courier New', monospace;
+}
+
+body[data-stats-style="pixel"] .completion-legend-item {
+  color: #4ade80;
+  font-family: 'Courier New', monospace;
+}
+
+/* 像素风格滚动条 */
+body[data-stats-style="pixel"] .stats-chart-container::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+body[data-stats-style="pixel"] .stats-chart-container::-webkit-scrollbar-track {
+  background: #1a1a2e;
+  border: 2px solid #4ade80;
+}
+
+body[data-stats-style="pixel"] .stats-chart-container::-webkit-scrollbar-thumb {
+  background: #4ade80;
+  border: 2px solid #0f0f23;
+}
+
+/* CRT 扫描线效果（像素风格） */
+body[data-stats-style="pixel"] .stats-container::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%,
+    rgba(0, 0, 0, 0.1) 50%
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: 10;
+}
